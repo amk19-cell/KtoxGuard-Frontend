@@ -1,0 +1,41 @@
+{
+  "header": {
+    "title": "KToxGuard",
+    "security": "Niveau de sécurité",
+    "calm": "Calme",
+    "vigilance": "Vigilance",
+    "critical": "Critique"
+  },
+  "dashboard": {
+    "admin": "Dashboard Admin",
+    "manager": "Dashboard Manager",
+    "artist": "Espace Artiste",
+    "stats": {
+      "messagesToday": "Messages analysés aujourd'hui",
+      "threatsToday": "Menaces détectées aujourd'hui",
+      "artistsUnderAlert": "Artistes sous alerte active",
+      "raidsThisMonth": "Raids détectés ce mois"
+    },
+    "alerts": "Alertes critiques",
+    "markHandled": "Marquer comme traité",
+    "escalate": "Escalader à l'admin"
+  },
+  "artist": {
+    "askSecurity": "Souhaites-tu être informé de ton niveau de sécurité ?",
+    "yes": "Oui",
+    "no": "Non",
+    "calmMessage": "Rien d'inhabituel cette semaine",
+    "vigilanceMessage": "Quelques tensions en ligne, ton équipe veille",
+    "criticalMessage": "Ton équipe s'occupe de tout",
+    "teamWatch": "Ton équipe veille sur toi. Si tu as besoin de nous, on est là."
+  },
+  "creaven": {
+    "admin": "Besoin de souffler ?",
+    "artist": "Tu as besoin de parler ?"
+  },
+  "common": {
+    "loading": "Chargement...",
+    "error": "Une erreur est survenue",
+    "refresh": "Rafraîchir"
+  }
+}
