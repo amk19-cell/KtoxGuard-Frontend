@@ -1,27 +1,20 @@
-import React from 'react'
-import Header from './Header'
-import Sidebar from './Sidebar'
+import React, { useState } from 'react';
+import Header from './Header';
+import Sidebar from './Sidebar';
 
-const Layout = ({ children, userRole }) => {
-  const isArtist = userRole === 'artist'
-  
+const Layout = ({ children, artists }) => {
+  const [sidebarOpen, setSidebarOpen] = useState(false);
   return (
-    <div className="min-h-screen bg-background">
-      <Header 
-        agencyName="SM Entertainment" 
-        userRole="agency" 
-        subRole={userRole} 
-        securityLevel="calm" 
-        scope="agency"
-      />
-      <div className="flex">
-        {!isArtist && <Sidebar subRole={userRole} />}
-        <main className={`flex-1 p-6 ${isArtist ? 'w-full' : ''}`}>
+    <div className="min-h-screen bg-background flex flex-col">
+      <Header toggleSidebar={() => setSidebarOpen(!sidebarOpen)} />
+      <div className="flex flex-1 relative">
+        <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} artists={artists} />
+        <main className="flex-1 p-4 md:p-6 transition-all duration-300">
           {children}
         </main>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Layout
+export default Layout;
