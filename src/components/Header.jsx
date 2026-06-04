@@ -1,39 +1,46 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import SecurityIndicator from './SecurityIndicator';
 import CreavenButton from './CreavenButton';
 
 const LanguageSelector = () => {
   const { i18n } = useTranslation();
-  
-  const changeLanguage = (lang) => {
-    i18n.changeLanguage(lang);
-  };
-  
+  const [isOpen, setIsOpen] = useState(false);
+  const languages = [
+    { code: 'en', label: 'EN' },
+    { code: 'ko', label: 'KO' },
+    { code: 'fr', label: 'FR' },
+  ];
   return (
-    <div className="flex gap-2">
-      <button onClick={() => changeLanguage('en')} className="px-2 py-1 text-sm rounded bg-gray-700 hover:bg-primary text-white">EN</button>
-      <button onClick={() => changeLanguage('ko')} className="px-2 py-1 text-sm rounded bg-gray-700 hover:bg-primary text-white">KO</button>
-      <button onClick={() => changeLanguage('fr')} className="px-2 py-1 text-sm rounded bg-gray-700 hover:bg-primary text-white">FR</button>
+    <div className="relative">
+      <button onClick={() => setIsOpen(!isOpen)} className="px-3 py-1 bg-gray-700 rounded text-white">
+        {i18n.language.toUpperCase()}
+      </button>
+      {isOpen && (
+        <div className="absolute right-0 mt-2 bg-card border border-gray-700 rounded shadow-lg z-10">
+          {languages.map(lang => (
+            <button key={lang.code} onClick={() => { i18n.changeLanguage(lang.code); setIsOpen(false); }} className="block w-full text-left px-4 py-2 hover:bg-primary/20 text-text">
+              {lang.label}
+            </button>
+          ))}
+        </div>
+      )}
     </div>
   );
 };
 
-const Header = ({ agencyName, userRole, subRole, securityLevel, scope }) => {
+const Header = ({ agencyName = "HYBE", subRole = "admin", securityLevel = "calm", toggleSidebar }) => {
   const { t } = useTranslation();
-  
   return (
-    <header className="bg-card border-b border-gray-800 px-6 py-4 flex justify-between items-center">
-      <div>
-        <h1 className="text-xl font-bold text-text">
-          🛡️ {t('header.title')} - {agencyName}
-        </h1>
-        <p className="text-textSecondary text-sm capitalize">
-          {subRole} {t('dashboard.admin')}
-        </p>
+    <header className="bg-card border-b border-gray-800 px-4 py-3 flex justify-between items-center sticky top-0 z-20">
+      <div className="flex items-center gap-3">
+        <button onClick={toggleSidebar} className="md:hidden text-text">
+          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" /></svg>
+        </button>
+        <h1 className="text-xl font-bold text-text">🛡️ KToxGuard - {agencyName}</h1>
       </div>
       <div className="flex items-center gap-4">
-        <SecurityIndicator level={securityLevel} scope={scope} />
+        <SecurityIndicator level={securityLevel} scope="agency" />
         <LanguageSelector />
         <CreavenButton userType={subRole} />
       </div>
