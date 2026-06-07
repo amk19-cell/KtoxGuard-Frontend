@@ -1,25 +1,29 @@
 import React, { useEffect, useState } from 'react';
-import { Routes, Route, Navigate } from 'react-router-dom';
-import Layout from './components/Layout';
-import AdminDashboard from './dashboards/agency/AdminDashboard';
-import ArtistDetailView from './dashboards/agency/ArtistDetailView';
 
 function App() {
-  const [artists, setArtists] = useState([]);
+  const [stats, setStats] = useState(null);
+  const [error, setError] = useState(false);
+
   useEffect(() => {
-    fetch('https://ktoxguard-api-production.up.railway.app/artists')
-      .then(res => res.json())
-      .then(setArtists)
-      .catch(err => console.error(err));
+    fetch('https://ktoxguard-api-production.up.railway.app/stats')
+      .then(res => {
+        if (!res.ok) throw new Error('API error');
+        return res.json();
+      })
+      .then(setStats)
+      .catch(() => setError(true));
   }, []);
+
+  if (error) return <div style={{ padding: 20, color: 'red' }}>⚠️ Erreur de connexion à l'API. Vérifiez que l'API est en ligne.</div>;
+  if (!stats) return <div style={{ padding: 20 }}>Chargement des statistiques...</div>;
+
   return (
-    <Layout artists={artists}>
-      <Routes>
-        <Route path="/" element={<AdminDashboard />} />
-        <Route path="/artist/:id" element={<ArtistDetailView />} />
-        <Route path="*" element={<Navigate to="/" />} />
-      </Routes>
-    </Layout>
+    <div style={{ padding: 20 }}>
+      <h1>KToxGuard</h1>
+      <p>Total messages : {stats.total_messages}</p>
+      <p>Messages toxiques : {stats.toxic_count}</p>
+      <p>Pourcentage de toxicité : {stats.toxic_percentage}%</p>
+    </div>
   );
 }
 
