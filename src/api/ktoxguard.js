@@ -12,7 +12,7 @@ export async function analyzeText(text, platform = null, author = null, lang = "
 
 export async function getStats() {
   const response = await fetch(`${API_BASE}/stats`);
-  if (!response.ok) throw new Error(`API error: ${response.status}`);
+  if (!response.ok) throw new Error(`HTTP ${response.status}`);
   return response.json();
 }
 
@@ -23,7 +23,7 @@ export async function getMessages(limit = 50, skip = 0) {
 }
 
 export async function login(email, password) {
-  // Simulation existante
+  // Simulation
   return new Promise((resolve) => {
     setTimeout(() => {
       resolve({
