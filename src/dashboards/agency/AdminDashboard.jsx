@@ -5,17 +5,34 @@ import RecommendationsPanel from '../../components/RecommendationsPanel';
 const AdminDashboard = () => {
   const [stats, setStats] = useState(null);
   const [messages, setMessages] = useState([]);
+  const [error, setError] = useState(false);
   const [selectedMsgId, setSelectedMsgId] = useState(null);
 
   const fetchData = async () => {
-    const [statsData, messagesData] = await Promise.all([getStats(), getMessages(50)]);
-    setStats(statsData);
-    setMessages(messagesData);
+    try {
+      const [statsData, messagesData] = await Promise.all([getStats(), getMessages(50)]);
+      setStats(statsData);
+      setMessages(messagesData);
+      setError(false);
+    } catch (err) {
+      console.error("Erreur chargement:", err);
+      setError(true);
+    }
   };
 
-  useEffect(() => { fetchData(); const interval = setInterval(fetchData, 30000); return () => clearInterval(interval); }, []);
+  useEffect(() => {
+    fetchData();
+    const interval = setInterval(fetchData, 30000);
+    return () => clearInterval(interval);
+  }, []);
 
-  if (!stats) return <div className="text-text">Chargement des statistiques...</div>;
+  if (error) {
+    return <div className="text-text p-6">⚠️ Données indisponibles. Réessayez plus tard.</div>;
+  }
+
+  if (!stats) {
+    return <div className="text-text p-6">Chargement des statistiques...</div>;
+  }
 
   return (
     <div>
