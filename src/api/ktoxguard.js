@@ -23,14 +23,14 @@ export async function getMessages(limit = 50, skip = 0) {
 }
 
 export async function login(email, password) {
-  // Simulation
+  // Simulation (à remplacer plus tard)
   return new Promise((resolve) => {
     setTimeout(() => {
       resolve({
         role: "agency",
         sub_role: "admin",
-        agencyName: "SM Entertainment",
-        managerName: "Kim SooYoung",
+        agencyName: "HYBE",
+        managerName: "Admin",
         artistId: 1,
       });
     }, 500);
