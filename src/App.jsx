@@ -1,8 +1,3 @@
-    </div>
-  );
-}
-
-export default App;
 import React, { useEffect, useState } from 'react';
 
 function App() {
