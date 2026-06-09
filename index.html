@@ -1,14 +1,103 @@
 <!DOCTYPE html>
-<html lang="fr">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>KToxGuard - Anti-violence social listening</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
-  </body>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KToxGuard - Demo (All profiles)</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{background:#0A0F1E;color:#F9FAFB;font-family:'Inter',sans-serif;padding:20px}
+        .container{max-width:1400px;margin:0 auto}
+        .header{text-align:center;margin-bottom:2rem}
+        .profile-bar{display:flex;flex-wrap:wrap;gap:0.5rem;justify-content:center;background:#111827;border-radius:48px;padding:0.5rem;margin-bottom:2rem}
+        .profile-btn{background:none;border:none;padding:0.6rem 1.2rem;border-radius:40px;font-weight:500;cursor:pointer;color:#9CA3AF}
+        .profile-btn.active{background:#3B82F6;color:#fff}
+        .sub-tabs{display:flex;gap:0.5rem;justify-content:center;margin-bottom:1.5rem;border-bottom:1px solid #1F2937;padding-bottom:0.5rem}
+        .sub-tab-btn{background:none;border:none;padding:0.5rem 1rem;cursor:pointer;color:#9CA3AF}
+        .sub-tab-btn.active{color:#3B82F6;border-bottom:2px solid #3B82F6}
+        .stats-grid{display:flex;flex-wrap:wrap;gap:1rem;margin-bottom:2rem}
+        .stat-card{background:#111827;padding:1rem 1.5rem;border-radius:20px;flex:1;min-width:160px}
+        .artists-grid{display:flex;flex-wrap:wrap;gap:1rem;margin:1rem 0}
+        .artist-card{background:#111827;border-radius:20px;padding:1rem;text-align:center;width:150px}
+        .artist-card img{width:70px;height:70px;border-radius:50%;object-fit:cover}
+        .threat-badge{font-size:0.7rem;padding:4px 8px;border-radius:20px;display:inline-block;margin-top:6px}
+        .threat-low{background:#10B981}
+        .threat-medium{background:#F59E0B;color:#000}
+        .threat-high{background:#EF4444}
+        .alerts-panel{background:#111827;border-radius:20px;padding:1rem;margin:1rem 0;border-left:4px solid #EF4444}
+        .guidance-box{background:#1F2937;border-radius:16px;padding:1rem;margin:1rem 0}
+        .btn{background:#3B82F6;border:none;padding:8px 16px;border-radius:40px;color:#fff;cursor:pointer}
+        .coming-soon{background:#1F2937;border-radius:20px;padding:2rem;text-align:center;color:#9CA3AF;margin:2rem 0}
+        .lang-selector{position:absolute;top:20px;right:20px}
+        .lang-selector button{background:#1F2937;border:none;padding:4px 12px;border-radius:20px;margin-left:5px;cursor:pointer;color:#fff}
+        .active-lang{background:#3B82F6}
+        @media(max-width:640px){.stats-grid{flex-direction:column}.artist-card{width:100%}.lang-selector{position:static;text-align:right;margin-bottom:1rem}}
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="lang-selector">
+        <button data-lang="en" class="active-lang">EN</button><button data-lang="ko">KO</button><button data-lang="fr">FR</button>
+    </div>
+    <div class="header"><h1>🛡️ KToxGuard – Demo</h1><p>Anti‑violence social listening (live API)</p></div>
+    <div class="profile-bar">
+        <button class="profile-btn active" data-profile="agency">🎵 Agency</button><button class="profile-btn" data-profile="government">🏛️ Government</button><button class="profile-btn" data-profile="school">🏫 School</button>
+    </div>
+    <div id="agency-sub-tabs" style="display:flex;flex-direction:column"><div class="sub-tabs"><button class="sub-tab-btn active" data-sub="admin">👑 Admin</button><button class="sub-tab-btn" data-sub="manager">📋 Manager</button><button class="sub-tab-btn" data-sub="artist">🎤 Artist</button></div></div>
+    <div id="dashboard-content"></div>
+</div>
+<script>
+    const trans={
+        en:{total:"Total messages",toxic:"Toxic messages",artistsAlert:"Artists under alert",artistsMonitored:"Artists monitored",criticalAlerts:"⚠️ Critical alerts (death threats / physical threats)",escalate:"Escalate",guidanceTitle:"📘 Guidance for agency admin",guidanceText:"Raid → document before deletion, contact platform. Death threat → export PDF, inform security, escalate to police.",members:"members",noAlerts:"No critical alerts.",yourArtists:"Your artists",threatsOnYour:"Threats on your artists",calm:"Calm",vigilance:"Vigilance",critical:"Critical",calmMsg:"🟢 Calm — nothing unusual this week",vigilanceMsg:"🟡 Be attentive — some online tensions, your team is watching",criticalMsg:"🔴 Sensitive period — your team is taking care of everything",suggestionLow:"Enjoy your free time.",suggestionHigh:"Avoid sharing your location. Talk to your manager.",creaven:"💬 Need to talk? (Creaven)",nationalToxicity:"National toxicity rate",totalThreats:"Total threats",threatTypes:"📊 Threat types",death:"Death threats",doxxing:"Doxxing",hate:"Hate speech",schoolBullying:"School bullying",heatmap:"🗺️ Geographic heatmap – coming soon",bullyingIndicators:"Bullying indicators",studentsMonitored:"Students monitored",schoolThreats:"⚠️ School‑related threats",notify:"Notify counselor",guidanceSchool:"Cyberbullying prevention resources – available.",safe:"✓ Safe"},
+        ko:{total:"전체 메시지",toxic:"유해 메시지",artistsAlert:"경고 아티스트",artistsMonitored:"모니터링 아티스트",criticalAlerts:"⚠️ 긴급 알림 (살해 위협 / 신체 위협)",escalate:"상급자 보고",guidanceTitle:"📘 에이전시 관리자 가이드",guidanceText:"공격 탐지 → 삭제 전 기록, 플랫폼에 연락. 살해 위협 → PDF 저장, 보안팀 통보, 경찰 신고.",members:"명",noAlerts:"긴급 알림 없음.",yourArtists:"담당 아티스트",threatsOnYour:"담당 아티스트 위협",calm:"안정",vigilance:"주의",critical:"위험",calmMsg:"🟢 안정 — 이번 주 특이 사항 없음",vigilanceMsg:"🟡 주의 — 온라인상 약간의 긴장감, 팀이 지켜봄",criticalMsg:"🔴 민감 시기 — 팀이 모든 것을 처리 중입니다",suggestionLow:"자유 시간을 즐기고 팬들과 소통하세요.",suggestionHigh:"위치 공유를 피하세요. 매니저에게 말하세요.",creaven:"💬 이야기 필요하신가요? (Creaven)",nationalToxicity:"국가 유해율",totalThreats:"전체 위협",threatTypes:"📊 위협 유형",death:"살해 위협",doxxing:"신상 유출",hate:"혐오 발언",schoolBullying:"학교 폭력",heatmap:"🗺️ 지역별 히트맵 – 준비 중",bullyingIndicators:"학교 폭력 지표",studentsMonitored:"모니터링 학생",schoolThreats:"⚠️ 학교 관련 위협",notify:"상담사에게 알리기",guidanceSchool:"사이버 폭력 예방 자료 – 제공 예정.",safe:"✓ 안전"},
+        fr:{total:"Messages totaux",toxic:"Messages toxiques",artistsAlert:"Artistes sous alerte",artistsMonitored:"Artistes suivis",criticalAlerts:"⚠️ Alertes critiques (menaces de mort / physiques)",escalate:"Escalader",guidanceTitle:"📘 Guide pour l’administrateur",guidanceText:"Raid → documentez avant suppression, contactez la plateforme. Menace de mort → export PDF, informez la sécurité, signalez à la police.",members:"membres",noAlerts:"Aucune alerte critique.",yourArtists:"Vos artistes",threatsOnYour:"Menaces sur vos artistes",calm:"Calme",vigilance:"Vigilance",critical:"Critique",calmMsg:"🟢 Calme — rien d’inhabituel cette semaine",vigilanceMsg:"🟡 Soyez attentif — quelques tensions en ligne, votre équipe veille",criticalMsg:"🔴 Période sensible — votre équipe gère tout",suggestionLow:"Profitez de votre temps libre.",suggestionHigh:"Évitez de partager votre localisation. Parlez à votre manager.",creaven:"💬 Besoin de parler ? (Creaven)",nationalToxicity:"Taux de toxicité national",totalThreats:"Menaces totales",threatTypes:"📊 Types de menaces",death:"Menaces de mort",doxxing:"Doxxing",hate:"Discours de haine",schoolBullying:"Harcèlement scolaire",heatmap:"🗺️ Carte de chaleur géographique – bientôt",bullyingIndicators:"Indicateurs de harcèlement",studentsMonitored:"Élèves suivis",schoolThreats:"⚠️ Menaces scolaires",notify:"Notifier le conseiller",guidanceSchool:"Ressources de prévention du cyberharcèlement – disponibles.",safe:"✓ Sécurisé"}
+    };
+    let lang=localStorage.getItem('lang')||'en';
+    let currentProfile='agency',currentSub='admin';
+    const API='https://ktoxguard-api-production.up.railway.app';
+    function updateLang(){document.querySelectorAll('.lang-selector button').forEach(b=>b.classList.toggle('active-lang',b.getAttribute('data-lang')===lang));localStorage.setItem('lang',lang);loadDashboard();}
+    async function fetchStats(){return (await fetch(API+'/stats')).json()}
+    async function fetchArtists(){return (await fetch(API+'/artists')).json()}
+    async function fetchMessages(){return (await fetch(API+'/messages?limit=300')).json()}
+    function threatLevel(artist,messages){let kw=[artist.name.toLowerCase(),...artist.name.split(' ').map(w=>w.toLowerCase())];let cnt=messages.filter(m=>m.label==='toxique'&&kw.some(k=>m.text.toLowerCase().includes(k))).length;if(cnt===0)return{lab:trans[lang].calm,cls:'threat-low'};if(cnt<3)return{lab:trans[lang].vigilance,cls:'threat-medium'};return{lab:trans[lang].critical,cls:'threat-high'}}
+    async function loadDashboard(){
+        try{
+            let[stats,artists,messages]=await Promise.all([fetchStats(),fetchArtists(),fetchMessages()]);
+            let t=trans[lang];
+            let div=document.getElementById('dashboard-content');
+            if(currentProfile==='agency'){
+                if(currentSub==='admin'){
+                    let withThreat=artists.map(a=>({...a,threat:threatLevel(a,messages)}));
+                    let crit=messages.filter(m=>m.label==='toxique'&&(m.text.includes('kill')||m.text.includes('죽어')));
+                    div.innerHTML=`<div class="stats-grid"><div class="stat-card"><h3>${t.total}</h3><p>${stats.total_messages}</p></div><div class="stat-card"><h3>${t.toxic}</h3><p>${stats.toxic_count}</p></div><div class="stat-card"><h3>${t.artistsAlert}</h3><p>${withThreat.filter(a=>a.threat.cls!=='threat-low').length}</p></div></div><h3>${t.artistsMonitored}</h3><div class="artists-grid">${withThreat.map(a=>`<div class="artist-card"><img src="${a.photo}"><h4>${a.name}</h4><div class="threat-badge ${a.threat.cls}">${a.threat.lab}</div></div>`).join('')}</div><div class="alerts-panel"><h3>${t.criticalAlerts}</h3>${crit.length?crit.slice(0,5).map(c=>`<div>${c.text.substring(0,120)}<br><small>${c.platform}</small></div>`).join(''):`<p>${t.noAlerts}</p>`}<button class="btn" onclick="alert('${t.escalate}')">${t.escalate}</button></div><div class="guidance-box"><h4>${t.guidanceTitle}</h4><p>${t.guidanceText}</p></div><div class="coming-soon">📊 Advanced analytics – soon</div>`;
+                }else if(currentSub==='manager'){
+                    let assigned=artists.slice(0,2);
+                    let withThreat=assigned.map(a=>({...a,threat:threatLevel(a,messages)}));
+                    let crit=messages.filter(m=>m.label==='toxique'&&(m.text.includes('kill')||m.text.includes('죽어'))&&assigned.some(a=>m.text.toLowerCase().includes(a.name.toLowerCase())));
+                    div.innerHTML=`<div class="stats-grid"><div class="stat-card"><h3>${t.threatsOnYour}</h3><p>${crit.length}</p></div><div class="stat-card"><h3>${t.artistsAlert}</h3><p>${withThreat.filter(a=>a.threat.cls!=='threat-low').length}</p></div></div><h3>${t.yourArtists}</h3><div class="artists-grid">${withThreat.map(a=>`<div class="artist-card"><img src="${a.photo}"><h4>${a.name}</h4><div class="threat-badge ${a.threat.cls}">${a.threat.lab}</div></div>`).join('')}</div><div class="alerts-panel"><h3>${t.criticalAlerts}</h3>${crit.length?crit.map(c=>`<div>${c.text.substring(0,100)}<button class="btn" onclick="alert('${t.escalate}')">${t.escalate}</button></div>`).join(''):`<p>${t.noAlerts}</p>`}</div><div class="guidance-box"><h4>${t.guidanceTitle}</h4><p>${t.guidanceText}</p></div>`;
+                }else{
+                    let me=artists[0];
+                    let th=threatLevel(me,messages);
+                    let msg=th.lab===t.calm?t.calmMsg:(th.lab===t.vigilance?t.vigilanceMsg:t.criticalMsg);
+                    let suggestion=th.lab===t.calm?t.suggestionLow:t.suggestionHigh;
+                    div.innerHTML=`<div style="max-width:600px;margin:0 auto;text-align:center"><div class="stat-card"><h3>Your security level</h3><div class="threat-badge ${th.cls}" style="font-size:1.2rem;">${th.lab}</div><p>${msg}</p></div><div class="guidance-box"><p>${suggestion}</p></div><button class="btn" onclick="window.open('https://creaven.pages.dev','_blank')">${t.creaven}</button></div>`;
+                }
+            }else if(currentProfile==='government'){
+                let types={death:0,doxxing:0,hate:0,bully:0};
+                messages.forEach(m=>{if(m.label==='toxique'){if(m.text.includes('kill')||m.text.includes('죽어'))types.death++;if(m.text.includes('신상'))types.doxxing++;if(m.text.includes('병신'))types.hate++;if(m.text.includes('왕따')||m.text.includes('학폭'))types.bully++;}});
+                div.innerHTML=`<div class="stats-grid"><div class="stat-card"><h3>${t.nationalToxicity}</h3><p>${stats.toxic_percentage}%</p></div><div class="stat-card"><h3>${t.totalThreats}</h3><p>${stats.toxic_count}</p></div></div><div class="alerts-panel"><h3>${t.threatTypes}</h3><div class="stats-grid"><div class="stat-card"><h4>${t.death}</h4><p>${types.death}</p></div><div class="stat-card"><h4>${t.doxxing}</h4><p>${types.doxxing}</p></div><div class="stat-card"><h4>${t.hate}</h4><p>${types.hate}</p></div><div class="stat-card"><h4>${t.schoolBullying}</h4><p>${types.bully}</p></div></div></div><div class="coming-soon">${t.heatmap}</div>`;
+            }else{
+                let studentsMock=[{name:"Lee Minho",class:"3-1"},{name:"Kim Yuna",class:"3-2"},{name:"Park Jisoo",class:"2-5"}];
+                let bullying=messages.filter(m=>m.label==='toxique'&&(m.text.includes('왕따')||m.text.includes('학폭')||m.text.includes('bully')));
+                div.innerHTML=`<div class="stats-grid"><div class="stat-card"><h3>${t.bullyingIndicators}</h3><p>${bullying.length}</p></div></div><h3>${t.studentsMonitored}</h3><div class="artists-grid" style="justify-content:flex-start">${studentsMock.map(s=>`<div class="artist-card" style="cursor:pointer" onclick="alert('Student: ${s.name} - ${s.class}')"><h4>${s.name}</h4><p>${s.class}</p><div class="threat-badge threat-low">${t.safe}</div></div>`).join('')}</div><div class="alerts-panel"><h3>${t.schoolThreats}</h3>${bullying.length?bullying.slice(0,3).map(b=>`<div>${b.text.substring(0,120)}</div>`).join(''):`<p>${t.noAlerts}</p>`}<button class="btn" onclick="alert('${t.notify}')">${t.notify}</button></div><div class="guidance-box"><h4>${t.guidanceTitle}</h4><p>${t.guidanceSchool}</p></div>`;
+            }
+        }catch(e){document.getElementById('dashboard-content').innerHTML='<div style="color:red;">Error loading API</div>';}
+    }
+    document.querySelectorAll('.profile-btn').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('.profile-btn').forEach(p=>p.classList.remove('active'));b.classList.add('active');currentProfile=b.getAttribute('data-profile');document.getElementById('agency-sub-tabs').style.display=currentProfile==='agency'?'flex':'none';if(currentProfile!=='agency')currentSub='admin';loadDashboard();}));
+    document.querySelectorAll('.sub-tab-btn').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('.sub-tab-btn').forEach(p=>p.classList.remove('active'));b.classList.add('active');currentSub=b.getAttribute('data-sub');loadDashboard();}));
+    document.querySelectorAll('.lang-selector button').forEach(b=>b.addEventListener('click',()=>{lang=b.getAttribute('data-lang');updateLang();}));
+    updateLang();loadDashboard();setInterval(loadDashboard,60000);
+</script>
+</body>
 </html>
