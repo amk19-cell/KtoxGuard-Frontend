@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KToxGuard - Government</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body{background:#0A0F1E;color:#F9FAFB;font-family:'Inter',sans-serif;padding:20px}
+        .container{max-width:1200px;margin:0 auto}
+        .header{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;margin-bottom:2rem}
+        .lang-selector button{background:#1F2937;border:none;padding:6px 12px;border-radius:20px;margin-left:8px;cursor:pointer;color:#fff}
+        .active{background:#3B82F6}
+        .stats-grid{display:flex;flex-wrap:wrap;gap:1rem;margin-bottom:2rem}
+        .stat-card{background:#111827;padding:1rem 1.5rem;border-radius:20px;flex:1}
+        .alerts-panel{background:#111827;border-radius:20px;padding:1rem;border-left:4px solid #EF4444;margin-bottom:2rem}
+        .coming-soon{background:#1F2937;border-radius:20px;padding:2rem;text-align:center;color:#9CA3AF}
+        @media(max-width:640px){.stats-grid{flex-direction:column}}
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h1>🏛️ KToxGuard – Government Portal</h1>
+        <div class="lang-selector">
+            <button data-lang="en" class="active">EN</button><button data-lang="ko">KO</button><button data-lang="fr">FR</button>
+            <a href="index.html" style="color:#3B82F6;margin-left:1rem">← Demo</a>
+        </div>
+    </div>
+    <div id="content">Loading...</div>
+</div>
+<script>
+    const trans={
+        en:{nationalToxicity:"National toxicity rate",totalThreats:"Total threats",threatTypes:"📊 Threat types",death:"Death threats",doxxing:"Doxxing",hate:"Hate speech",schoolBullying:"School bullying",heatmap:"🗺️ Geographic heatmap & regional trends – coming soon"},
+        ko:{nationalToxicity:"국가 유해율",totalThreats:"전체 위협",threatTypes:"📊 위협 유형",death:"살해 위협",doxxing:"신상 유출",hate:"혐오 발언",schoolBullying:"학교 폭력",heatmap:"🗺️ 지역별 히트맵 및 트렌드 – 준비 중"},
+        fr:{nationalToxicity:"Taux de toxicité national",totalThreats:"Menaces totales",threatTypes:"📊 Types de menaces",death:"Menaces de mort",doxxing:"Doxxing",hate:"Discours de haine",schoolBullying:"Harcèlement scolaire",heatmap:"🗺️ Carte de chaleur géographique & tendances régionales – bientôt"}
+    };
+    let lang=localStorage.getItem('lang')||'en';
+    const API='https://ktoxguard-api-production.up.railway.app';
+    function updateLang(){document.querySelectorAll('.lang-selector button').forEach(b=>b.classList.toggle('active',b.getAttribute('data-lang')===lang));localStorage.setItem('lang',lang);load();}
+    async function fetchStats(){return (await fetch(API+'/stats')).json()}
+    async function fetchMessages(){return (await fetch(API+'/messages?limit=500')).json()}
+    async function load(){try{let[stats,messages]=await Promise.all([fetchStats(),fetchMessages()]);let types={death:0,doxxing:0,hate:0,bully:0};messages.forEach(m=>{if(m.label==='toxique'){if(m.text.includes('kill')||m.text.includes('죽어'))types.death++;if(m.text.includes('신상'))types.doxxing++;if(m.text.includes('병신'))types.hate++;if(m.text.includes('왕따')||m.text.includes('학폭'))types.bully++;}});let t=trans[lang];document.getElementById('content').innerHTML=`
+            <div class="stats-grid"><div class="stat-card"><h3>${t.nationalToxicity}</h3><p>${stats.toxic_percentage}%</p></div><div class="stat-card"><h3>${t.totalThreats}</h3><p>${stats.toxic_count}</p></div></div>
+            <div class="alerts-panel"><h3>${t.threatTypes}</h3><div class="stats-grid"><div class="stat-card"><h4>${t.death}</h4><p>${types.death}</p></div><div class="stat-card"><h4>${t.doxxing}</h4><p>${types.doxxing}</p></div><div class="stat-card"><h4>${t.hate}</h4><p>${types.hate}</p></div><div class="stat-card"><h4>${t.schoolBullying}</h4><p>${types.bully}</p></div></div></div>
+            <div class="coming-soon">${t.heatmap}</div>
+        `;}catch(e){document.getElementById('content').innerHTML='<div class="coming-soon" style="color:red;">Error loading data</div>';}}
+    document.querySelectorAll('.lang-selector button').forEach(b=>b.addEventListener('click',()=>{lang=b.getAttribute('data-lang');updateLang();}));
+    updateLang();load();setInterval(load,60000);
+</script>
+</body>
+</html>
