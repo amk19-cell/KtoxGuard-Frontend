@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>KToxGuard - Manager Agency</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{background:#0A0F1E;color:#F9FAFB;font-family:'Inter',sans-serif;padding:20px}
+        .container{max-width:1400px;margin:0 auto}
+        .header{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;margin-bottom:2rem}
+        .lang-selector button{background:#1F2937;border:none;padding:6px 12px;border-radius:20px;margin-left:8px;cursor:pointer;color:#fff}
+        .lang-selector .active{background:#3B82F6}
+        .stats-grid{display:flex;flex-wrap:wrap;gap:1rem;margin-bottom:2rem}
+        .stat-card{background:#111827;padding:1rem 1.5rem;border-radius:20px;flex:1;min-width:160px}
+        .artists-grid{display:flex;flex-wrap:wrap;gap:1rem;margin:1rem 0}
+        .artist-card{background:#111827;border-radius:20px;padding:1rem;text-align:center;width:150px}
+        .artist-card img{width:70px;height:70px;border-radius:50%;object-fit:cover}
+        .threat-badge{font-size:0.7rem;padding:4px 8px;border-radius:20px;display:inline-block;margin-top:6px}
+        .threat-low{background:#10B981}
+        .threat-medium{background:#F59E0B;color:#000}
+        .threat-high{background:#EF4444}
+        .alerts-panel{background:#111827;border-radius:20px;padding:1rem;margin:1rem 0;border-left:4px solid #EF4444}
+        .guidance-box{background:#1F2937;border-radius:16px;padding:1rem;margin:1rem 0}
+        .btn{background:#3B82F6;border:none;padding:8px 16px;border-radius:40px;color:#fff;cursor:pointer}
+        .logo-agency{height:40px;margin-right:1rem}
+        @media(max-width:640px){.artist-card{width:100%}}
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <div style="display:flex;align-items:center">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0d/HYBE_Corporation_logo.svg/200px-HYBE_Corporation_logo.svg.png" alt="HYBE" class="logo-agency">
+            <h1>📋 KToxGuard – Manager Agency</h1>
+        </div>
+        <div class="lang-selector">
+            <button data-lang="en" class="active">EN</button><button data-lang="ko">KO</button><button data-lang="fr">FR</button>
+            <a href="index.html" style="color:#3B82F6;margin-left:1rem">← Demo</a>
+        </div>
+    </div>
+    <div id="content">Loading...</div>
+</div>
+<script>
+    const trans={
+        en:{threatsOnYour:"Threats on your artists",artistsAlert:"Artists under alert",yourArtists:"Your artists",criticalAlerts:"⚠️ Critical alerts (your artists)",escalate:"Escalate",guidanceTitle:"📘 Contextual guidance",guidanceText:"Raid → do not reply publicly, document, inform artist. Death threat → export PDF, inform security, escalate to admin.",members:"members",noAlerts:"No critical alerts for your artists."},
+        ko:{threatsOnYour:"담당 아티스트 위협",artistsAlert:"경고 아티스트",yourArtists:"담당 아티스트",criticalAlerts:"⚠️ 긴급 알림 (담당 아티스트)",escalate:"상급자 보고",guidanceTitle:"📘 상황별 가이드",guidanceText:"공격 탐지 → 공개 답변 금지, 기록 보관, 아티스트에게 알림. 살해 위협 → PDF 저장, 보안팀 통보, 상급자 보고.",members:"명",noAlerts:"담당 아티스트에 대한 긴급 알림 없음."},
+        fr:{threatsOnYour:"Menaces sur vos artistes",artistsAlert:"Artistes sous alerte",yourArtists:"Vos artistes",criticalAlerts:"⚠️ Alertes critiques (vos artistes)",escalate:"Escalader",guidanceTitle:"📘 Conseils contextuels",guidanceText:"Raid → ne répondez pas publiquement, documentez, informez l’artiste. Menace de mort → export PDF, informez la sécurité, escaladez à l’admin.",members:"membres",noAlerts:"Aucune alerte critique pour vos artistes."}
+    };
+    let lang=localStorage.getItem('lang')||'en';
+    const API='https://ktoxguard-api-production.up.railway.app';
+    function updateLang(){document.querySelectorAll('.lang-selector button').forEach(b=>b.classList.toggle('active',b.getAttribute('data-lang')===lang));localStorage.setItem('lang',lang);load();}
+    async function fetchArtists(){return (await fetch(API+'/artists')).json()}
+    async function fetchMessages(){return (await fetch(API+'/messages?limit=300')).json()}
+    function threatLevel(artist,messages){let kw=[artist.name.toLowerCase(),...artist.name.split(' ').map(w=>w.toLowerCase())];let cnt=messages.filter(m=>m.label==='toxique'&&kw.some(k=>m.text.toLowerCase().includes(k))).length;if(cnt===0)return{lab:'Calm',cls:'threat-low'};if(cnt<3)return{lab:'Vigilance',cls:'threat-medium'};return{lab:'Critical',cls:'threat-high'}}
+    async function load(){try{let[artists,messages]=await Promise.all([fetchArtists(),fetchMessages()]);let assigned=artists.slice(0,2);let withThreat=assigned.map(a=>({...a,threat:threatLevel(a,messages)}));let crit=messages.filter(m=>m.label==='toxique'&&(m.text.includes('kill')||m.text.includes('죽어'))&&assigned.some(a=>m.text.toLowerCase().includes(a.name.toLowerCase())));let t=trans[lang];document.getElementById('content').innerHTML=`
+        <div class="stats-grid"><div class="stat-card"><h3>${t.threatsOnYour}</h3><p>${crit.length}</p></div><div class="stat-card"><h3>${t.artistsAlert}</h3><p>${withThreat.filter(a=>a.threat.cls!=='threat-low').length}</p></div></div>
+        <h3>${t.yourArtists}</h3><div class="artists-grid">${withThreat.map(a=>`<div class="artist-card"><img src="${a.photo}"><h4>${a.name}</h4><div class="threat-badge ${a.threat.cls}">${a.threat.lab}</div><p>${a.members} ${t.members}</p></div>`).join('')}</div>
+        <div class="alerts-panel"><h3>${t.criticalAlerts}</h3>${crit.length?crit.map(c=>`<div style="border-bottom:1px solid #1F2937;padding:0.5rem 0;">${c.text.substring(0,100)}<button class="btn" style="margin-left:1rem;" onclick="alert('${t.escalate}')">${t.escalate}</button></div>`).join(''):`<p>${t.noAlerts}</p>`}</div>
+        <div class="guidance-box"><h4>${t.guidanceTitle}</h4><p>${t.guidanceText}</p></div>
+    `;}catch(e){document.getElementById('content').innerHTML='<div style="color:red;">Error loading API</div>';}}
+    document.querySelectorAll('.lang-selector button').forEach(b=>b.addEventListener('click',()=>{lang=b.getAttribute('data-lang');updateLang();}));
+    updateLang();load();setInterval(load,60000);
+</script>
+</body>
+</html>
