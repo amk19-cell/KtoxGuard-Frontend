@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KToxGuard - Artist</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body{background:#0A0F1E;color:#F9FAFB;font-family:'Inter',sans-serif;padding:20px;text-align:center}
+        .container{max-width:600px;margin:0 auto;background:#111827;border-radius:32px;padding:2rem}
+        .lang-selector{display:flex;justify-content:flex-end;gap:0.5rem;margin-bottom:1rem}
+        .lang-selector button{background:#1F2937;border:none;padding:4px 12px;border-radius:20px;cursor:pointer;color:#fff}
+        .active{background:#3B82F6}
+        .btn{background:#3B82F6;border:none;padding:12px 24px;border-radius:40px;color:#fff;cursor:pointer;margin-top:1rem}
+        .threat-badge{font-size:1.2rem;padding:0.5rem 1rem;border-radius:40px;display:inline-block;margin:1rem 0}
+        .threat-low{background:#10B981}
+        .threat-medium{background:#F59E0B;color:#000}
+        .threat-high{background:#EF4444}
+        .guidance-box{background:#1F2937;border-radius:16px;padding:1rem;margin:1rem 0}
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="lang-selector">
+        <button data-lang="en" class="active">EN</button><button data-lang="ko">KO</button><button data-lang="fr">FR</button>
+        <a href="index.html" style="color:#3B82F6;">← Demo</a>
+    </div>
+    <div id="content">Loading...</div>
+</div>
+<script>
+    const trans={
+        en:{yourSecurity:"Your security level",calm:"Calm",vigilance:"Vigilance",critical:"Critical",calmMsg:"🟢 Calm — nothing unusual this week",vigilanceMsg:"🟡 Be attentive — some online tensions, your team is watching",criticalMsg:"🔴 Sensitive period — your team is taking care of everything",suggestionLow:"Enjoy your free time, stay connected with fans.",suggestionHigh:"Avoid sharing your location. Limit social media exposure tonight. If you see something worrying, talk to your manager.",creaven:"💬 Need to talk? (Creaven)"},
+        ko:{yourSecurity:"내 보안 수준",calm:"안정",vigilance:"주의",critical:"위험",calmMsg:"🟢 안정 — 이번 주 특이 사항 없음",vigilanceMsg:"🟡 주의 — 온라인상 약간의 긴장감, 팀이 지켜봄",criticalMsg:"🔴 민감 시기 — 팀이 모든 것을 처리 중입니다",suggestionLow:"자유 시간을 즐기고 팬들과 소통하세요.",suggestionHigh:"위치 공유를 피하세요. 오늘 밤 SNS 노출을 제한하세요. 걱정되면 매니저에게 말하세요.",creaven:"💬 이야기 필요하신가요? (Creaven)"},
+        fr:{yourSecurity:"Votre niveau de sécurité",calm:"Calme",vigilance:"Vigilance",critical:"Critique",calmMsg:"🟢 Calme — rien d’inhabituel cette semaine",vigilanceMsg:"🟡 Soyez attentif — quelques tensions en ligne, votre équipe veille",criticalMsg:"🔴 Période sensible — votre équipe gère tout",suggestionLow:"Profitez de votre temps libre, restez connecté avec vos fans.",suggestionHigh:"Évitez de partager votre localisation. Limitez votre exposition sur les réseaux ce soir. Si quelque chose vous inquiète, parlez-en à votre manager.",creaven:"💬 Besoin de parler ? (Creaven)"}
+    };
+    let lang=localStorage.getItem('lang')||'en';
+    const API='https://ktoxguard-api-production.up.railway.app';
+    function updateLang(){document.querySelectorAll('.lang-selector button').forEach(b=>b.classList.toggle('active',b.getAttribute('data-lang')===lang));localStorage.setItem('lang',lang);load();}
+    async function fetchArtists(){return (await fetch(API+'/artists')).json()}
+    async function fetchMessages(){return (await fetch(API+'/messages?limit=200')).json()}
+    function threatLevel(artist,messages){let kw=[artist.name.toLowerCase(),...artist.name.split(' ').map(w=>w.toLowerCase())];let cnt=messages.filter(m=>m.label==='toxique'&&kw.some(k=>m.text.toLowerCase().includes(k))).length;if(cnt===0)return{l:'low',lab:trans[lang].calm,cls:'threat-low'};if(cnt<3)return{l:'medium',lab:trans[lang].vigilance,cls:'threat-medium'};return{l:'high',lab:trans[lang].critical,cls:'threat-high'}}
+    async function load(){try{let[artists,messages]=await Promise.all([fetchArtists(),fetchMessages()]);let me=artists[0];let th=threatLevel(me,messages);let t=trans[lang];let msg=th.l==='low'?t.calmMsg:(th.l==='medium'?t.vigilanceMsg:t.criticalMsg);let suggestion=th.l==='low'?t.suggestionLow:t.suggestionHigh;document.getElementById('content').innerHTML=`<div class="threat-badge ${th.cls}">${th.lab}</div><p>${msg}</p><div class="guidance-box"><p>${suggestion}</p></div><button class="btn" onclick="window.open('https://creaven.pages.dev','_blank')">${t.creaven}</button>`;}catch(e){document.getElementById('content').innerHTML='<p style="color:red;">Error</p>';}}
+    document.querySelectorAll('.lang-selector button').forEach(b=>b.addEventListener('click',()=>{lang=b.getAttribute('data-lang');updateLang();}));
+    updateLang();load();setInterval(load,60000);
+</script>
+</body>
+</html>
