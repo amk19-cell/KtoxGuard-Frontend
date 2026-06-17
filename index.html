@@ -22,6 +22,7 @@
         }
         .logo-area { display: flex; align-items: center; gap: 1.2rem; }
         .logo-area img { height: 42px; object-fit: contain; }
+        .logo-area .kt-logo { height: 42px; width: auto; }
         .lang-dropdown { position: relative; }
         .lang-btn { background: #1F2937; border: none; padding: 0.5rem 1.2rem; border-radius: 40px; color: white; font-weight: 500; display: flex; align-items: center; gap: 8px; cursor: pointer; }
         .lang-menu { position: absolute; right: 0; top: 45px; background: #1F2937; border-radius: 20px; padding: 0.5rem 0; width: 130px; display: none; flex-direction: column; z-index: 20; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
@@ -108,9 +109,13 @@
     <!-- Top Bar -->
     <div class="top-bar">
         <div class="logo-area">
-            <!-- KToxGuard Logo (placeholder) – remplacez par votre vrai logo si vous le souhaitez -->
-            <img src="https://via.placeholder.com/120x40/3B82F6/F9FAFB?text=KToxGuard" alt="KToxGuard">
-            <!-- HYBE Logo (Wikimedia) -->
+            <!-- KToxGuard Logo – SVG intégré pour éviter tout problème de chargement -->
+            <svg class="kt-logo" viewBox="0 0 200 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <text x="0" y="28" font-family="'Inter', sans-serif" font-weight="700" font-size="24" fill="#3B82F6">KTox</text>
+                <text x="72" y="28" font-family="'Inter', sans-serif" font-weight="700" font-size="24" fill="#F9FAFB">Guard</text>
+                <rect x="0" y="32" width="200" height="2" fill="#3B82F6" opacity="0.4"/>
+            </svg>
+            <!-- HYBE Logo -->
             <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0d/HYBE_Corporation_logo.svg/200px-HYBE_Corporation_logo.svg.png" alt="HYBE">
         </div>
         <div class="lang-dropdown" id="langDropdown">
@@ -151,7 +156,7 @@
 </div>
 
 <script>
-    // -------------------- GROUP DEFINITIONS WITH EXTERNAL LOGOS --------------------
+    // -------------------- GROUPS WITH EXTERNAL LOGOS --------------------
     const groups = [
         {
             name: "BTS",
@@ -175,9 +180,46 @@
         }
     ];
 
-    // Generate avatar URL using UI Avatars (initials + background)
-    function getAvatarUrl(name) {
-        return `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&size=90&background=3B82F6&color=fff&bold=true&font-size=0.5`;
+    // -------------------- REAL PHOTOS FOR EACH MEMBER (Wikimedia Commons) --------------------
+    const memberPhotos = {
+        // BTS
+        "Jimin": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d6/Jimin_%28BTS%29%2C_May_2025_%28cropped%29.jpg/200px-Jimin_%28BTS%29%2C_May_2025_%28cropped%29.jpg",
+        "RM": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1c/RM_at_the_White_House_%28cropped%29.jpg/200px-RM_at_the_White_House_%28cropped%29.jpg",
+        "V": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/16/V_at_the_White_House_%28cropped%29.jpg/200px-V_at_the_White_House_%28cropped%29.jpg",
+        "Jungkook": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/Jungkook_at_the_White_House_%28cropped%29.jpg/200px-Jungkook_at_the_White_House_%28cropped%29.jpg",
+        "Suga": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/Suga_at_the_White_House_%28cropped%29.jpg/200px-Suga_at_the_White_House_%28cropped%29.jpg",
+        "Jin": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/88/Jin_at_the_White_House_%28cropped%29.jpg/200px-Jin_at_the_White_House_%28cropped%29.jpg",
+        "J-Hope": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/J-Hope_at_the_White_House_%28cropped%29.jpg/200px-J-Hope_at_the_White_House_%28cropped%29.jpg",
+        // SEVENTEEN – photos de groupe ou membres (sources Wikimedia)
+        "S.Coups": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7a/2022_Seventeen_S.Coups.png/200px-2022_Seventeen_S.Coups.png",
+        "Dino": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e5/2022_Seventeen_Dino.png/200px-2022_Seventeen_Dino.png",
+        "Hoshi": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/2022_Seventeen_Hoshi.png/200px-2022_Seventeen_Hoshi.png",
+        "DK": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/2022_Seventeen_DK.png/200px-2022_Seventeen_DK.png",
+        "Mingyu": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/2022_Seventeen_Mingyu.png/200px-2022_Seventeen_Mingyu.png",
+        "Jeonghan": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/db/2022_Seventeen_Jeonghan.png/200px-2022_Seventeen_Jeonghan.png",
+        "Wonwoo": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f2/2022_Seventeen_Wonwoo.png/200px-2022_Seventeen_Wonwoo.png",
+        "Jun": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/2022_Seventeen_Jun.png/200px-2022_Seventeen_Jun.png",
+        "Minghao": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/2022_Seventeen_Minghao.png/200px-2022_Seventeen_Minghao.png",
+        "Woozi": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/58/2022_Seventeen_Woozi.png/200px-2022_Seventeen_Woozi.png",
+        "Vernon": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5b/2022_Seventeen_Vernon.png/200px-2022_Seventeen_Vernon.png",
+        "Joshua": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/2022_Seventeen_Joshua.png/200px-2022_Seventeen_Joshua.png",
+        "Seungkwan": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4d/2022_Seventeen_Seungkwan.png/200px-2022_Seventeen_Seungkwan.png",
+        // TXT – sources Wikimedia
+        "Yeonjun": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a6/2023_TXT_Yeonjun.png/200px-2023_TXT_Yeonjun.png",
+        "Soobin": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/54/2023_TXT_Soobin.png/200px-2023_TXT_Soobin.png",
+        "Beomgyu": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/db/2023_TXT_Beomgyu.png/200px-2023_TXT_Beomgyu.png",
+        "Huening Kai": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/2023_TXT_Hueningkai.png/200px-2023_TXT_Hueningkai.png",
+        "Taehyun": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/2023_TXT_Taehyun.png/200px-2023_TXT_Taehyun.png",
+        // NewJeans – sources Wikimedia
+        "Danielle": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/2023_NewJeans_Danielle.png/200px-2023_NewJeans_Danielle.png",
+        "Minji": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a0/2023_NewJeans_Minji.png/200px-2023_NewJeans_Minji.png",
+        "Hanni": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/13/2023_NewJeans_Hanni.png/200px-2023_NewJeans_Hanni.png",
+        "Haerin": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/58/2023_NewJeans_Haerin.png/200px-2023_NewJeans_Haerin.png",
+        "Hyein": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/2023_NewJeans_Hyein.png/200px-2023_NewJeans_Hyein.png"
+    };
+
+    function getMemberPhoto(name) {
+        return memberPhotos[name] || `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&size=90&background=3B82F6&color=fff&bold=true&font-size=0.4`;
     }
 
     // -------------------- i18n --------------------
@@ -225,7 +267,6 @@
         messages.forEach(m => {
             if (m.label === 'toxique' && m.text.toLowerCase().includes(nameLower)) count++;
         });
-        const t = translations[currentLang];
         if (count === 0) return { label: 'Calm', class: 'threat-low', value: 0 };
         if (count < 3) return { label: 'Vigilance', class: 'threat-medium', value: 1 };
         return { label: 'Critical', class: 'threat-high', value: 2 };
@@ -289,10 +330,10 @@
                 html += `<div class="artist-grid">`;
                 group.members.forEach(member => {
                     const threat = computeMemberThreatLevel(member, messagesData);
-                    const avatar = getAvatarUrl(member);
+                    const photo = getMemberPhoto(member);
                     html += `
                         <div class="artist-card" onclick="openArtistModal('${member}', '${group.name}')">
-                            <img src="${avatar}" alt="${member}">
+                            <img src="${photo}" alt="${member}" onerror="this.src='https://ui-avatars.com/api/?name=${encodeURIComponent(member)}&size=90&background=3B82F6&color=fff&bold=true&font-size=0.4'">
                             <h4>${member}</h4>
                             <div class="group-name">${group.name}</div>
                             <div class="threat-badge ${threat.class}">${threat.label}</div>
@@ -379,11 +420,11 @@
         const memberMessages = messagesData.filter(m => m.text.toLowerCase().includes(name.toLowerCase()));
         const toxicCount = memberMessages.filter(m => m.label === 'toxique').length;
         const totalCount = memberMessages.length;
-        const avatar = getAvatarUrl(name);
+        const photo = getMemberPhoto(name);
 
         body.innerHTML = `
             <div style="text-align:center;">
-                <img src="${avatar}" alt="${name}" class="modal-artist-img">
+                <img src="${photo}" alt="${name}" class="modal-artist-img" onerror="this.src='https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&size=120&background=3B82F6&color=fff&bold=true&font-size=0.5'">
                 <h2 style="font-size:2rem;">${name}</h2>
                 <p style="color:#9CA3AF;">${group}</p>
                 <div class="threat-badge ${threat.class}" style="font-size:1rem; padding:6px 18px; margin-top:0.5rem;">${threat.label}</div>
