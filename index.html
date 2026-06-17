@@ -15,20 +15,17 @@
         ::-webkit-scrollbar-thumb { background: #3B82F6; border-radius: 10px; }
 
         .container { max-width: 1400px; margin: 0 auto; padding: 1.5rem; }
-        /* Header */
         .top-bar {
             display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;
             background: #111827; padding: 0.75rem 1.5rem; border-radius: 60px; margin-bottom: 2rem;
-            backdrop-filter: blur(4px); border: 1px solid #1E293B;
+            border: 1px solid #1E293B;
         }
         .logo-area { display: flex; align-items: center; gap: 1.2rem; }
-        .logo-area img { height: 42px; object-fit: contain; transition: 0.2s; }
-        .logo-area img:hover { transform: scale(1.02); }
-
+        .logo-area img { height: 42px; object-fit: contain; }
         .lang-dropdown { position: relative; }
         .lang-btn { background: #1F2937; border: none; padding: 0.5rem 1.2rem; border-radius: 40px; color: white; font-weight: 500; display: flex; align-items: center; gap: 8px; cursor: pointer; }
         .lang-menu { position: absolute; right: 0; top: 45px; background: #1F2937; border-radius: 20px; padding: 0.5rem 0; width: 130px; display: none; flex-direction: column; z-index: 20; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
-        .lang-menu button { background: none; border: none; padding: 0.6rem 1rem; text-align: left; color: #F9FAFB; cursor: pointer; transition: 0.1s; }
+        .lang-menu button { background: none; border: none; padding: 0.6rem 1rem; text-align: left; color: #F9FAFB; cursor: pointer; }
         .lang-menu button:hover { background: #3B82F6; border-radius: 8px; }
         .lang-dropdown.active .lang-menu { display: flex; }
 
@@ -45,9 +42,8 @@
         .section-title { font-size: 1.3rem; font-weight: 600; margin: 2rem 0 1rem 0; display: flex; align-items: center; gap: 10px; }
 
         .group-block { margin-bottom: 2.5rem; background: #0F172A; border-radius: 32px; padding: 1.2rem; border: 1px solid #1E293B; }
-        .group-header { display: flex; align-items: center; gap: 1.5rem; margin-bottom: 1.2rem; border-bottom: 2px solid #1E293B; padding-bottom: 0.5rem; cursor: pointer; }
+        .group-header { display: flex; align-items: center; gap: 1.5rem; margin-bottom: 1.2rem; border-bottom: 2px solid #1E293B; padding-bottom: 0.5rem; }
         .group-header img { width: 60px; height: 60px; object-fit: contain; background: #111827; border-radius: 20px; padding: 8px; transition: 0.2s; }
-        .group-header img:hover { transform: scale(1.05); }
         .group-header h2 { font-size: 1.8rem; font-weight: 700; }
 
         .artist-grid { display: flex; flex-wrap: wrap; gap: 1.2rem; }
@@ -56,11 +52,10 @@
             transition: transform 0.2s, box-shadow 0.2s; border: 1px solid #1E293B; cursor: pointer;
         }
         .artist-card:hover { transform: translateY(-5px); box-shadow: 0 8px 25px rgba(59,130,246,0.15); background: #1F2937; }
-        .artist-card img { width: 90px; height: 90px; border-radius: 50%; object-fit: cover; margin-bottom: 0.75rem; border: 3px solid #3B82F6; padding: 2px; background: #0A0F1E; transition: 0.2s; }
-        .artist-card:hover img { border-color: #60A5FA; }
+        .artist-card img { width: 90px; height: 90px; border-radius: 50%; object-fit: cover; margin-bottom: 0.75rem; border: 3px solid #3B82F6; padding: 2px; background: #0A0F1E; }
         .artist-card h4 { font-size: 1rem; font-weight: 600; }
         .artist-card .group-name { font-size: 0.7rem; color: #9CA3AF; margin-top: 4px; }
-        .threat-badge { display: inline-block; margin-top: 8px; padding: 4px 14px; border-radius: 30px; font-size: 0.7rem; font-weight: 600; letter-spacing: 0.3px; }
+        .threat-badge { display: inline-block; margin-top: 8px; padding: 4px 14px; border-radius: 30px; font-size: 0.7rem; font-weight: 600; }
         .threat-low { background: #10B981; color: #fff; }
         .threat-medium { background: #F59E0B; color: #000; }
         .threat-high { background: #EF4444; color: #fff; }
@@ -75,7 +70,6 @@
         .soon-card { background: #1F2937; border-radius: 28px; padding: 2rem; text-align: center; color: #9CA3AF; margin-top: 2rem; border: 1px dashed #1E293B; }
         canvas { max-height: 300px; background: #0A0F1E; border-radius: 20px; padding: 1rem; }
 
-        /* Modal (page individuelle) */
         .modal-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(10,15,30,0.8); backdrop-filter: blur(8px);
             display: none; align-items: center; justify-content: center; z-index: 100; padding: 1.5rem;
@@ -85,7 +79,7 @@
             background: #111827; border-radius: 40px; padding: 2rem; max-width: 700px; width: 100%; max-height: 90vh; overflow-y: auto;
             border: 1px solid #1E293B; box-shadow: 0 20px 60px rgba(0,0,0,0.6);
         }
-        .modal-close { background: none; border: none; color: #9CA3AF; font-size: 1.5rem; cursor: pointer; float: right; transition: 0.2s; }
+        .modal-close { background: none; border: none; color: #9CA3AF; font-size: 1.5rem; cursor: pointer; float: right; }
         .modal-close:hover { color: white; transform: rotate(90deg); }
         .modal-artist-img { width: 120px; height: 120px; border-radius: 50%; object-fit: cover; border: 4px solid #3B82F6; margin-bottom: 1rem; }
         .modal-stats { display: flex; gap: 1rem; flex-wrap: wrap; margin: 1rem 0; }
@@ -101,7 +95,7 @@
             .stat-card .value { font-size: 1.8rem; }
             .artist-card { width: 140px; }
             .artist-card img { width: 70px; height: 70px; }
-            .modal-content { padding: 1.5rem; margin: 1rem; }
+            .modal-content { padding: 1.5rem; }
         }
         @media (max-width: 480px) {
             .artist-card { width: 100%; }
@@ -114,8 +108,10 @@
     <!-- Top Bar -->
     <div class="top-bar">
         <div class="logo-area">
-            <img src="images/logos/ktoxguard.png" alt="KToxGuard" id="ktLogo" onerror="this.src='images/logos/ktoxguard.webp'">
-            <img src="images/logos/hybe.png" alt="HYBE" id="hybeLogo" onerror="this.src='images/logos/hybe.webp'">
+            <!-- KToxGuard Logo (placeholder) – remplacez par votre vrai logo si vous le souhaitez -->
+            <img src="https://via.placeholder.com/120x40/3B82F6/F9FAFB?text=KToxGuard" alt="KToxGuard">
+            <!-- HYBE Logo (Wikimedia) -->
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0d/HYBE_Corporation_logo.svg/200px-HYBE_Corporation_logo.svg.png" alt="HYBE">
         </div>
         <div class="lang-dropdown" id="langDropdown">
             <button class="lang-btn" id="langBtn"><i class="fas fa-globe"></i> <span id="currentLangLabel">EN</span> <i class="fas fa-chevron-down"></i></button>
@@ -134,7 +130,6 @@
         <button class="tab" data-tab="school">🏫 School</button>
     </div>
 
-    <!-- Dashboard Content -->
     <div id="dashboardContent">
         <div id="statsGrid" class="stats-grid"></div>
         <div class="section-title"><i class="fas fa-microphone-alt"></i> <span id="artistsTitle">Artists monitored</span></div>
@@ -146,7 +141,7 @@
         </div>
     </div>
 
-    <!-- Modal (Individual Artist Page) -->
+    <!-- Modal -->
     <div class="modal-overlay" id="modalOverlay">
         <div class="modal-content" id="modalContent">
             <button class="modal-close" id="modalClose"><i class="fas fa-times"></i></button>
@@ -156,112 +151,63 @@
 </div>
 
 <script>
-    // -------------------- GROUPS & MEMBERS (exact order) --------------------
+    // -------------------- GROUP DEFINITIONS WITH EXTERNAL LOGOS --------------------
     const groups = [
         {
             name: "BTS",
-            logo: "images/logos/bts.png",
-            logoWebp: "images/logos/bts.webp",
+            logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/BTS_logo_2017.png/200px-BTS_logo_2017.png",
             members: ["Jimin", "RM", "V", "Jungkook", "Suga", "Jin", "J-Hope"]
         },
         {
             name: "SEVENTEEN",
-            logo: "images/logos/seventeen.png",
-            logoWebp: "images/logos/seventeen.webp",
+            logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3d/Seventeen_logo_2016.png/200px-Seventeen_logo_2016.png",
             members: ["S.Coups", "Dino", "Hoshi", "DK", "Mingyu", "Jeonghan", "Wonwoo", "Jun", "Minghao", "Woozi", "Vernon", "Joshua", "Seungkwan"]
         },
         {
             name: "TXT",
-            logo: "images/logos/txt.png",
-            logoWebp: "images/logos/txt.webp",
+            logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/TXT_logo.svg/200px-TXT_logo.svg.png",
             members: ["Yeonjun", "Soobin", "Beomgyu", "Huening Kai", "Taehyun"]
         },
         {
             name: "NewJeans",
-            logo: "images/logos/newjeans.png",
-            logoWebp: "images/logos/newjeans.webp",
+            logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2b/NewJeans_logo.svg/200px-NewJeans_logo.svg.png",
             members: ["Danielle", "Minji", "Hanni", "Haerin", "Hyein"]
         }
     ];
 
-    // Mapping des noms de membres vers fichiers images (plusieurs extensions possibles)
-    function getMemberImagePath(name) {
-        const base = name.toLowerCase()
-            .replace(/[ .]/g, '_')
-            .replace(/[-]/g, '_')
-            .replace(/&/g, 'and')
-            .replace(/é/g, 'e')
-            .replace(/è/g, 'e')
-            .replace(/ô/g, 'o');
-        const variants = {
-            'j-hope': 'jhope',
-            's.coups': 'scoups',
-            'dk': 'dk',
-            'huening_kai': 'hueningkai'
-        };
-        const fileName = variants[base] || base;
-        // On va tester plusieurs extensions via l'événement onerror
-        return `images/artists/${fileName}`;
+    // Generate avatar URL using UI Avatars (initials + background)
+    function getAvatarUrl(name) {
+        return `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&size=90&background=3B82F6&color=fff&bold=true&font-size=0.5`;
     }
 
     // -------------------- i18n --------------------
     const translations = {
         en: {
-            artistsTitle: "Artists monitored",
-            totalMessages: "Total messages",
-            toxicMessages: "Toxic messages",
-            artistsAlert: "Artists under alert",
-            nationalToxicity: "National toxicity rate",
-            totalThreats: "Total threats",
-            bullyingIndicators: "Bullying indicators",
-            studentsMonitored: "Students monitored",
-            criticalAlerts: "⚠️ Critical alerts",
-            escalate: "Escalate",
-            guidance: "Guidance: In case of death threat, export evidence and contact police (112).",
+            artistsTitle: "Artists monitored", totalMessages: "Total messages", toxicMessages: "Toxic messages",
+            artistsAlert: "Artists under alert", nationalToxicity: "National toxicity rate", totalThreats: "Total threats",
+            bullyingIndicators: "Bullying indicators", studentsMonitored: "Students monitored", criticalAlerts: "⚠️ Critical alerts",
+            escalate: "Notify counselor", guidance: "Guidance: In case of death threat, export evidence and contact police (112).",
             schoolGuidance: "Cyberbullying prevention resources. Anonymous reporting coming soon.",
-            recentMessages: "📩 Recent toxic messages",
-            noMessages: "No toxic messages yet.",
-            threatLevel: "Threat level",
-            close: "Close",
-            threats: "Threats"
+            recentMessages: "📩 Recent toxic messages", noMessages: "No toxic messages yet.", threatLevel: "Threat level",
+            close: "Close", threats: "Threats"
         },
         ko: {
-            artistsTitle: "모니터링 아티스트",
-            totalMessages: "전체 메시지",
-            toxicMessages: "유해 메시지",
-            artistsAlert: "경고 아티스트",
-            nationalToxicity: "국가 유해율",
-            totalThreats: "전체 위협",
-            bullyingIndicators: "학교 폭력 지표",
-            studentsMonitored: "모니터링 학생",
-            criticalAlerts: "⚠️ 긴급 알림",
-            escalate: "상급자 보고",
-            guidance: "가이드: 살해 위협 시 증거 저장 후 경찰(112)에 신고하세요.",
+            artistsTitle: "모니터링 아티스트", totalMessages: "전체 메시지", toxicMessages: "유해 메시지",
+            artistsAlert: "경고 아티스트", nationalToxicity: "국가 유해율", totalThreats: "전체 위협",
+            bullyingIndicators: "학교 폭력 지표", studentsMonitored: "모니터링 학생", criticalAlerts: "⚠️ 긴급 알림",
+            escalate: "상담사에게 알리기", guidance: "가이드: 살해 위협 시 증거 저장 후 경찰(112)에 신고하세요.",
             schoolGuidance: "사이버 폭력 예방 자료. 익명 신고 도구 준비 중.",
-            recentMessages: "📩 최근 유해 메시지",
-            noMessages: "유해 메시지 없음.",
-            threatLevel: "위협 수준",
-            close: "닫기",
-            threats: "위협"
+            recentMessages: "📩 최근 유해 메시지", noMessages: "유해 메시지 없음.", threatLevel: "위협 수준",
+            close: "닫기", threats: "위협"
         },
         fr: {
-            artistsTitle: "Artistes suivis",
-            totalMessages: "Messages totaux",
-            toxicMessages: "Messages toxiques",
-            artistsAlert: "Artistes sous alerte",
-            nationalToxicity: "Taux de toxicité national",
-            totalThreats: "Menaces totales",
-            bullyingIndicators: "Indicateurs de harcèlement",
-            studentsMonitored: "Élèves suivis",
-            criticalAlerts: "⚠️ Alertes critiques",
-            escalate: "Escalader",
-            guidance: "Guide : En cas de menace de mort, exportez les preuves et contactez la police (112).",
+            artistsTitle: "Artistes suivis", totalMessages: "Messages totaux", toxicMessages: "Messages toxiques",
+            artistsAlert: "Artistes sous alerte", nationalToxicity: "Taux de toxicité national", totalThreats: "Menaces totales",
+            bullyingIndicators: "Indicateurs de harcèlement", studentsMonitored: "Élèves suivis", criticalAlerts: "⚠️ Alertes critiques",
+            escalate: "Notifier le conseiller", guidance: "Guide : En cas de menace de mort, exportez les preuves et contactez la police (112).",
             schoolGuidance: "Ressources de prévention du cyberharcèlement. Signalement anonyme à venir.",
-            recentMessages: "📩 Derniers messages toxiques",
-            noMessages: "Aucun message toxique pour l'instant.",
-            threatLevel: "Niveau de menace",
-            close: "Fermer",
-            threats: "Menaces"
+            recentMessages: "📩 Derniers messages toxiques", noMessages: "Aucun message toxique pour l'instant.", threatLevel: "Niveau de menace",
+            close: "Fermer", threats: "Menaces"
         }
     };
 
@@ -273,7 +219,6 @@
 
     const API_BASE = 'https://ktoxguard-api-production.up.railway.app';
 
-    // Compute threat level for a member
     function computeMemberThreatLevel(memberName, messages) {
         const nameLower = memberName.toLowerCase();
         let count = 0;
@@ -281,9 +226,9 @@
             if (m.label === 'toxique' && m.text.toLowerCase().includes(nameLower)) count++;
         });
         const t = translations[currentLang];
-        if (count === 0) return { label: t.threatLevel === 'Threat level' ? 'Calm' : (currentLang === 'ko' ? '안정' : 'Calme'), class: 'threat-low', value: 0 };
-        if (count < 3) return { label: t.threatLevel === 'Threat level' ? 'Vigilance' : (currentLang === 'ko' ? '주의' : 'Vigilance'), class: 'threat-medium', value: 1 };
-        return { label: t.threatLevel === 'Threat level' ? 'Critical' : (currentLang === 'ko' ? '위험' : 'Critique'), class: 'threat-high', value: 2 };
+        if (count === 0) return { label: 'Calm', class: 'threat-low', value: 0 };
+        if (count < 3) return { label: 'Vigilance', class: 'threat-medium', value: 1 };
+        return { label: 'Critical', class: 'threat-high', value: 2 };
     }
 
     async function fetchData() {
@@ -300,14 +245,6 @@
             messagesData = [];
         }
         renderDashboard();
-    }
-
-    // Helper to try multiple image extensions
-    function imgWithFallback(src, alt, className) {
-        // src is base path without extension
-        const extensions = ['.jpg', '.jpeg', '.png', '.webp'];
-        const fallbackSrc = `${src}.png`; // default fallback
-        return `<img src="${src}.jpg" alt="${alt}" class="${className}" onerror="this.onerror=null; this.src='${src}.jpeg'; if(this.src.indexOf('.jpeg')>-1){this.onerror=null; this.src='${src}.png';} if(this.src.indexOf('.png')>-1){this.onerror=null; this.src='${src}.webp';} if(this.src.indexOf('.webp')>-1){this.src='images/artists/default.jpg';}" />`;
     }
 
     function renderDashboard() {
@@ -342,27 +279,20 @@
             `;
         }
 
-        // Artists grid
+        // Artists
         const artistsGrid = document.getElementById('artistsGrid');
         if (currentTab === 'agency') {
             let html = '';
             groups.forEach(group => {
                 html += `<div class="group-block">`;
-                html += `<div class="group-header" onclick="alert('${group.name} - ${group.members.length} members')">`;
-                html += `<img src="${group.logo}" alt="${group.name}" onerror="this.src='${group.logoWebp}'; this.onerror=null;">`;
-                html += `<h2>${group.name}</h2>`;
-                html += `</div><div class="artist-grid">`;
+                html += `<div class="group-header"><img src="${group.logo}" alt="${group.name}" onerror="this.src='https://via.placeholder.com/60/3B82F6/F9FAFB?text=${group.name.charAt(0)}'"><h2>${group.name}</h2></div>`;
+                html += `<div class="artist-grid">`;
                 group.members.forEach(member => {
                     const threat = computeMemberThreatLevel(member, messagesData);
-                    const imgBase = getMemberImagePath(member);
-                    // Try multiple extensions using inline onerror
+                    const avatar = getAvatarUrl(member);
                     html += `
-                        <div class="artist-card" onclick="openArtistModal('${member}', '${group.name}', '${imgBase}')">
-                            <img src="${imgBase}.jpg" alt="${member}" 
-                                 onerror="this.onerror=null; this.src='${imgBase}.jpeg'; 
-                                          if(this.src.indexOf('.jpeg')>-1){this.onerror=null; this.src='${imgBase}.png';} 
-                                          if(this.src.indexOf('.png')>-1){this.onerror=null; this.src='${imgBase}.webp';} 
-                                          if(this.src.indexOf('.webp')>-1){this.src='images/artists/default.jpg';}">
+                        <div class="artist-card" onclick="openArtistModal('${member}', '${group.name}')">
+                            <img src="${avatar}" alt="${member}">
                             <h4>${member}</h4>
                             <div class="group-name">${group.name}</div>
                             <div class="threat-badge ${threat.class}">${threat.label}</div>
@@ -376,7 +306,7 @@
             artistsGrid.innerHTML = `<div class="soon-card" style="width:100%;">${t.guidance}</div>`;
         }
 
-        // Extra section
+        // Extra
         const extraDiv = document.getElementById('extraSection');
         if (currentTab === 'agency') {
             extraDiv.innerHTML = `<div style="background:#111827; border-radius:28px; padding:1rem; margin-top:1rem;"><canvas id="toxicityChart" width="400" height="200"></canvas></div>`;
@@ -421,7 +351,7 @@
             `;
         }
 
-        // Messages list
+        // Messages
         const toxicMessages = messagesData.filter(m => m.label === 'toxique');
         const messagesList = document.getElementById('messagesList');
         if (toxicMessages.length === 0) {
@@ -440,24 +370,20 @@
         }
     }
 
-    // -------------------- Modal (Individual Artist Page) --------------------
-    function openArtistModal(name, group, imgBase) {
+    // Modal
+    function openArtistModal(name, group) {
         const overlay = document.getElementById('modalOverlay');
         const body = document.getElementById('modalBody');
         const t = translations[currentLang];
         const threat = computeMemberThreatLevel(name, messagesData);
-        // Count messages mentioning this member
         const memberMessages = messagesData.filter(m => m.text.toLowerCase().includes(name.toLowerCase()));
         const toxicCount = memberMessages.filter(m => m.label === 'toxique').length;
         const totalCount = memberMessages.length;
+        const avatar = getAvatarUrl(name);
 
         body.innerHTML = `
             <div style="text-align:center;">
-                <img src="${imgBase}.jpg" alt="${name}" class="modal-artist-img"
-                     onerror="this.onerror=null; this.src='${imgBase}.jpeg'; 
-                              if(this.src.indexOf('.jpeg')>-1){this.onerror=null; this.src='${imgBase}.png';} 
-                              if(this.src.indexOf('.png')>-1){this.onerror=null; this.src='${imgBase}.webp';} 
-                              if(this.src.indexOf('.webp')>-1){this.src='images/artists/default.jpg';}">
+                <img src="${avatar}" alt="${name}" class="modal-artist-img">
                 <h2 style="font-size:2rem;">${name}</h2>
                 <p style="color:#9CA3AF;">${group}</p>
                 <div class="threat-badge ${threat.class}" style="font-size:1rem; padding:6px 18px; margin-top:0.5rem;">${threat.label}</div>
@@ -481,7 +407,6 @@
         overlay.classList.add('active');
     }
 
-    // Modal close
     document.getElementById('modalClose').addEventListener('click', () => {
         document.getElementById('modalOverlay').classList.remove('active');
     });
@@ -489,7 +414,7 @@
         if (e.target === e.currentTarget) document.getElementById('modalOverlay').classList.remove('active');
     });
 
-    // -------------------- Language dropdown --------------------
+    // Language
     function initLang() {
         const dropdown = document.getElementById('langDropdown');
         const btn = document.getElementById('langBtn');
@@ -508,7 +433,6 @@
         window.addEventListener('click', (e) => { if (!dropdown.contains(e.target)) dropdown.classList.remove('active'); });
     }
 
-    // -------------------- Tabs --------------------
     function initTabs() {
         document.querySelectorAll('.tab').forEach(tab => {
             tab.addEventListener('click', () => {
@@ -519,11 +443,6 @@
             });
         });
     }
-
-    // -------------------- Init --------------------
-    // Replace logos with fallback
-    document.getElementById('ktLogo').onerror = function() { this.src = 'images/logos/ktoxguard.webp'; };
-    document.getElementById('hybeLogo').onerror = function() { this.src = 'images/logos/hybe.webp'; };
 
     initLang();
     initTabs();
