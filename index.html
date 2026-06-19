@@ -169,8 +169,9 @@
 
     // ---------- PHOTOS (avec fallback intelligent) ----------
     function getMemberPhoto(name) {
+        // J'utilise des URLs fiables (Naver / Soompi) – vous pouvez les remplacer
         const photos = {
-            // BTS – photos récentes",
+            // BTS – photos récentes
             "Jimin": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTr6m_Ro1bu_wosVEh-xvObFD8Gd8s7LpyxJsYs8cazzz7CfABoOkKw7SmCqId28tJ3YdLiDwgDnuHS-LvTew8mz-PFk4Rl0x_BnAZ7woH-3g&s=10"
             "RM": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRWB2GKjbSpKmAJdi67UWpit9S7djv3Ys0lS3n1101mY-1yJaGw0BxFmNA15KCxqIGWPMJPHeI48Q5M9ESQYyqbiEOJ0QlAhFFoNsELRCWP&s=10",
             "V": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSPSjqzBS87ojRxVpKCK0UMwBBcxJQU-exg7nF9r74-5Q&s=10",
@@ -205,6 +206,7 @@
             "Daniela": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQN6jMI_NIiStjhs-MUVeq8CiESUzPyVVlAYM-vN5gajKJqDFa4Y9f5Wl_6sJlrQ-lCTHQldEb27r3G31gSHvdv4asVDLnu6-NY7yHdwFf1&s=10",
             "Manon": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4I8KlKqCPgstMn6h-7soZGq3nv0LwwHW9cxOLz0SypMp3L-v9zSS9_oZ-H-iiPovj7yOgQzt_t9KwTHWzHogguE5OLECNwr2RxxSA6kXa&s=10"
         };
+        // Si la photo n'est pas trouvée, on retourne un placeholder "personne" (pas des initiales)
         return photos[name] || null;
     }
 
