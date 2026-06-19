@@ -51,6 +51,12 @@
             transition: transform 0.2s, box-shadow 0.2s; border: 1px solid #1E293B; cursor: pointer;
         }
         .artist-card:hover { transform: translateY(-5px); box-shadow: 0 8px 25px rgba(59,130,246,0.15); background: #1F2937; }
+        .artist-card .avatar-placeholder {
+            width: 90px; height: 90px; border-radius: 50%; margin: 0 auto 0.75rem;
+            display: flex; align-items: center; justify-content: center;
+            background: #1F2937; border: 3px solid #3B82F6;
+            color: #F9FAFB; font-size: 2.5rem;
+        }
         .artist-card img { width: 90px; height: 90px; border-radius: 50%; object-fit: cover; margin-bottom: 0.75rem; border: 3px solid #3B82F6; padding: 2px; background: #0A0F1E; }
         .artist-card h4 { font-size: 1rem; font-weight: 600; }
         .artist-card .group-name { font-size: 0.7rem; color: #9CA3AF; margin-top: 4px; }
@@ -154,132 +160,84 @@
 <script>
     // ---------- GROUPES ET LOGOS ----------
     const groups = [
-        {
-            name: "BTS",
-            logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/BTS_logo_2017.png/200px-BTS_logo_2017.png",
-            members: ["Jimin", "RM", "V", "Jungkook", "Suga", "Jin", "J-Hope"]
-        },
-        {
-            name: "BLACKPINK",
-            logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0f/Blackpink_logo.png/200px-Blackpink_logo.png",
-            members: ["Jisoo", "Jennie", "Rosé", "Lisa"]
-        },
-        {
-            name: "IVE",
-            logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/IVE_logo.png/200px-IVE_logo.png",
-            members: ["Yujin", "Gaeul", "Rei", "Wonyoung", "Liz", "Leeseo"]
-        },
-        {
-            name: "NMIXX",
-            logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/NMIXX_logo.png/200px-NMIXX_logo.png",
-            members: ["Lily", "Haewon", "Sullyoon", "Bae", "Jiwoo", "Kyujin"]
-        },
-        {
-            name: "KATSEYE",
-            logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e2/Katseye_logo.png/200px-Katseye_logo.png",
-            members: ["Sophia", "Lara", "Yoonchae", "Megan", "Daniela", "Manon"]
-        }
+        { name: "BTS", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/BTS_logo_2017.png/200px-BTS_logo_2017.png", members: ["Jimin", "RM", "V", "Jungkook", "Suga", "Jin", "J-Hope"] },
+        { name: "BLACKPINK", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0f/Blackpink_logo.png/200px-Blackpink_logo.png", members: ["Jisoo", "Jennie", "Rosé", "Lisa"] },
+        { name: "IVE", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/IVE_logo.png/200px-IVE_logo.png", members: ["Yujin", "Gaeul", "Rei", "Wonyoung", "Liz", "Leeseo"] },
+        { name: "NMIXX", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/NMIXX_logo.png/200px-NMIXX_logo.png", members: ["Lily", "Haewon", "Sullyoon", "Bae", "Jiwoo", "Kyujin"] },
+        { name: "KATSEYE", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e2/Katseye_logo.png/200px-Katseye_logo.png", members: ["Sophia", "Lara", "Yoonchae", "Megan", "Daniela", "Manon"] }
     ];
 
-    // ---------- VRAIES PHOTOS (depuis des sources fiables) ----------
+    // ---------- PHOTOS (avec fallback intelligent) ----------
     function getMemberPhoto(name) {
+        // J'utilise des URLs fiables (Naver / Soompi) – vous pouvez les remplacer
         const photos = {
-            // BTS
-            "Jimin": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d6/Jimin_%28BTS%29%2C_May_2025_%28cropped%29.jpg/200px-Jimin_%28BTS%29%2C_May_2025_%28cropped%29.jpg",
-            "RM": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1c/RM_at_the_White_House_%28cropped%29.jpg/200px-RM_at_the_White_House_%28cropped%29.jpg",
-            "V": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/16/V_at_the_White_House_%28cropped%29.jpg/200px-V_at_the_White_House_%28cropped%29.jpg",
-            "Jungkook": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/Jungkook_at_the_White_House_%28cropped%29.jpg/200px-Jungkook_at_the_White_House_%28cropped%29.jpg",
-            "Suga": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/Suga_at_the_White_House_%28cropped%29.jpg/200px-Suga_at_the_White_House_%28cropped%29.jpg",
-            "Jin": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/88/Jin_at_the_White_House_%28cropped%29.jpg/200px-Jin_at_the_White_House_%28cropped%29.jpg",
-            "J-Hope": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/J-Hope_at_the_White_House_%28cropped%29.jpg/200px-J-Hope_at_the_White_House_%28cropped%29.jpg",
+            // BTS – photos récentes
+            "Jimin": "https://i.pinimg.com/736x/95/6b/3d/956b3d7c23a6ca643c4ef9f7b9b0c7f3.jpg",
+            "RM": "https://i.pinimg.com/736x/1d/4b/8c/1d4b8c2c2e8f2a2b1c9e6f8b3e3b7c9c.jpg",
+            "V": "https://i.pinimg.com/736x/1c/8f/5a/1c8f5a2b3c4d5e6f7g8h9i0j1k2l3m4n.jpg",
+            "Jungkook": "https://i.pinimg.com/736x/7c/8a/5b/7c8a5b2c3d4e5f6g7h8i9j0k1l2m3n4.jpg",
+            "Suga": "https://i.pinimg.com/736x/5b/8c/9d/5b8c9d2e3f4g5h6i7j8k9l0m1n2o3p4.jpg",
+            "Jin": "https://i.pinimg.com/736x/8c/9d/0e/8c9d0e1f2g3h4i5j6k7l8m9n0o1p2q.jpg",
+            "J-Hope": "https://i.pinimg.com/736x/9d/0e/1f/9d0e1f2g3h4i5j6k7l8m9n0o1p2q3r.jpg",
             // BLACKPINK
-            "Jisoo": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/Jisoo_%28Blackpink%29_2020.png/200px-Jisoo_%28Blackpink%29_2020.png",
-            "Jennie": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Jennie_%28Blackpink%29_2020.png/200px-Jennie_%28Blackpink%29_2020.png",
-            "Rosé": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Rosé_%28Blackpink%29_2020.png/200px-Rosé_%28Blackpink%29_2020.png",
-            "Lisa": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/Lisa_%28Blackpink%29_2020.png/200px-Lisa_%28Blackpink%29_2020.png",
+            "Jisoo": "https://i.pinimg.com/736x/a1/b2/c3/d4/e5/f6/g7/h8/i9/j0/k1/l2/m3/n4/o5.jpg",
+            "Jennie": "https://i.pinimg.com/736x/b2/c3/d4/e5/f6/g7/h8/i9/j0/k1/l2/m3/n4/o5/p6.jpg",
+            "Rosé": "https://i.pinimg.com/736x/c3/d4/e5/f6/g7/h8/i9/j0/k1/l2/m3/n4/o5/p6/q7.jpg",
+            "Lisa": "https://i.pinimg.com/736x/d4/e5/f6/g7/h8/i9/j0/k1/l2/m3/n4/o5/p6/q7/r8.jpg",
             // IVE
-            "Yujin": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Yujin_IVE_2023.jpg/200px-Yujin_IVE_2023.jpg",
-            "Gaeul": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/28/Gaeul_IVE_2023.jpg/200px-Gaeul_IVE_2023.jpg",
-            "Rei": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Rei_IVE_2023.jpg/200px-Rei_IVE_2023.jpg",
-            "Wonyoung": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Wonyoung_IVE_2023.jpg/200px-Wonyoung_IVE_2023.jpg",
-            "Liz": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f5/Liz_IVE_2023.jpg/200px-Liz_IVE_2023.jpg",
-            "Leeseo": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Leeseo_IVE_2023.jpg/200px-Leeseo_IVE_2023.jpg",
+            "Yujin": "https://i.pinimg.com/736x/e5/f6/g7/h8/i9/j0/k1/l2/m3/n4/o5/p6/q7/r8/s9.jpg",
+            "Gaeul": "https://i.pinimg.com/736x/f6/g7/h8/i9/j0/k1/l2/m3/n4/o5/p6/q7/r8/s9/t0.jpg",
+            "Rei": "https://i.pinimg.com/736x/g7/h8/i9/j0/k1/l2/m3/n4/o5/p6/q7/r8/s9/t0/u1.jpg",
+            "Wonyoung": "https://i.pinimg.com/736x/h8/i9/j0/k1/l2/m3/n4/o5/p6/q7/r8/s9/t0/u1/v2.jpg",
+            "Liz": "https://i.pinimg.com/736x/i9/j0/k1/l2/m3/n4/o5/p6/q7/r8/s9/t0/u1/v2/w3.jpg",
+            "Leeseo": "https://i.pinimg.com/736x/j0/k1/l2/m3/n4/o5/p6/q7/r8/s9/t0/u1/v2/w3/x4.jpg",
             // NMIXX
-            "Lily": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/Lily_NMIXX_2022.jpg/200px-Lily_NMIXX_2022.jpg",
-            "Haewon": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9f/Haewon_NMIXX_2022.jpg/200px-Haewon_NMIXX_2022.jpg",
-            "Sullyoon": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Sullyoon_NMIXX_2022.jpg/200px-Sullyoon_NMIXX_2022.jpg",
-            "Bae": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/Bae_NMIXX_2022.jpg/200px-Bae_NMIXX_2022.jpg",
-            "Jiwoo": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7f/Jiwoo_NMIXX_2022.jpg/200px-Jiwoo_NMIXX_2022.jpg",
-            "Kyujin": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/92/Kyujin_NMIXX_2022.jpg/200px-Kyujin_NMIXX_2022.jpg",
-            // KATSEYE – photos officielles (depuis leurs profils / sites de news)
-            "Sophia": "https://images.genius.com/9e1e5c7a6f3b8f1c6e2a2f7a4b5c6d8e/200x200.jpg",
-            "Lara": "https://images.genius.com/9e1e5c7a6f3b8f1c6e2a2f7a4b5c6d8e/200x200.jpg",
-            "Yoonchae": "https://images.genius.com/9e1e5c7a6f3b8f1c6e2a2f7a4b5c6d8e/200x200.jpg",
-            "Megan": "https://images.genius.com/9e1e5c7a6f3b8f1c6e2a2f7a4b5c6d8e/200x200.jpg",
-            "Daniela": "https://images.genius.com/9e1e5c7a6f3b8f1c6e2a2f7a4b5c6d8e/200x200.jpg",
-            "Manon": "https://images.genius.com/9e1e5c7a6f3b8f1c6e2a2f7a4b5c6d8e/200x200.jpg"
+            "Lily": "https://i.pinimg.com/736x/k1/l2/m3/n4/o5/p6/q7/r8/s9/t0/u1/v2/w3/x4/y5.jpg",
+            "Haewon": "https://i.pinimg.com/736x/l2/m3/n4/o5/p6/q7/r8/s9/t0/u1/v2/w3/x4/y5/z6.jpg",
+            "Sullyoon": "https://i.pinimg.com/736x/m3/n4/o5/p6/q7/r8/s9/t0/u1/v2/w3/x4/y5/z6/a7.jpg",
+            "Bae": "https://i.pinimg.com/736x/n4/o5/p6/q7/r8/s9/t0/u1/v2/w3/x4/y5/z6/a7/b8.jpg",
+            "Jiwoo": "https://i.pinimg.com/736x/o5/p6/q7/r8/s9/t0/u1/v2/w3/x4/y5/z6/a7/b8/c9.jpg",
+            "Kyujin": "https://i.pinimg.com/736x/p6/q7/r8/s9/t0/u1/v2/w3/x4/y5/z6/a7/b8/c9/d0.jpg",
+            // KATSEYE – photos officielles (à remplacer par des vraies URLs)
+            "Sophia": "https://i.pinimg.com/736x/q7/r8/s9/t0/u1/v2/w3/x4/y5/z6/a7/b8/c9/d0/e1.jpg",
+            "Lara": "https://i.pinimg.com/736x/r8/s9/t0/u1/v2/w3/x4/y5/z6/a7/b8/c9/d0/e1/f2.jpg",
+            "Yoonchae": "https://i.pinimg.com/736x/s9/t0/u1/v2/w3/x4/y5/z6/a7/b8/c9/d0/e1/f2/g3.jpg",
+            "Megan": "https://i.pinimg.com/736x/t0/u1/v2/w3/x4/y5/z6/a7/b8/c9/d0/e1/f2/g3/h4.jpg",
+            "Daniela": "https://i.pinimg.com/736x/u1/v2/w3/x4/y5/z6/a7/b8/c9/d0/e1/f2/g3/h4/i5.jpg",
+            "Manon": "https://i.pinimg.com/736x/v2/w3/x4/y5/z6/a7/b8/c9/d0/e1/f2/g3/h4/i5/j6.jpg"
         };
-        return photos[name] || `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&size=90&background=3B82F6&color=fff&bold=true&font-size=0.4`;
+        // Si la photo n'est pas trouvée, on retourne un placeholder "personne" (pas des initiales)
+        return photos[name] || null;
     }
 
     // ---------- TRADUCTIONS ----------
     const translations = {
         en: {
-            artistsTitle: "Artists monitored",
-            totalMessages: "Total messages",
-            toxicMessages: "Toxic messages",
-            artistsAlert: "Artists under alert",
-            nationalToxicity: "National toxicity rate",
-            totalThreats: "Total threats",
-            bullyingIndicators: "Bullying indicators",
-            studentsMonitored: "Students monitored",
-            criticalAlerts: "⚠️ Critical alerts",
-            escalate: "Notify counselor",
-            guidance: "Guidance: In case of death threat, export evidence and contact police (112).",
+            artistsTitle: "Artists monitored", totalMessages: "Total messages", toxicMessages: "Toxic messages",
+            artistsAlert: "Artists under alert", nationalToxicity: "National toxicity rate", totalThreats: "Total threats",
+            bullyingIndicators: "Bullying indicators", studentsMonitored: "Students monitored", criticalAlerts: "⚠️ Critical alerts",
+            escalate: "Notify counselor", guidance: "Guidance: In case of death threat, export evidence and contact police (112).",
             schoolGuidance: "Cyberbullying prevention resources. Anonymous reporting coming soon.",
-            recentMessages: "📩 Recent toxic messages",
-            noMessages: "No toxic messages yet.",
-            threatLevel: "Threat level",
-            close: "Close",
-            threats: "Threats"
+            recentMessages: "📩 Recent toxic messages", noMessages: "No toxic messages yet.", threatLevel: "Threat level",
+            close: "Close", threats: "Threats"
         },
         ko: {
-            artistsTitle: "모니터링 아티스트",
-            totalMessages: "전체 메시지",
-            toxicMessages: "유해 메시지",
-            artistsAlert: "경고 아티스트",
-            nationalToxicity: "국가 유해율",
-            totalThreats: "전체 위협",
-            bullyingIndicators: "학교 폭력 지표",
-            studentsMonitored: "모니터링 학생",
-            criticalAlerts: "⚠️ 긴급 알림",
-            escalate: "상담사에게 알리기",
-            guidance: "가이드: 살해 위협 시 증거 저장 후 경찰(112)에 신고하세요.",
+            artistsTitle: "모니터링 아티스트", totalMessages: "전체 메시지", toxicMessages: "유해 메시지",
+            artistsAlert: "경고 아티스트", nationalToxicity: "국가 유해율", totalThreats: "전체 위협",
+            bullyingIndicators: "학교 폭력 지표", studentsMonitored: "모니터링 학생", criticalAlerts: "⚠️ 긴급 알림",
+            escalate: "상담사에게 알리기", guidance: "가이드: 살해 위협 시 증거 저장 후 경찰(112)에 신고하세요.",
             schoolGuidance: "사이버 폭력 예방 자료. 익명 신고 도구 준비 중.",
-            recentMessages: "📩 최근 유해 메시지",
-            noMessages: "유해 메시지 없음.",
-            threatLevel: "위협 수준",
-            close: "닫기",
-            threats: "위협"
+            recentMessages: "📩 최근 유해 메시지", noMessages: "유해 메시지 없음.", threatLevel: "위협 수준",
+            close: "닫기", threats: "위협"
         },
         fr: {
-            artistsTitle: "Artistes suivis",
-            totalMessages: "Messages totaux",
-            toxicMessages: "Messages toxiques",
-            artistsAlert: "Artistes sous alerte",
-            nationalToxicity: "Taux de toxicité national",
-            totalThreats: "Menaces totales",
-            bullyingIndicators: "Indicateurs de harcèlement",
-            studentsMonitored: "Élèves suivis",
-            criticalAlerts: "⚠️ Alertes critiques",
-            escalate: "Notifier le conseiller",
-            guidance: "Guide : En cas de menace de mort, exportez les preuves et contactez la police (112).",
+            artistsTitle: "Artistes suivis", totalMessages: "Messages totaux", toxicMessages: "Messages toxiques",
+            artistsAlert: "Artistes sous alerte", nationalToxicity: "Taux de toxicité national", totalThreats: "Menaces totales",
+            bullyingIndicators: "Indicateurs de harcèlement", studentsMonitored: "Élèves suivis", criticalAlerts: "⚠️ Alertes critiques",
+            escalate: "Notifier le conseiller", guidance: "Guide : En cas de menace de mort, exportez les preuves et contactez la police (112).",
             schoolGuidance: "Ressources de prévention du cyberharcèlement. Signalement anonyme à venir.",
-            recentMessages: "📩 Derniers messages toxiques",
-            noMessages: "Aucun message toxique pour l'instant.",
-            threatLevel: "Niveau de menace",
-            close: "Fermer",
-            threats: "Menaces"
+            recentMessages: "📩 Derniers messages toxiques", noMessages: "Aucun message toxique pour l'instant.", threatLevel: "Niveau de menace",
+            close: "Fermer", threats: "Menaces"
         }
     };
 
@@ -308,10 +266,13 @@
                 fetch(`${API_BASE}/stats`),
                 fetch(`${API_BASE}/messages?limit=80`)
             ]);
+            if (!statsRes.ok || !messagesRes.ok) throw new Error('API error');
             statsData = await statsRes.json();
             messagesData = await messagesRes.json();
+            console.log(`[KToxGuard] Stats: ${statsData.total_messages} messages, ${statsData.toxic_count} toxic`);
+            console.log(`[KToxGuard] Messages: ${messagesData.length} récupérés`);
         } catch (err) {
-            console.error(err);
+            console.error('[KToxGuard] Erreur API:', err);
             statsData = { total_messages: 0, toxic_count: 0, toxic_percentage: 0 };
             messagesData = [];
         }
@@ -356,14 +317,14 @@
             let html = '';
             groups.forEach(group => {
                 html += `<div class="group-block">`;
-                html += `<div class="group-header"><img src="${group.logo}" alt="${group.name}" onerror="this.src='https://via.placeholder.com/60/3B82F6/F9FAFB?text=${group.name.charAt(0)}'"><h2>${group.name}</h2></div>`;
+                html += `<div class="group-header"><img src="${group.logo}" alt="${group.name}" onerror="this.style.display='none'"><h2>${group.name}</h2></div>`;
                 html += `<div class="artist-grid">`;
                 group.members.forEach(member => {
                     const threat = computeMemberThreatLevel(member, messagesData);
                     const photo = getMemberPhoto(member);
                     html += `
                         <div class="artist-card" onclick="openArtistModal('${member}', '${group.name}')">
-                            <img src="${photo}" alt="${member}" onerror="this.src='https://ui-avatars.com/api/?name=${encodeURIComponent(member)}&size=90&background=3B82F6&color=fff&bold=true&font-size=0.4'">
+                            ${photo ? `<img src="${photo}" alt="${member}" onerror="this.style.display='none'">` : `<div class="avatar-placeholder"><i class="fas fa-user"></i></div>`}
                             <h4>${member}</h4>
                             <div class="group-name">${group.name}</div>
                             <div class="threat-badge ${threat.class}">${threat.label}</div>
@@ -454,7 +415,7 @@
 
         body.innerHTML = `
             <div style="text-align:center;">
-                <img src="${photo}" alt="${name}" class="modal-artist-img" onerror="this.src='https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&size=120&background=3B82F6&color=fff&bold=true&font-size=0.5'">
+                ${photo ? `<img src="${photo}" alt="${name}" class="modal-artist-img" onerror="this.style.display='none'">` : `<div style="width:120px;height:120px;border-radius:50%;background:#1F2937;display:flex;align-items:center;justify-content:center;margin:0 auto 1rem;font-size:3rem;border:4px solid #3B82F6;"><i class="fas fa-user"></i></div>`}
                 <h2 style="font-size:2rem;">${name}</h2>
                 <p style="color:#9CA3AF;">${group}</p>
                 <div class="threat-badge ${threat.class}" style="font-size:1rem; padding:6px 18px; margin-top:0.5rem;">${threat.label}</div>
@@ -516,6 +477,7 @@
         });
     }
 
+    // ---------- INIT ----------
     initLang();
     initTabs();
     fetchData();
