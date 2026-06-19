@@ -21,8 +21,7 @@
             border: 1px solid #1E293B;
         }
         .logo-area { display: flex; align-items: center; gap: 1.2rem; }
-        .logo-area img { height: 42px; object-fit: contain; }
-        .logo-area .kt-logo { height: 42px; width: auto; }
+        .logo-area svg { height: 42px; width: auto; }
         .lang-dropdown { position: relative; }
         .lang-btn { background: #1F2937; border: none; padding: 0.5rem 1.2rem; border-radius: 40px; color: white; font-weight: 500; display: flex; align-items: center; gap: 8px; cursor: pointer; }
         .lang-menu { position: absolute; right: 0; top: 45px; background: #1F2937; border-radius: 20px; padding: 0.5rem 0; width: 130px; display: none; flex-direction: column; z-index: 20; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
@@ -35,8 +34,7 @@
         .tab.active { background: #3B82F6; color: white; }
 
         .stats-grid { display: flex; flex-wrap: wrap; gap: 1.5rem; margin-bottom: 2.5rem; }
-        .stat-card { background: linear-gradient(135deg, #111827 0%, #0F172A 100%); border-radius: 28px; padding: 1.2rem 1.8rem; flex: 1; min-width: 180px; border: 1px solid #1E293B; box-shadow: 0 8px 20px rgba(0,0,0,0.2); transition: 0.3s; }
-        .stat-card:hover { transform: translateY(-3px); border-color: #3B82F6; }
+        .stat-card { background: linear-gradient(135deg, #111827 0%, #0F172A 100%); border-radius: 28px; padding: 1.2rem 1.8rem; flex: 1; min-width: 180px; border: 1px solid #1E293B; box-shadow: 0 8px 20px rgba(0,0,0,0.2); }
         .stat-card h4 { font-size: 0.85rem; color: #9CA3AF; letter-spacing: 0.5px; margin-bottom: 0.5rem; }
         .stat-card .value { font-size: 2.4rem; font-weight: 800; }
 
@@ -44,7 +42,7 @@
 
         .group-block { margin-bottom: 2.5rem; background: #0F172A; border-radius: 32px; padding: 1.2rem; border: 1px solid #1E293B; }
         .group-header { display: flex; align-items: center; gap: 1.5rem; margin-bottom: 1.2rem; border-bottom: 2px solid #1E293B; padding-bottom: 0.5rem; }
-        .group-header img { width: 60px; height: 60px; object-fit: contain; background: #111827; border-radius: 20px; padding: 8px; transition: 0.2s; }
+        .group-header img { width: 60px; height: 60px; object-fit: contain; background: #111827; border-radius: 20px; padding: 8px; }
         .group-header h2 { font-size: 1.8rem; font-weight: 700; }
 
         .artist-grid { display: flex; flex-wrap: wrap; gap: 1.2rem; }
@@ -71,32 +69,14 @@
         .soon-card { background: #1F2937; border-radius: 28px; padding: 2rem; text-align: center; color: #9CA3AF; margin-top: 2rem; border: 1px dashed #1E293B; }
         canvas { max-height: 300px; background: #0A0F1E; border-radius: 20px; padding: 1rem; }
 
-        .modal-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(10,15,30,0.8); backdrop-filter: blur(8px);
-            display: none; align-items: center; justify-content: center; z-index: 100; padding: 1.5rem;
-        }
-        .modal-overlay.active { display: flex; }
-        .modal-content {
-            background: #111827; border-radius: 40px; padding: 2rem; max-width: 700px; width: 100%; max-height: 90vh; overflow-y: auto;
-            border: 1px solid #1E293B; box-shadow: 0 20px 60px rgba(0,0,0,0.6);
-        }
-        .modal-close { background: none; border: none; color: #9CA3AF; font-size: 1.5rem; cursor: pointer; float: right; }
-        .modal-close:hover { color: white; transform: rotate(90deg); }
-        .modal-artist-img { width: 120px; height: 120px; border-radius: 50%; object-fit: cover; border: 4px solid #3B82F6; margin-bottom: 1rem; }
-        .modal-stats { display: flex; gap: 1rem; flex-wrap: wrap; margin: 1rem 0; }
-        .modal-stat { background: #0F172A; border-radius: 16px; padding: 0.8rem 1.2rem; flex: 1; min-width: 100px; }
-        .modal-stat h5 { color: #9CA3AF; font-size: 0.7rem; text-transform: uppercase; }
-        .modal-stat p { font-size: 1.2rem; font-weight: 600; }
-
         @media (max-width: 768px) {
             .container { padding: 1rem; }
             .top-bar { border-radius: 30px; padding: 0.5rem 1rem; }
-            .logo-area img { height: 32px; }
+            .logo-area svg { height: 32px; }
             .group-header h2 { font-size: 1.3rem; }
             .stat-card .value { font-size: 1.8rem; }
             .artist-card { width: 140px; }
             .artist-card img { width: 70px; height: 70px; }
-            .modal-content { padding: 1.5rem; }
         }
         @media (max-width: 480px) {
             .artist-card { width: 100%; }
@@ -109,14 +89,11 @@
     <!-- Top Bar -->
     <div class="top-bar">
         <div class="logo-area">
-            <!-- KToxGuard Logo – SVG intégré pour éviter tout problème de chargement -->
-            <svg class="kt-logo" viewBox="0 0 200 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <svg viewBox="0 0 200 40" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <text x="0" y="28" font-family="'Inter', sans-serif" font-weight="700" font-size="24" fill="#3B82F6">KTox</text>
                 <text x="72" y="28" font-family="'Inter', sans-serif" font-weight="700" font-size="24" fill="#F9FAFB">Guard</text>
                 <rect x="0" y="32" width="200" height="2" fill="#3B82F6" opacity="0.4"/>
             </svg>
-            <!-- HYBE Logo -->
-            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0d/HYBE_Corporation_logo.svg/200px-HYBE_Corporation_logo.svg.png" alt="HYBE">
         </div>
         <div class="lang-dropdown" id="langDropdown">
             <button class="lang-btn" id="langBtn"><i class="fas fa-globe"></i> <span id="currentLangLabel">EN</span> <i class="fas fa-chevron-down"></i></button>
@@ -145,18 +122,10 @@
             <div id="messagesList">Loading messages...</div>
         </div>
     </div>
-
-    <!-- Modal -->
-    <div class="modal-overlay" id="modalOverlay">
-        <div class="modal-content" id="modalContent">
-            <button class="modal-close" id="modalClose"><i class="fas fa-times"></i></button>
-            <div id="modalBody">Loading...</div>
-        </div>
-    </div>
 </div>
 
 <script>
-    // -------------------- GROUPS WITH EXTERNAL LOGOS --------------------
+    // ---------- GROUPS WITH EXTERNAL LOGOS ----------
     const groups = [
         {
             name: "BTS",
@@ -164,23 +133,28 @@
             members: ["Jimin", "RM", "V", "Jungkook", "Suga", "Jin", "J-Hope"]
         },
         {
-            name: "SEVENTEEN",
-            logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3d/Seventeen_logo_2016.png/200px-Seventeen_logo_2016.png",
-            members: ["S.Coups", "Dino", "Hoshi", "DK", "Mingyu", "Jeonghan", "Wonwoo", "Jun", "Minghao", "Woozi", "Vernon", "Joshua", "Seungkwan"]
+            name: "BLACKPINK",
+            logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0f/Blackpink_logo.png/200px-Blackpink_logo.png",
+            members: ["Jisoo", "Jennie", "Rosé", "Lisa"]
         },
         {
-            name: "TXT",
-            logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/TXT_logo.svg/200px-TXT_logo.svg.png",
-            members: ["Yeonjun", "Soobin", "Beomgyu", "Huening Kai", "Taehyun"]
+            name: "IVE",
+            logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/IVE_logo.png/200px-IVE_logo.png",
+            members: ["Yujin", "Gaeul", "Rei", "Wonyoung", "Liz", "Leeseo"]
         },
         {
-            name: "NewJeans",
-            logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2b/NewJeans_logo.svg/200px-NewJeans_logo.svg.png",
-            members: ["Danielle", "Minji", "Hanni", "Haerin", "Hyein"]
+            name: "NMIXX",
+            logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/NMIXX_logo.png/200px-NMIXX_logo.png",
+            members: ["Lily", "Haewon", "Sullyoon", "Bae", "Jiwoo", "Kyujin"]
+        },
+        {
+            name: "KATSEYE",
+            logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e2/Katseye_logo.png/200px-Katseye_logo.png",
+            members: ["Sophia", "Lara", "Yoonchae", "Megan", "Daniela", "Manon"]
         }
     ];
 
-    // -------------------- REAL PHOTOS FOR EACH MEMBER (Wikimedia Commons) --------------------
+    // Photos des membres (Wikimedia Commons)
     const memberPhotos = {
         // BTS
         "Jimin": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d6/Jimin_%28BTS%29%2C_May_2025_%28cropped%29.jpg/200px-Jimin_%28BTS%29%2C_May_2025_%28cropped%29.jpg",
@@ -190,66 +164,90 @@
         "Suga": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/Suga_at_the_White_House_%28cropped%29.jpg/200px-Suga_at_the_White_House_%28cropped%29.jpg",
         "Jin": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/88/Jin_at_the_White_House_%28cropped%29.jpg/200px-Jin_at_the_White_House_%28cropped%29.jpg",
         "J-Hope": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/J-Hope_at_the_White_House_%28cropped%29.jpg/200px-J-Hope_at_the_White_House_%28cropped%29.jpg",
-        // SEVENTEEN – photos de groupe ou membres (sources Wikimedia)
-        "S.Coups": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7a/2022_Seventeen_S.Coups.png/200px-2022_Seventeen_S.Coups.png",
-        "Dino": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e5/2022_Seventeen_Dino.png/200px-2022_Seventeen_Dino.png",
-        "Hoshi": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/2022_Seventeen_Hoshi.png/200px-2022_Seventeen_Hoshi.png",
-        "DK": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/2022_Seventeen_DK.png/200px-2022_Seventeen_DK.png",
-        "Mingyu": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/2022_Seventeen_Mingyu.png/200px-2022_Seventeen_Mingyu.png",
-        "Jeonghan": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/db/2022_Seventeen_Jeonghan.png/200px-2022_Seventeen_Jeonghan.png",
-        "Wonwoo": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f2/2022_Seventeen_Wonwoo.png/200px-2022_Seventeen_Wonwoo.png",
-        "Jun": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/2022_Seventeen_Jun.png/200px-2022_Seventeen_Jun.png",
-        "Minghao": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/2022_Seventeen_Minghao.png/200px-2022_Seventeen_Minghao.png",
-        "Woozi": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/58/2022_Seventeen_Woozi.png/200px-2022_Seventeen_Woozi.png",
-        "Vernon": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5b/2022_Seventeen_Vernon.png/200px-2022_Seventeen_Vernon.png",
-        "Joshua": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/2022_Seventeen_Joshua.png/200px-2022_Seventeen_Joshua.png",
-        "Seungkwan": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4d/2022_Seventeen_Seungkwan.png/200px-2022_Seventeen_Seungkwan.png",
-        // TXT – sources Wikimedia
-        "Yeonjun": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a6/2023_TXT_Yeonjun.png/200px-2023_TXT_Yeonjun.png",
-        "Soobin": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/54/2023_TXT_Soobin.png/200px-2023_TXT_Soobin.png",
-        "Beomgyu": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/db/2023_TXT_Beomgyu.png/200px-2023_TXT_Beomgyu.png",
-        "Huening Kai": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/2023_TXT_Hueningkai.png/200px-2023_TXT_Hueningkai.png",
-        "Taehyun": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/2023_TXT_Taehyun.png/200px-2023_TXT_Taehyun.png",
-        // NewJeans – sources Wikimedia
-        "Danielle": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/2023_NewJeans_Danielle.png/200px-2023_NewJeans_Danielle.png",
-        "Minji": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a0/2023_NewJeans_Minji.png/200px-2023_NewJeans_Minji.png",
-        "Hanni": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/13/2023_NewJeans_Hanni.png/200px-2023_NewJeans_Hanni.png",
-        "Haerin": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/58/2023_NewJeans_Haerin.png/200px-2023_NewJeans_Haerin.png",
-        "Hyein": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/2023_NewJeans_Hyein.png/200px-2023_NewJeans_Hyein.png"
+        // BLACKPINK
+        "Jisoo": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/Jisoo_%28Blackpink%29_2020.png/200px-Jisoo_%28Blackpink%29_2020.png",
+        "Jennie": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Jennie_%28Blackpink%29_2020.png/200px-Jennie_%28Blackpink%29_2020.png",
+        "Rosé": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Rosé_%28Blackpink%29_2020.png/200px-Rosé_%28Blackpink%29_2020.png",
+        "Lisa": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/Lisa_%28Blackpink%29_2020.png/200px-Lisa_%28Blackpink%29_2020.png",
+        // IVE
+        "Yujin": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Yujin_IVE_2023.jpg/200px-Yujin_IVE_2023.jpg",
+        "Gaeul": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/28/Gaeul_IVE_2023.jpg/200px-Gaeul_IVE_2023.jpg",
+        "Rei": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Rei_IVE_2023.jpg/200px-Rei_IVE_2023.jpg",
+        "Wonyoung": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Wonyoung_IVE_2023.jpg/200px-Wonyoung_IVE_2023.jpg",
+        "Liz": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f5/Liz_IVE_2023.jpg/200px-Liz_IVE_2023.jpg",
+        "Leeseo": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Leeseo_IVE_2023.jpg/200px-Leeseo_IVE_2023.jpg",
+        // NMIXX
+        "Lily": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/Lily_NMIXX_2022.jpg/200px-Lily_NMIXX_2022.jpg",
+        "Haewon": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9f/Haewon_NMIXX_2022.jpg/200px-Haewon_NMIXX_2022.jpg",
+        "Sullyoon": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Sullyoon_NMIXX_2022.jpg/200px-Sullyoon_NMIXX_2022.jpg",
+        "Bae": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/Bae_NMIXX_2022.jpg/200px-Bae_NMIXX_2022.jpg",
+        "Jiwoo": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7f/Jiwoo_NMIXX_2022.jpg/200px-Jiwoo_NMIXX_2022.jpg",
+        "Kyujin": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/92/Kyujin_NMIXX_2022.jpg/200px-Kyujin_NMIXX_2022.jpg",
+        // KATSEYE (placeholder – remplacez par les vraies photos)
+        "Sophia": "https://via.placeholder.com/90/3B82F6/FFFFFF?text=S",
+        "Lara": "https://via.placeholder.com/90/3B82F6/FFFFFF?text=L",
+        "Yoonchae": "https://via.placeholder.com/90/3B82F6/FFFFFF?text=Y",
+        "Megan": "https://via.placeholder.com/90/3B82F6/FFFFFF?text=M",
+        "Daniela": "https://via.placeholder.com/90/3B82F6/FFFFFF?text=D",
+        "Manon": "https://via.placeholder.com/90/3B82F6/FFFFFF?text=M"
     };
 
     function getMemberPhoto(name) {
-        return memberPhotos[name] || `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&size=90&background=3B82F6&color=fff&bold=true&font-size=0.4`;
+        return memberPhotos[name] || `https://via.placeholder.com/90/3B82F6/FFFFFF?text=${name.charAt(0)}`;
     }
 
-    // -------------------- i18n --------------------
+    // ---------- i18n ----------
     const translations = {
         en: {
-            artistsTitle: "Artists monitored", totalMessages: "Total messages", toxicMessages: "Toxic messages",
-            artistsAlert: "Artists under alert", nationalToxicity: "National toxicity rate", totalThreats: "Total threats",
-            bullyingIndicators: "Bullying indicators", studentsMonitored: "Students monitored", criticalAlerts: "⚠️ Critical alerts",
-            escalate: "Notify counselor", guidance: "Guidance: In case of death threat, export evidence and contact police (112).",
+            artistsTitle: "Artists monitored",
+            totalMessages: "Total messages",
+            toxicMessages: "Toxic messages",
+            artistsAlert: "Artists under alert",
+            nationalToxicity: "National toxicity rate",
+            totalThreats: "Total threats",
+            bullyingIndicators: "Bullying indicators",
+            studentsMonitored: "Students monitored",
+            criticalAlerts: "⚠️ Critical alerts",
+            escalate: "Notify counselor",
+            guidance: "Guidance: In case of death threat, export evidence and contact police (112).",
             schoolGuidance: "Cyberbullying prevention resources. Anonymous reporting coming soon.",
-            recentMessages: "📩 Recent toxic messages", noMessages: "No toxic messages yet.", threatLevel: "Threat level",
-            close: "Close", threats: "Threats"
+            recentMessages: "📩 Recent toxic messages",
+            noMessages: "No toxic messages yet.",
+            threatLevel: "Threat level"
         },
         ko: {
-            artistsTitle: "모니터링 아티스트", totalMessages: "전체 메시지", toxicMessages: "유해 메시지",
-            artistsAlert: "경고 아티스트", nationalToxicity: "국가 유해율", totalThreats: "전체 위협",
-            bullyingIndicators: "학교 폭력 지표", studentsMonitored: "모니터링 학생", criticalAlerts: "⚠️ 긴급 알림",
-            escalate: "상담사에게 알리기", guidance: "가이드: 살해 위협 시 증거 저장 후 경찰(112)에 신고하세요.",
+            artistsTitle: "모니터링 아티스트",
+            totalMessages: "전체 메시지",
+            toxicMessages: "유해 메시지",
+            artistsAlert: "경고 아티스트",
+            nationalToxicity: "국가 유해율",
+            totalThreats: "전체 위협",
+            bullyingIndicators: "학교 폭력 지표",
+            studentsMonitored: "모니터링 학생",
+            criticalAlerts: "⚠️ 긴급 알림",
+            escalate: "상담사에게 알리기",
+            guidance: "가이드: 살해 위협 시 증거 저장 후 경찰(112)에 신고하세요.",
             schoolGuidance: "사이버 폭력 예방 자료. 익명 신고 도구 준비 중.",
-            recentMessages: "📩 최근 유해 메시지", noMessages: "유해 메시지 없음.", threatLevel: "위협 수준",
-            close: "닫기", threats: "위협"
+            recentMessages: "📩 최근 유해 메시지",
+            noMessages: "유해 메시지 없음.",
+            threatLevel: "위협 수준"
         },
         fr: {
-            artistsTitle: "Artistes suivis", totalMessages: "Messages totaux", toxicMessages: "Messages toxiques",
-            artistsAlert: "Artistes sous alerte", nationalToxicity: "Taux de toxicité national", totalThreats: "Menaces totales",
-            bullyingIndicators: "Indicateurs de harcèlement", studentsMonitored: "Élèves suivis", criticalAlerts: "⚠️ Alertes critiques",
-            escalate: "Notifier le conseiller", guidance: "Guide : En cas de menace de mort, exportez les preuves et contactez la police (112).",
+            artistsTitle: "Artistes suivis",
+            totalMessages: "Messages totaux",
+            toxicMessages: "Messages toxiques",
+            artistsAlert: "Artistes sous alerte",
+            nationalToxicity: "Taux de toxicité national",
+            totalThreats: "Menaces totales",
+            bullyingIndicators: "Indicateurs de harcèlement",
+            studentsMonitored: "Élèves suivis",
+            criticalAlerts: "⚠️ Alertes critiques",
+            escalate: "Notifier le conseiller",
+            guidance: "Guide : En cas de menace de mort, exportez les preuves et contactez la police (112).",
             schoolGuidance: "Ressources de prévention du cyberharcèlement. Signalement anonyme à venir.",
-            recentMessages: "📩 Derniers messages toxiques", noMessages: "Aucun message toxique pour l'instant.", threatLevel: "Niveau de menace",
-            close: "Fermer", threats: "Menaces"
+            recentMessages: "📩 Derniers messages toxiques",
+            noMessages: "Aucun message toxique pour l'instant.",
+            threatLevel: "Niveau de menace"
         }
     };
 
@@ -332,8 +330,8 @@
                     const threat = computeMemberThreatLevel(member, messagesData);
                     const photo = getMemberPhoto(member);
                     html += `
-                        <div class="artist-card" onclick="openArtistModal('${member}', '${group.name}')">
-                            <img src="${photo}" alt="${member}" onerror="this.src='https://ui-avatars.com/api/?name=${encodeURIComponent(member)}&size=90&background=3B82F6&color=fff&bold=true&font-size=0.4'">
+                        <div class="artist-card">
+                            <img src="${photo}" alt="${member}" onerror="this.src='https://via.placeholder.com/90/3B82F6/F9FAFB?text=${member.charAt(0)}'">
                             <h4>${member}</h4>
                             <div class="group-name">${group.name}</div>
                             <div class="threat-badge ${threat.class}">${threat.label}</div>
@@ -411,50 +409,6 @@
         }
     }
 
-    // Modal
-    function openArtistModal(name, group) {
-        const overlay = document.getElementById('modalOverlay');
-        const body = document.getElementById('modalBody');
-        const t = translations[currentLang];
-        const threat = computeMemberThreatLevel(name, messagesData);
-        const memberMessages = messagesData.filter(m => m.text.toLowerCase().includes(name.toLowerCase()));
-        const toxicCount = memberMessages.filter(m => m.label === 'toxique').length;
-        const totalCount = memberMessages.length;
-        const photo = getMemberPhoto(name);
-
-        body.innerHTML = `
-            <div style="text-align:center;">
-                <img src="${photo}" alt="${name}" class="modal-artist-img" onerror="this.src='https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&size=120&background=3B82F6&color=fff&bold=true&font-size=0.5'">
-                <h2 style="font-size:2rem;">${name}</h2>
-                <p style="color:#9CA3AF;">${group}</p>
-                <div class="threat-badge ${threat.class}" style="font-size:1rem; padding:6px 18px; margin-top:0.5rem;">${threat.label}</div>
-            </div>
-            <div class="modal-stats">
-                <div class="modal-stat"><h5>${t.totalMessages}</h5><p>${totalCount}</p></div>
-                <div class="modal-stat"><h5>${t.toxicMessages}</h5><p>${toxicCount}</p></div>
-                <div class="modal-stat"><h5>${t.threats}</h5><p>${threat.value === 0 ? 'Low' : (threat.value === 1 ? 'Medium' : 'High')}</p></div>
-            </div>
-            <div style="margin-top:1rem;">
-                <h4 style="margin-bottom:0.5rem;">📩 ${t.recentMessages}</h4>
-                ${memberMessages.length ? memberMessages.slice(0,10).map(m => `
-                    <div class="message-item" style="padding:0.5rem 0;">
-                        <div class="message-meta">${new Date(m.timestamp).toLocaleDateString()}</div>
-                        <div class="message-text">${m.text.substring(0,150)}</div>
-                        <span class="toxique-badge" style="background:${m.label === 'toxique' ? '#EF4444' : '#10B981'};">${m.label}</span>
-                    </div>
-                `).join('') : '<p style="color:#9CA3AF;">No messages for this member.</p>'}
-            </div>
-        `;
-        overlay.classList.add('active');
-    }
-
-    document.getElementById('modalClose').addEventListener('click', () => {
-        document.getElementById('modalOverlay').classList.remove('active');
-    });
-    document.getElementById('modalOverlay').addEventListener('click', (e) => {
-        if (e.target === e.currentTarget) document.getElementById('modalOverlay').classList.remove('active');
-    });
-
     // Language
     function initLang() {
         const dropdown = document.getElementById('langDropdown');
@@ -488,7 +442,7 @@
     initLang();
     initTabs();
     fetchData();
-    setInterval(fetchData, 60000);
+    setInterval(fetchData, 10000);
 </script>
 </body>
 </html>
