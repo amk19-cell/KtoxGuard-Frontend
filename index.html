@@ -1,487 +1,550 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>KToxGuard – Anti‑Violence Social Listening</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { background: #0A0F1E; color: #F9FAFB; font-family: 'Inter', sans-serif; line-height: 1.5; }
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: #111827; border-radius: 10px; }
-        ::-webkit-scrollbar-thumb { background: #3B82F6; border-radius: 10px; }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KToxGuard — HYBE</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4/dist/chart.umd.min.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#070B14;
+  --surface:#0D1320;
+  --surface2:#121A2B;
+  --border:#1C2740;
+  --blue:#3B82F6;
+  --cyan:#22D3EE;
+  --text:#F1F5F9;
+  --muted:#64748B;
+  --danger:#F43F5E;
+  --warn:#F59E0B;
+  --ok:#10B981;
+}
+body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;min-height:100vh;-webkit-font-smoothing:antialiased}
+::-webkit-scrollbar{width:5px}
+::-webkit-scrollbar-track{background:var(--surface)}
+::-webkit-scrollbar-thumb{background:var(--blue);border-radius:10px}
 
-        .container { max-width: 1400px; margin: 0 auto; padding: 1.5rem; }
-        .top-bar {
-            display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;
-            background: #111827; padding: 0.75rem 1.5rem; border-radius: 60px; margin-bottom: 2rem;
-            border: 1px solid #1E293B;
-        }
-        .logo-area { display: flex; align-items: center; gap: 1.2rem; }
-        .logo-area svg { height: 42px; width: auto; }
-        .lang-dropdown { position: relative; }
-        .lang-btn { background: #1F2937; border: none; padding: 0.5rem 1.2rem; border-radius: 40px; color: white; font-weight: 500; display: flex; align-items: center; gap: 8px; cursor: pointer; }
-        .lang-menu { position: absolute; right: 0; top: 45px; background: #1F2937; border-radius: 20px; padding: 0.5rem 0; width: 130px; display: none; flex-direction: column; z-index: 20; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
-        .lang-menu button { background: none; border: none; padding: 0.6rem 1rem; text-align: left; color: #F9FAFB; cursor: pointer; }
-        .lang-menu button:hover { background: #3B82F6; border-radius: 8px; }
-        .lang-dropdown.active .lang-menu { display: flex; }
+/* HEADER */
+.header{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0.9rem 1.5rem;background:rgba(13,19,32,0.85);
+  backdrop-filter:blur(12px);border-bottom:1px solid var(--border);
+  position:sticky;top:0;z-index:100;gap:0.75rem;flex-wrap:wrap;
+}
+.header-left{display:flex;align-items:center;gap:1rem}
+.logo-kt{height:32px;object-fit:contain;display:block}
+.header-right{display:flex;align-items:center;gap:0.6rem}
 
-        .tabs { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 2rem; border-bottom: 1px solid #1F2937; padding-bottom: 0.5rem; }
-        .tab { background: none; border: none; padding: 0.6rem 1.5rem; font-size: 1rem; font-weight: 600; color: #9CA3AF; cursor: pointer; border-radius: 40px; transition: 0.2s; }
-        .tab.active { background: #3B82F6; color: white; }
+.sec-badge{
+  display:flex;align-items:center;gap:7px;padding:6px 14px;border-radius:30px;
+  font-size:0.72rem;font-weight:600;background:rgba(16,185,129,0.1);
+  border:1px solid rgba(16,185,129,0.25);color:var(--ok);white-space:nowrap;
+  transition:all 0.3s;
+}
+.sec-dot{width:7px;height:7px;border-radius:50%;background:var(--ok);box-shadow:0 0 8px currentColor;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.4}}
 
-        .stats-grid { display: flex; flex-wrap: wrap; gap: 1.5rem; margin-bottom: 2.5rem; }
-        .stat-card { background: linear-gradient(135deg, #111827 0%, #0F172A 100%); border-radius: 28px; padding: 1.2rem 1.8rem; flex: 1; min-width: 180px; border: 1px solid #1E293B; box-shadow: 0 8px 20px rgba(0,0,0,0.2); }
-        .stat-card h4 { font-size: 0.85rem; color: #9CA3AF; letter-spacing: 0.5px; margin-bottom: 0.5rem; }
-        .stat-card .value { font-size: 2.4rem; font-weight: 800; }
+.btn-creaven{
+  background:linear-gradient(135deg,var(--blue),var(--cyan));border:none;color:#06101F;
+  padding:7px 16px;border-radius:30px;font-size:0.72rem;font-weight:700;cursor:pointer;
+  white-space:nowrap;box-shadow:0 4px 14px rgba(59,130,246,0.25);
+}
 
-        .section-title { font-size: 1.3rem; font-weight: 600; margin: 2rem 0 1rem 0; display: flex; align-items: center; gap: 10px; }
+.lang-wrap{position:relative}
+.lang-btn{
+  background:var(--surface2);border:1px solid var(--border);color:var(--text);
+  padding:6px 14px;border-radius:30px;font-size:0.72rem;font-weight:500;
+  cursor:pointer;display:flex;align-items:center;gap:5px;
+}
+.lang-menu{
+  position:absolute;right:0;top:42px;background:var(--surface2);
+  border:1px solid var(--border);border-radius:14px;overflow:hidden;
+  display:none;flex-direction:column;min-width:140px;z-index:200;
+  box-shadow:0 12px 30px rgba(0,0,0,0.5);
+}
+.lang-menu.open{display:flex}
+.lang-menu button{background:none;border:none;padding:10px 16px;text-align:left;color:var(--text);cursor:pointer;font-size:0.8rem}
+.lang-menu button:hover{background:var(--border)}
 
-        .group-block { margin-bottom: 2.5rem; background: #0F172A; border-radius: 32px; padding: 1.2rem; border: 1px solid #1E293B; }
-        .group-header { display: flex; align-items: center; gap: 1.5rem; margin-bottom: 1.2rem; border-bottom: 2px solid #1E293B; padding-bottom: 0.5rem; }
-        .group-header img { width: 60px; height: 60px; object-fit: contain; background: #111827; border-radius: 20px; padding: 8px; }
-        .group-header h2 { font-size: 1.8rem; font-weight: 700; }
+/* TABS */
+.tabs{display:flex;gap:4px;padding:0.9rem 1.5rem 0;border-bottom:1px solid var(--border);overflow-x:auto}
+.tab{
+  background:none;border:none;padding:9px 18px;border-radius:10px 10px 0 0;
+  font-size:0.82rem;font-weight:600;color:var(--muted);cursor:pointer;white-space:nowrap;
+  border-bottom:2px solid transparent;transition:all 0.2s;
+}
+.tab.active{color:var(--blue);border-bottom-color:var(--blue);background:rgba(59,130,246,0.07)}
 
-        .artist-grid { display: flex; flex-wrap: wrap; gap: 1.2rem; }
-        .artist-card {
-            background: #111827; border-radius: 24px; padding: 1rem; width: 160px; text-align: center;
-            transition: transform 0.2s, box-shadow 0.2s; border: 1px solid #1E293B; cursor: pointer;
-        }
-        .artist-card:hover { transform: translateY(-5px); box-shadow: 0 8px 25px rgba(59,130,246,0.15); background: #1F2937; }
-        .artist-card .avatar-placeholder {
-            width: 90px; height: 90px; border-radius: 50%; margin: 0 auto 0.75rem;
-            display: flex; align-items: center; justify-content: center;
-            background: #1F2937; border: 3px solid #3B82F6;
-            color: #F9FAFB; font-size: 2.5rem;
-        }
-        .artist-card img { width: 90px; height: 90px; border-radius: 50%; object-fit: cover; margin-bottom: 0.75rem; border: 3px solid #3B82F6; padding: 2px; background: #0A0F1E; }
-        .artist-card h4 { font-size: 1rem; font-weight: 600; }
-        .artist-card .group-name { font-size: 0.7rem; color: #9CA3AF; margin-top: 4px; }
-        .threat-badge { display: inline-block; margin-top: 8px; padding: 4px 14px; border-radius: 30px; font-size: 0.7rem; font-weight: 600; }
-        .threat-low { background: #10B981; color: #fff; }
-        .threat-medium { background: #F59E0B; color: #000; }
-        .threat-high { background: #EF4444; color: #fff; }
+main{padding:1.5rem;max-width:1400px;margin:0 auto}
 
-        .messages-panel { background: #111827; border-radius: 28px; padding: 1.5rem; margin-top: 1.5rem; border: 1px solid #1E293B; }
-        .message-item { border-bottom: 1px solid #1F2937; padding: 1rem 0; }
-        .message-item:last-child { border: none; }
-        .message-meta { display: flex; gap: 12px; font-size: 0.75rem; color: #9CA3AF; margin-bottom: 0.25rem; }
-        .message-text { font-size: 0.9rem; color: #E2E8F0; }
-        .toxique-badge { background: #EF4444; padding: 2px 10px; border-radius: 20px; font-size: 0.7rem; display: inline-block; margin-top: 6px; font-weight: 600; }
+/* STATS */
+.stats-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:0.85rem;margin-bottom:1.75rem}
+.stat{
+  background:linear-gradient(150deg,var(--surface) 0%,var(--surface2) 100%);
+  border:1px solid var(--border);border-radius:18px;padding:1.1rem 1.25rem;
+  position:relative;overflow:hidden;
+}
+.stat::before{content:'';position:absolute;top:0;left:0;width:3px;height:100%;background:var(--blue);opacity:0.6}
+.stat label{font-size:0.68rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.6px;display:block;margin-bottom:5px;font-weight:600}
+.stat .val{font-size:2rem;font-weight:800;font-family:'Space Grotesk',sans-serif;line-height:1}
+.val.blue{color:var(--blue)}.val.red{color:var(--danger)}.val.warn{color:var(--warn)}.val.green{color:var(--ok)}
 
-        .soon-card { background: #1F2937; border-radius: 28px; padding: 2rem; text-align: center; color: #9CA3AF; margin-top: 2rem; border: 1px dashed #1E293B; }
-        canvas { max-height: 300px; background: #0A0F1E; border-radius: 20px; padding: 1rem; }
+/* CHART */
+.chart-wrap{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:1.4rem;margin-bottom:1.75rem}
+.chart-title{font-size:0.85rem;font-weight:600;margin-bottom:1rem;color:var(--muted)}
 
-        /* MODAL */
-        .modal-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(10,15,30,0.85); backdrop-filter: blur(6px);
-            display: none; align-items: center; justify-content: center; z-index: 100; padding: 1.5rem;
-        }
-        .modal-overlay.active { display: flex; }
-        .modal-content {
-            background: #111827; border-radius: 40px; padding: 2rem; max-width: 700px; width: 100%; max-height: 90vh; overflow-y: auto;
-            border: 1px solid #1E293B; box-shadow: 0 20px 60px rgba(0,0,0,0.6);
-        }
-        .modal-close { background: none; border: none; color: #9CA3AF; font-size: 1.5rem; cursor: pointer; float: right; }
-        .modal-close:hover { color: white; transform: rotate(90deg); }
-        .modal-artist-img { width: 120px; height: 120px; border-radius: 50%; object-fit: cover; border: 4px solid #3B82F6; margin-bottom: 1rem; }
-        .modal-stats { display: flex; gap: 1rem; flex-wrap: wrap; margin: 1rem 0; }
-        .modal-stat { background: #0F172A; border-radius: 16px; padding: 0.8rem 1.2rem; flex: 1; min-width: 100px; }
-        .modal-stat h5 { color: #9CA3AF; font-size: 0.7rem; text-transform: uppercase; }
-        .modal-stat p { font-size: 1.2rem; font-weight: 600; }
+/* GROUP */
+.group-block{margin-bottom:2.25rem}
+.group-header{display:flex;align-items:center;gap:0.85rem;margin-bottom:1.1rem}
+.group-badge{
+  width:42px;height:42px;border-radius:12px;background:var(--surface2);
+  border:1px solid var(--border);display:flex;align-items:center;justify-content:center;
+  font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:0.85rem;color:var(--blue);
+  flex-shrink:0;
+}
+.group-name{font-size:1.15rem;font-weight:700;font-family:'Space Grotesk',sans-serif}
+.group-count{font-size:0.72rem;color:var(--muted);margin-left:auto}
 
-        @media (max-width: 768px) {
-            .container { padding: 1rem; }
-            .top-bar { border-radius: 30px; padding: 0.5rem 1rem; }
-            .logo-area svg { height: 32px; }
-            .group-header h2 { font-size: 1.3rem; }
-            .stat-card .value { font-size: 1.8rem; }
-            .artist-card { width: 140px; }
-            .artist-card img { width: 70px; height: 70px; }
-            .modal-content { padding: 1.5rem; }
-        }
-        @media (max-width: 480px) {
-            .artist-card { width: 100%; }
-            .tab { font-size: 0.85rem; padding: 0.4rem 1rem; }
-        }
-    </style>
+/* ARTIST GRID */
+.artist-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(135px,1fr));gap:0.85rem}
+.artist-card{
+  background:var(--surface);border:1px solid var(--border);border-radius:18px;
+  padding:1.1rem 0.8rem;text-align:center;cursor:pointer;transition:all 0.25s;position:relative;
+}
+.artist-card:hover{border-color:var(--blue);background:var(--surface2);transform:translateY(-3px);box-shadow:0 10px 25px rgba(59,130,246,0.12)}
+.artist-photo{
+  width:74px;height:74px;border-radius:50%;object-fit:cover;object-position:top;
+  border:2px solid var(--border);margin:0 auto 0.7rem;display:block;background:var(--surface2);
+}
+.artist-photo.fallback{
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.3rem;color:var(--blue);
+  background:linear-gradient(135deg,rgba(59,130,246,0.15),rgba(34,211,238,0.1));
+}
+.artist-card h4{font-size:0.84rem;font-weight:600;margin-bottom:2px}
+.artist-group{font-size:0.66rem;color:var(--muted);margin-bottom:7px}
+.threat{display:inline-block;padding:3px 11px;border-radius:20px;font-size:0.64rem;font-weight:700}
+.t-low{background:rgba(16,185,129,0.13);color:var(--ok)}
+.t-med{background:rgba(245,158,11,0.13);color:var(--warn)}
+.t-high{background:rgba(244,63,94,0.13);color:var(--danger)}
+
+/* MESSAGES */
+.messages-wrap{background:var(--surface);border:1px solid var(--border);border-radius:20px;overflow:hidden}
+.messages-header{padding:1.1rem 1.4rem;border-bottom:1px solid var(--border);font-size:0.9rem;font-weight:600;display:flex;align-items:center;gap:8px}
+.msg-item{padding:1rem 1.4rem;border-bottom:1px solid var(--border)}
+.msg-item:last-child{border-bottom:none}
+.msg-meta{display:flex;gap:10px;margin-bottom:5px;flex-wrap:wrap;align-items:center}
+.msg-meta span{font-size:0.68rem;color:var(--muted);display:flex;align-items:center;gap:4px}
+.platform-tag{
+  font-size:0.65rem;font-weight:700;padding:2px 9px;border-radius:6px;
+  background:var(--surface2);color:var(--cyan);text-transform:uppercase;letter-spacing:0.3px;
+}
+.msg-text{font-size:0.83rem;line-height:1.55;color:#CBD5E1}
+.msg-badges{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap}
+.badge{display:inline-block;padding:3px 10px;border-radius:20px;font-size:0.64rem;font-weight:600}
+.badge-toxic{background:rgba(244,63,94,0.13);color:var(--danger)}
+.badge-conf{background:rgba(59,130,246,0.1);color:var(--blue)}
+.badge-type{background:rgba(34,211,238,0.1);color:var(--cyan)}
+
+/* MODAL */
+.modal-overlay{
+  position:fixed;inset:0;background:rgba(5,8,15,0.88);backdrop-filter:blur(8px);
+  display:none;align-items:flex-end;justify-content:center;z-index:1000;
+}
+.modal-overlay.active{display:flex}
+.modal-content{
+  background:var(--surface);border-radius:28px 28px 0 0;padding:1.75rem 1.5rem 2.5rem;
+  max-width:560px;width:100%;max-height:88vh;overflow-y:auto;
+  border:1px solid var(--border);box-shadow:0 -10px 50px rgba(0,0,0,0.5);
+  animation:slideUp 0.3s ease;
+}
+@media(min-width:640px){
+  .modal-overlay{align-items:center}
+  .modal-content{border-radius:28px;max-height:80vh}
+}
+@keyframes slideUp{from{transform:translateY(40px);opacity:0}to{transform:translateY(0);opacity:1}}
+.modal-close{
+  background:var(--surface2);border:1px solid var(--border);color:var(--muted);
+  width:32px;height:32px;border-radius:50%;cursor:pointer;float:right;
+  font-size:1rem;display:flex;align-items:center;justify-content:center;
+}
+.modal-hero{display:flex;align-items:center;gap:1rem;margin-top:0.5rem;margin-bottom:1.25rem}
+.modal-photo{width:84px;height:84px;border-radius:50%;object-fit:cover;object-position:top;border:3px solid var(--blue);flex-shrink:0}
+.modal-photo.fallback{display:flex;align-items:center;justify-content:center;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.6rem;color:var(--blue);background:linear-gradient(135deg,rgba(59,130,246,0.18),rgba(34,211,238,0.12))}
+.modal-info h2{font-size:1.3rem;font-weight:700;font-family:'Space Grotesk',sans-serif}
+.modal-info .sub{font-size:0.8rem;color:var(--muted);margin-top:2px}
+
+.empty{padding:2.5rem;text-align:center;color:var(--muted);font-size:0.85rem}
+.heatmap-placeholder{background:var(--surface);border:1px dashed var(--border);border-radius:18px;padding:2.2rem;text-align:center;color:var(--muted);font-size:0.85rem;margin-bottom:1.75rem}
+
+@media(max-width:480px){
+  .header{padding:0.7rem 1rem}
+  main{padding:1rem}
+  .artist-grid{grid-template-columns:repeat(auto-fill,minmax(105px,1fr));gap:0.6rem}
+  .artist-photo{width:62px;height:62px}
+}
+</style>
 </head>
 <body>
-<div class="container">
-    <!-- Top Bar -->
-    <div class="top-bar">
-        <div class="logo-area">
-            <svg viewBox="0 0 200 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <text x="0" y="28" font-family="'Inter', sans-serif" font-weight="700" font-size="24" fill="#3B82F6">KTox</text>
-                <text x="72" y="28" font-family="'Inter', sans-serif" font-weight="700" font-size="24" fill="#F9FAFB">Guard</text>
-                <rect x="0" y="32" width="200" height="2" fill="#3B82F6" opacity="0.4"/>
-            </svg>
-        </div>
-        <div class="lang-dropdown" id="langDropdown">
-            <button class="lang-btn" id="langBtn"><i class="fas fa-globe"></i> <span id="currentLangLabel">EN</span> <i class="fas fa-chevron-down"></i></button>
-            <div class="lang-menu" id="langMenu">
-                <button data-lang="en">🇬🇧 English</button>
-                <button data-lang="ko">🇰🇷 한국어</button>
-                <button data-lang="fr">🇫🇷 Français</button>
-            </div>
-        </div>
-    </div>
 
-    <!-- Tabs -->
-    <div class="tabs">
-        <button class="tab active" data-tab="agency">🎵 Agency Admin</button>
-        <button class="tab" data-tab="government">🏛️ Government</button>
-        <button class="tab" data-tab="school">🏫 School</button>
+<header class="header">
+  <div class="header-left">
+    <img class="logo-kt" src="images/logos/ktoxguard.png" alt="KToxGuard" onerror="this.style.display='none'">
+  </div>
+  <div class="header-right">
+    <div class="sec-badge" id="secBadge">
+      <span class="sec-dot"></span>
+      <span id="secLabel">Secure</span>
     </div>
+    <div class="lang-wrap" id="langWrap">
+      <button class="lang-btn" id="langBtn">🌐 <span id="langLabel">EN</span> ▾</button>
+      <div class="lang-menu" id="langMenu">
+        <button data-lang="en">🇬🇧 English</button>
+        <button data-lang="ko">🇰🇷 한국어</button>
+        <button data-lang="fr">🇫🇷 Français</button>
+      </div>
+    </div>
+    <button class="btn-creaven" id="creavenBtn" onclick="window.open('https://creaven.pages.dev','_blank')">Need support?</button>
+  </div>
+</header>
 
-    <div id="dashboardContent">
-        <div id="statsGrid" class="stats-grid"></div>
-        <div class="section-title"><i class="fas fa-microphone-alt"></i> <span id="artistsTitle">Artists monitored</span></div>
-        <div id="artistsGrid"></div>
-        <div id="extraSection"></div>
-        <div class="messages-panel">
-            <h3 id="recentMessagesTitle">📩 Recent toxic messages</h3>
-            <div id="messagesList">Loading messages...</div>
-        </div>
-    </div>
+<div class="tabs">
+  <button class="tab active" data-tab="agency">🎵 Agency</button>
+  <button class="tab" data-tab="government">🏛️ Government</button>
+  <button class="tab" data-tab="school">🏫 School</button>
+</div>
 
-    <!-- Modal -->
-    <div class="modal-overlay" id="modalOverlay">
-        <div class="modal-content" id="modalContent">
-            <button class="modal-close" id="modalClose"><i class="fas fa-times"></i></button>
-            <div id="modalBody">Loading...</div>
-        </div>
-    </div>
+<main>
+  <div class="stats-row" id="statsRow"></div>
+  <div class="chart-wrap" id="chartWrap">
+    <div class="chart-title" id="chartTitle">Toxicity trend</div>
+    <canvas id="toxChart" height="110"></canvas>
+  </div>
+  <div id="heatmapSlot"></div>
+  <div id="groupsContainer"></div>
+  <div class="messages-wrap" style="margin-top:1.75rem">
+    <div class="messages-header" id="msgsHeader">📩 Recent detections</div>
+    <div id="msgsList"><div class="empty">Loading…</div></div>
+  </div>
+</main>
+
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal-content">
+    <button class="modal-close" id="modalClose">✕</button>
+    <div id="modalBody"></div>
+  </div>
 </div>
 
 <script>
-    // ---------- GROUPES ET LOGOS ----------
-    const groups = [
-        { name: "BTS", logo: "data:image/jpeg;base64,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", members: ["Jimin", "RM", "V", "Jungkook", "Suga", "Jin", "J-Hope"] },
-        { name: "BLACKPINK", logo: "data:image/png;base64,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", members: ["Jisoo", "Jennie", "Rosé", "Lisa"] },
-        { name: "IVE", logo: "data:image/png;base64,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", members: ["Yujin", "Gaeul", "Rei", "Wonyoung", "Liz", "Leeseo"] },
-        { name: "NMIXX", logo: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJQAAACUCAMAAABC4vDmAAAAY1BMVEX///8AAACKiop3d3fAwMDq6uqoqKi1tbVGRka5ubmWlpbt7e19fX3f399bW1v6+vqenp7MzMwdHR3z8/MkJCTGxsbZ2dkvLy8ICAgZGRlvb28TExNqamphYWFMTEyQkJA7OzswO+lFAAAB5klEQVR4nO2ZXXOiMBRAkwp+QlGMgkLr/v9fufcGaUGo0z40sDvnPHgnCd4cTAhxYgwAAAAAAAAAAAAAAAAAAMyFYxzHu3s8tpVZW9uy67YKUoyzz2Km5Xvsfu2zJntI8JzECpuj2Up4+ahdae227TZbanHfcSqkvOo4a7vEk4R1L30qNe+SZyMx+bbUi+azie9325ey17hRuPrSsiO11jvpSOWN1EHC60DqVaSi3j1/T8q+JyNS1h40X24nkvI8SpXW3sy+bQ0s5aT/suxLlWXlrZqPPLzUplarBymb3LyQ6ibL8FKRWeV2KGWiwo9bsTGTSJnzn8Gckif4qFbr1Ewk5efzQMqvYhpnJbWQuEAKKaT+ZanTRFKHZ1LJJFJl5Q5fSmV+LxJa6qLv7stXUtJJNYFU4Zzsf96iyl3eHqRcXotr5Vx1CyuVnc/nVDcWqcReem05ie9CWuKwUp77pUPS/CdD939LNcNnbT02fGkkj8E1/PD5iS4ZSjcy0Z3f4FfBJ7ouCVYuKkeXBNlQ76Za0Y252TEpMY39P+SJ3n370V+qSGf4QtZZNjup2W5dkEIKKaSQQgqpZyT39MNjkFpirTFrlAMeg7QHReMHRqOt5tcPjAAAAAAAAAAAAAAAAAAA4Lf5C5JXM7mBMG8XAAAAAElFTkSuQmCC", members: ["Lily", "Haewon", "Sullyoon", "Bae", "Jiwoo", "Kyujin"] },
-        { name: "KATSEYE", logo: "data:image/jpeg;base64,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", members: ["Sophia", "Lara", "Yoonchae", "Megan", "Daniela", "Manon"] }
-    ];
+const API = 'https://ktoxguard-api-production.up.railway.app';
 
-    // ---------- PHOTOS (avec fallback intelligent) ----------
-    function getMemberPhoto(name) {
-        // J'utilise des URLs fiables (Naver / Soompi) – vous pouvez les remplacer
-        const photos = {
-            // BTS – photos récentes
-            "Jimin": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTr6m_Ro1bu_wosVEh-xvObFD8Gd8s7LpyxJsYs8cazzz7CfABoOkKw7SmCqId28tJ3YdLiDwgDnuHS-LvTew8mz-PFk4Rl0x_BnAZ7woH-3g&s=10"
-            "RM": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRWB2GKjbSpKmAJdi67UWpit9S7djv3Ys0lS3n1101mY-1yJaGw0BxFmNA15KCxqIGWPMJPHeI48Q5M9ESQYyqbiEOJ0QlAhFFoNsELRCWP&s=10",
-            "V": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSPSjqzBS87ojRxVpKCK0UMwBBcxJQU-exg7nF9r74-5Q&s=10",
-            "Jungkook": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTHcFDAF1yYREbrtJ5Tp72zbb_hmCNEDzoyE-E38aYxZQ&s=10",
-            "Suga": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQCMPyS9ar3RcYSU0-UR6B0DKzjllLEvIpkSB6t6PbrRA&s=10",
-            "Jin": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTZKQDY8Xdjxto3JWewwV35xq347cSN8KQotiTMReZsug&s=10",
-            "J-Hope": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS_KdNSz6dLYjwA6P51YzSNm_WgIQSwxYwhP7aHl2BHSw&s=10",
-            // BLACKPINK
-            "Jisoo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQJsaSgIAZAv3FCuLwbxBdxSvUyNTM0Sdlj6YFX5zXUa6PvbQ3giEID2Wr5Oz-oppgRLcEtR98c72uba_iyoXdQuNCaX_ZxKkVN-NcpVU4v&s=10",
-            "Jennie": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcScblhyPMz1wwLT-v77DOeheg_dmYBQDxzBtkrJm24jBA&s=10",
-            "Rosé": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSDUNyHoUYq7kNEEjaolzF2UHPnHvQUNS5_ma3S1KCZAA&s=10",
-            "Lisa": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRjnIO_4A-e_LDW814AkcRvjVxlJLEyatgRdcJiTkczlw&s=10",
-            // IVE
-            "Yujin": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQSBiypKH_zJWYNTGnJv-_qWSBGa7lnFNGQeNM0j94s_GkBjHWf4TKUB2PfCJ8uKB8WAyb9BtlJVaE_HmUqxHylaXmvg_lGV5QcOe3TNObA&s=10",
-            "Gaeul": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRUpkGtXVn9xaca3ZatLi3LIEU2Q06JQ7GU9GQtPgwQ7Z9orkkmlnhWagawgwb_XGy7curScCEGa5-iNZqRutQH5ZBPcr2fetXmJOxjSjHf&s=10",
-            "Rei": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT1zAeEELxnpV-vFZjScIBcy6tS0F6YerPOoykJGH6jNPi8Cz1qOhqhkm5onwxFK4Xow_JNHokryCH3waiEEU2E-lINVarE0XMW6w07EJre&s=10",
-            "Wonyoung": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRel747R9l3wCsNmJOZJsz20PzOkAAboPSbFjh9p8qA6X5Zhl5tGNqVyDuP-PVs-mAuBHmncoGipdhf7kWKtShFfvCe2lVud6aSSWVGJ6cl&s=10",
-            "Liz": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ6yW05q1HpOBuVHuJYCcMRJQI2lZBVjkgjow3MsT2PWCbrFfsOQ6e-zea8sVWAutGDBoPJsipAntd1K6kXGwS8J3PuajcuuC-zyaXLCpLT&s=10",
-            "Leeseo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQwaXY3E98Q-tG21bex9beRCDet-NO_pp45rRPEsQXA-dG68g-erfnhqXIBW5AvmxQEajunDMzhQWSQpe2JxBaD5gQVB1qdmdiv5n9phmah9Q&s=10",
-            // NMIXX
-            "Lily": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSwQe2Q0LmOdZ3bR9t04cIf69lOWN3j8D28TuvNkClNXDaIP_fN_wEPrHzmmgbW4MHZVmS7nZNFFXcrIOXM9hglQQI96onKiNZlcN_z5BHb&s=10",
-            "Haewon": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRplATYmYTYTQzrsd11-U92kYS7rMptDMmkAeOO5OWSWqwLQfrZrKfFv9zJQiPI_VTE0POIu0eftGTwqnWgorvb1eTVkHYLYVM7ZsYjT_Y6&s=10",
-            "Sullyoon": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS3_gGBVNY6a21ZoeMZ4j6KEKCoQwGgA-VFobz1ZDk-mo3uWbmRv5IeIYJ9eL2g36Y8ccQPKUmAslatCHEN-7_oh3JO8haeKFr3RE1fNYj6Xg&s=10",
-            "Bae": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRZCLoZLYdbCRR5BX6ykurK2VAqyIE-mKf57-qC4TA2V-6_Xl21hi0bW7jMg6H3cNEjHiARZbzHSKu3IVCSwU4AQInv3L3nZzO8-mtI-AbF&s=10",
-            "Jiwoo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQYPodhjCjImL4t9PY5UBI6z8mYaw5bN91jj2_Ij_a6yiv7fjqeevVwmymya5ZE-xCxedwDNBIqN5wIvHcnpdS4pjSF1HtJ1d6YLMMCj5c-4Q&s=10",
-            "Kyujin": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ8zOPrRRLbdCj1sjAWBbuFNMZzQT4Vq4DWocVM8aziFYTBvMPitwhw5-uxmfQLlJB8dvbVfjkreKA2j-f9DCjQcWpPg8gHydv4noS6jLjekQ&s=10",
-            // KATSEYE – photos officielles (à remplacer par des vraies URLs)
-            "Sophia": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR3NktgevXUqee4p6knGkNqg63y1CwMo-Yp86WanMN1sNgVZsB6WtYgKzSWka9VSSexj7j3cJ6cK1Xkcb4YRHb-yYgLmeXWxfnj6wud-6wy&s=10",
-            "Lara": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6mnw2_J1RBtZFZX-8PftPQbNGcs4Fbb0pHnpSysLuSiiNKXtdpzwPlkJJMjOBS_zUyN50jGiFg1x7j9LAhV0DFM8r7V-PHfOZZt70riu7&s=10",
-            "Yoonchae": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQlPjjwzNqoPEEUINBNKjlGw3faW_UoQk8-cGZZZbspe6IblD_sme3Lf608r0dGUBef2TXOx6PUBXy4IUrvl4YFReVeb6LJ8oVBAmI-VxPs&s=10",
-            "Megan": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT3wpWtwvUJC9jsaoab9V6lhneDxVkvDNpJCCxkmx7JI1Ct-hfKtbShd2FYrfj0ViyJoUQ4qOGSH1p0mJo2UKutLldSL2q1SlRmBE5haVoC4A&s=10",
-            "Daniela": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQN6jMI_NIiStjhs-MUVeq8CiESUzPyVVlAYM-vN5gajKJqDFa4Y9f5Wl_6sJlrQ-lCTHQldEb27r3G31gSHvdv4asVDLnu6-NY7yHdwFf1&s=10",
-            "Manon": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4I8KlKqCPgstMn6h-7soZGq3nv0LwwHW9cxOLz0SypMp3L-v9zSS9_oZ-H-iiPovj7yOgQzt_t9KwTHWzHogguE5OLECNwr2RxxSA6kXa&s=10"
-        };
-        // Si la photo n'est pas trouvée, on retourne un placeholder "personne" (pas des initiales)
-        return photos[name] || null;
+const GROUPS = [
+  {name:'BTS',members:[
+    {name:'Jimin',img:'images/artists/jimin.jpg'},
+    {name:'RM',img:'images/artists/rm.jpg'},
+    {name:'V',img:'images/artists/v.jpg'},
+    {name:'Jungkook',img:'images/artists/jungkook.jpg'},
+    {name:'Suga',img:'images/artists/suga.jpeg'},
+    {name:'Jin',img:'images/artists/jin.jpg'},
+    {name:'J-Hope',img:'images/artists/jhope.jpg'}
+  ]},
+  {name:'SEVENTEEN',members:[
+    {name:'S.Coups',img:'images/artists/scoups.jpeg'},
+    {name:'Dino',img:'images/artists/dino.jpg'},
+    {name:'Hoshi',img:'images/artists/hoshi.jpg'},
+    {name:'DK',img:'images/artists/dk.jpg'},
+    {name:'Mingyu',img:'images/artists/mingyu.jpg'},
+    {name:'Jeonghan',img:'images/artists/jeonghan.jpg'},
+    {name:'Wonwoo',img:'images/artists/wonwoo.jpg'},
+    {name:'Jun',img:'images/artists/jun.jpg'},
+    {name:'Minghao',img:'images/artists/minghao.jpg'},
+    {name:'Woozi',img:'images/artists/woozi.jpg'},
+    {name:'Vernon',img:'images/artists/vernon.jpg'},
+    {name:'Joshua',img:'images/artists/joshua.jpg'},
+    {name:'Seungkwan',img:'images/artists/seungkwan.jpg'}
+  ]},
+  {name:'TXT',members:[
+    {name:'Yeonjun',img:'images/artists/yeonjun.jpg'},
+    {name:'Soobin',img:'images/artists/soobin.jpg'},
+    {name:'Beomgyu',img:'images/artists/beomgyu.jpg'},
+    {name:'Huening Kai',img:'images/artists/kai.jpeg'},
+    {name:'Taehyun',img:'images/artists/taehyun.jpeg'}
+  ]},
+  {name:'NewJeans',members:[
+    {name:'Minji',img:'images/artists/minji.jpg'},
+    {name:'Hanni',img:'images/artists/hanni.jpg'},
+    {name:'Danielle',img:'images/artists/danielle.jpg'},
+    {name:'Haerin',img:'images/artists/haerin.jpg'},
+    {name:'Hyein',img:'images/artists/hyein.jpg'}
+  ]}
+];
+
+const T = {
+  en:{secure:'Secure',moderate:'Moderate',critical:'Critical',
+    total:'Total messages',toxic:'Toxic messages',alerts:'Artists under alert',rate:'Toxicity rate',
+    trend:'Toxicity trend — last detections',recents:'Recent detections',
+    calm:'Calm',vigilance:'Vigilance',crisis:'Crisis',
+    mentions:'Messages mentioning this artist',empty:'No messages yet.',support:'Need support?',
+    bullyCount:'Bullying indicators',students:'Students monitored',
+    national:'National toxicity rate',threats:'Total threats',deaths:'Death threats',doxx:'Doxxing',hate:'Hate speech',
+    heatmap:'🗺️ Geographic heatmap — coming soon'},
+  ko:{secure:'안전',moderate:'주의',critical:'위험',
+    total:'전체 메시지',toxic:'유해 메시지',alerts:'경고 아티스트',rate:'유해율',
+    trend:'독성 추이',recents:'최근 탐지',
+    calm:'안정',vigilance:'주의',crisis:'위험',
+    mentions:'관련 메시지',empty:'메시지 없음.',support:'도움이 필요하신가요?',
+    bullyCount:'학폭 지표',students:'모니터링 학생',
+    national:'국가 유해율',threats:'전체 위협',deaths:'살해 위협',doxx:'신상유출',hate:'혐오 발언',
+    heatmap:'🗺️ 지리적 히트맵 — 준비 중'},
+  fr:{secure:'Sécurisé',moderate:'Vigilance',critical:'Critique',
+    total:'Messages totaux',toxic:'Messages toxiques',alerts:'Artistes sous alerte',rate:'Taux de toxicité',
+    trend:'Tendance de toxicité',recents:'Détections récentes',
+    calm:'Calme',vigilance:'Vigilance',crisis:'Critique',
+    mentions:'Messages mentionnant cet artiste',empty:'Aucun message.',support:"Besoin d'aide?",
+    bullyCount:'Indicateurs harcèlement',students:'Élèves suivis',
+    national:'Taux national de toxicité',threats:'Menaces totales',deaths:'Menaces de mort',doxx:'Doxxing',hate:'Discours haineux',
+    heatmap:'🗺️ Carte de chaleur géographique — à venir'}
+};
+
+let lang = localStorage.getItem('ktLang')||'en';
+let tab = 'agency';
+let stats = null, messages = [], chart = null;
+
+function t(k){return T[lang][k]||k}
+function initials(name){return name.split(' ').map(w=>w[0]).join('').substring(0,2).toUpperCase()}
+
+function avatarHtml(name, img, size){
+  return `<img class="${size}" src="${img}" alt="${name}"
+    onerror="this.outerHTML='<div class=&quot;${size} fallback&quot;>${initials(name)}</div>'">`;
+}
+
+function threatFor(name){
+  const n = name.toLowerCase();
+  const count = messages.filter(m=>m.label==='toxique'&&(m.text||'').toLowerCase().includes(n)).length;
+  if(count===0) return {label:t('calm'),cls:'t-low',val:0};
+  if(count<3) return {label:t('vigilance'),cls:'t-med',val:1};
+  return {label:t('crisis'),cls:'t-high',val:2};
+}
+
+async function fetchData(){
+  try{
+    const sr = await fetch(API+'/stats').then(r=>r.json());
+    stats = sr;
+    let mr = [];
+    try{ mr = await fetch(API+'/messages?limit=100').then(r=>r.json()); }catch(e){}
+    messages = Array.isArray(mr) ? mr : [];
+  }catch(e){
+    stats = {total_messages:0,toxic_count:0,toxic_percentage:0};
+    messages = [];
+  }
+  render();
+}
+
+function render(){
+  if(!stats) return;
+  updateSecBadge();
+  document.getElementById('creavenBtn').textContent = t('support');
+  document.getElementById('msgsHeader').textContent = '📩 ' + t('recents');
+  if(tab==='agency') renderAgency();
+  else if(tab==='government') renderGovt();
+  else renderSchool();
+}
+
+function updateSecBadge(){
+  const pct = stats.toxic_percentage||0;
+  const badge = document.getElementById('secBadge');
+  const label = document.getElementById('secLabel');
+  const dot = badge.querySelector('.sec-dot');
+  let color, bg, border, key;
+  if(pct<10){color='var(--ok)';bg='rgba(16,185,129,0.1)';border='rgba(16,185,129,0.25)';key='secure';}
+  else if(pct<30){color='var(--warn)';bg='rgba(245,158,11,0.1)';border='rgba(245,158,11,0.25)';key='moderate';}
+  else{color='var(--danger)';bg='rgba(244,63,94,0.1)';border='rgba(244,63,94,0.25)';key='critical';}
+  badge.style.background=bg;badge.style.borderColor=border;badge.style.color=color;
+  dot.style.background=color;label.textContent=t(key);
+}
+
+function renderAgency(){
+  document.getElementById('chartWrap').style.display='block';
+  document.getElementById('heatmapSlot').innerHTML='';
+  const alertCount = GROUPS.flatMap(g=>g.members).filter(m=>threatFor(m.name).val>0).length;
+  document.getElementById('statsRow').innerHTML = `
+    <div class="stat"><label>${t('total')}</label><div class="val blue">${stats.total_messages}</div></div>
+    <div class="stat"><label>${t('toxic')}</label><div class="val red">${stats.toxic_count}</div></div>
+    <div class="stat"><label>${t('alerts')}</label><div class="val warn">${alertCount}</div></div>
+    <div class="stat"><label>${t('rate')}</label><div class="val green">${(stats.toxic_percentage||0).toFixed(1)}%</div></div>
+  `;
+  document.getElementById('chartTitle').textContent = t('trend');
+  renderChart();
+  renderGroups();
+  renderMessages(messages.filter(m=>m.label==='toxique').slice(0,20));
+}
+
+function renderChart(){
+  const ctx = document.getElementById('toxChart').getContext('2d');
+  if(chart) chart.destroy();
+  const toxic = messages.filter(m=>m.label==='toxique');
+  const days = {};
+  toxic.forEach(m=>{
+    const d = m.timestamp ? new Date(m.timestamp).toLocaleDateString('en',{month:'short',day:'numeric'}) : 'N/A';
+    days[d]=(days[d]||0)+1;
+  });
+  let labels = Object.keys(days);
+  let data = labels.map(l=>days[l]);
+  if(!labels.length){labels=['No data'];data=[0];}
+  labels = labels.slice(-10); data = data.slice(-10);
+  chart = new Chart(ctx,{
+    type:'line',
+    data:{labels,datasets:[{
+      data,borderColor:'#3B82F6',backgroundColor:'rgba(59,130,246,0.08)',
+      borderWidth:2,tension:0.4,fill:true,pointBackgroundColor:'#3B82F6',pointRadius:3
+    }]},
+    options:{responsive:true,maintainAspectRatio:true,
+      plugins:{legend:{display:false}},
+      scales:{
+        x:{grid:{color:'rgba(255,255,255,0.04)'},ticks:{color:'#64748B',font:{size:10}}},
+        y:{grid:{color:'rgba(255,255,255,0.04)'},ticks:{color:'#64748B',font:{size:10}}}
+      }
     }
+  });
+}
 
-    // ---------- TRADUCTIONS ----------
-    const translations = {
-        en: {
-            artistsTitle: "Artists monitored", totalMessages: "Total messages", toxicMessages: "Toxic messages",
-            artistsAlert: "Artists under alert", nationalToxicity: "National toxicity rate", totalThreats: "Total threats",
-            bullyingIndicators: "Bullying indicators", studentsMonitored: "Students monitored", criticalAlerts: "⚠️ Critical alerts",
-            escalate: "Notify counselor", guidance: "Guidance: In case of death threat, export evidence and contact police (112).",
-            schoolGuidance: "Cyberbullying prevention resources. Anonymous reporting coming soon.",
-            recentMessages: "📩 Recent toxic messages", noMessages: "No toxic messages yet.", threatLevel: "Threat level",
-            close: "Close", threats: "Threats"
-        },
-        ko: {
-            artistsTitle: "모니터링 아티스트", totalMessages: "전체 메시지", toxicMessages: "유해 메시지",
-            artistsAlert: "경고 아티스트", nationalToxicity: "국가 유해율", totalThreats: "전체 위협",
-            bullyingIndicators: "학교 폭력 지표", studentsMonitored: "모니터링 학생", criticalAlerts: "⚠️ 긴급 알림",
-            escalate: "상담사에게 알리기", guidance: "가이드: 살해 위협 시 증거 저장 후 경찰(112)에 신고하세요.",
-            schoolGuidance: "사이버 폭력 예방 자료. 익명 신고 도구 준비 중.",
-            recentMessages: " 최근 유해 메시지", noMessages: "유해 메시지 없음.", threatLevel: "위협 수준",
-            close: "닫기", threats: "위협"
-        },
-        fr: {
-            artistsTitle: "Artistes suivis", totalMessages: "Messages totaux", toxicMessages: "Messages toxiques",
-            artistsAlert: "Artistes sous alerte", nationalToxicity: "Taux de toxicité national", totalThreats: "Menaces totales",
-            bullyingIndicators: "Indicateurs de harcèlement", studentsMonitored: "Élèves suivis", criticalAlerts: "⚠️ Alertes critiques",
-            escalate: "Notifier le conseiller", guidance: "Guide : En cas de menace de mort, exportez les preuves et contactez la police (112).",
-            schoolGuidance: "Ressources de prévention du cyberharcèlement. Signalement anonyme à venir.",
-            recentMessages: " Derniers messages toxiques", noMessages: "Aucun message toxique pour l'instant.", threatLevel: "Niveau de menace",
-            close: "Fermer", threats: "Menaces"
-        }
-    };
-
-    let currentLang = localStorage.getItem('lang') || 'en';
-    let currentTab = 'agency';
-    let statsData = null;
-    let messagesData = [];
-    let toxicityChart = null;
-
-    const API_BASE = 'https://ktoxguard-api-production.up.railway.app';
-
-    function computeMemberThreatLevel(memberName, messages) {
-        const nameLower = memberName.toLowerCase();
-        let count = 0;
-        messages.forEach(m => {
-            if (m.label === 'toxique' && m.text.toLowerCase().includes(nameLower)) count++;
-        });
-        if (count === 0) return { label: 'Calm', class: 'threat-low', value: 0 };
-        if (count < 3) return { label: 'Vigilance', class: 'threat-medium', value: 1 };
-        return { label: 'Critical', class: 'threat-high', value: 2 };
-    }
-
-    async function fetchData() {
-        try {
-            const [statsRes, messagesRes] = await Promise.all([
-                fetch(`${API_BASE}/stats`),
-                fetch(`${API_BASE}/messages?limit=80`)
-            ]);
-            if (!statsRes.ok || !messagesRes.ok) throw new Error('API error');
-            statsData = await statsRes.json();
-            messagesData = await messagesRes.json();
-            console.log(`[KToxGuard] Stats: ${statsData.total_messages} messages, ${statsData.toxic_count} toxic`);
-            console.log(`[KToxGuard] Messages: ${messagesData.length} récupérés`);
-        } catch (err) {
-            console.error('[KToxGuard] Erreur API:', err);
-            statsData = { total_messages: 0, toxic_count: 0, toxic_percentage: 0 };
-            messagesData = [];
-        }
-        renderDashboard();
-    }
-
-    function renderDashboard() {
-        if (!statsData) return;
-        const t = translations[currentLang];
-        document.getElementById('artistsTitle').innerText = t.artistsTitle;
-        document.getElementById('recentMessagesTitle').innerHTML = t.recentMessages;
-
-        // Stats
-        const statsGrid = document.getElementById('statsGrid');
-        if (currentTab === 'agency') {
-            let totalUnderAlert = 0;
-            groups.forEach(g => g.members.forEach(m => {
-                const threat = computeMemberThreatLevel(m, messagesData);
-                if (threat.class !== 'threat-low') totalUnderAlert++;
-            }));
-            statsGrid.innerHTML = `
-                <div class="stat-card"><h4>${t.totalMessages}</h4><div class="value">${statsData.total_messages}</div></div>
-                <div class="stat-card"><h4>${t.toxicMessages}</h4><div class="value">${statsData.toxic_count}</div></div>
-                <div class="stat-card"><h4>${t.artistsAlert}</h4><div class="value">${totalUnderAlert}</div></div>
-            `;
-        } else if (currentTab === 'government') {
-            statsGrid.innerHTML = `
-                <div class="stat-card"><h4>${t.nationalToxicity}</h4><div class="value">${statsData.toxic_percentage}%</div></div>
-                <div class="stat-card"><h4>${t.totalThreats}</h4><div class="value">${statsData.toxic_count}</div></div>
-            `;
-        } else {
-            const bullyingCount = messagesData.filter(m => m.label === 'toxique' && (m.text.includes('왕따') || m.text.includes('학폭') || m.text.includes('bully'))).length;
-            statsGrid.innerHTML = `
-                <div class="stat-card"><h4>${t.bullyingIndicators}</h4><div class="value">${bullyingCount}</div></div>
-                <div class="stat-card"><h4>${t.studentsMonitored}</h4><div class="value">5</div></div>
-            `;
-        }
-
-        // Artists
-        const artistsGrid = document.getElementById('artistsGrid');
-        if (currentTab === 'agency') {
-            let html = '';
-            groups.forEach(group => {
-                html += `<div class="group-block">`;
-                html += `<div class="group-header"><img src="${group.logo}" alt="${group.name}" onerror="this.style.display='none'"><h2>${group.name}</h2></div>`;
-                html += `<div class="artist-grid">`;
-                group.members.forEach(member => {
-                    const threat = computeMemberThreatLevel(member, messagesData);
-                    const photo = getMemberPhoto(member);
-                    html += `
-                        <div class="artist-card" onclick="openArtistModal('${member}', '${group.name}')">
-                            ${photo ? `<img src="${photo}" alt="${member}" onerror="this.style.display='none'">` : `<div class="avatar-placeholder"><i class="fas fa-user"></i></div>`}
-                            <h4>${member}</h4>
-                            <div class="group-name">${group.name}</div>
-                            <div class="threat-badge ${threat.class}">${threat.label}</div>
-                        </div>
-                    `;
-                });
-                html += `</div></div>`;
-            });
-            artistsGrid.innerHTML = html;
-        } else {
-            artistsGrid.innerHTML = `<div class="soon-card" style="width:100%;">${t.guidance}</div>`;
-        }
-
-        // Extra
-        const extraDiv = document.getElementById('extraSection');
-        if (currentTab === 'agency') {
-            extraDiv.innerHTML = `<div style="background:#111827; border-radius:28px; padding:1rem; margin-top:1rem;"><canvas id="toxicityChart" width="400" height="200"></canvas></div>`;
-            if (toxicityChart) toxicityChart.destroy();
-            const chartCanvas = document.getElementById('toxicityChart');
-            if (chartCanvas) {
-                toxicityChart = new Chart(chartCanvas, {
-                    type: 'line',
-                    data: {
-                        labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4'],
-                        datasets: [{ label: 'Toxicity %', data: [12, 19, 15, statsData.toxic_percentage], borderColor: '#3B82F6', backgroundColor: 'rgba(59,130,246,0.1)', tension: 0.3, fill: true }]
-                    },
-                    options: { responsive: true, maintainAspectRatio: true }
-                });
-            }
-        } else if (currentTab === 'government') {
-            let death=0, doxx=0, hate=0;
-            messagesData.forEach(m => {
-                if (m.label === 'toxique') {
-                    if (m.text.includes('kill') || m.text.includes('죽어')) death++;
-                    if (m.text.includes('신상')) doxx++;
-                    if (m.text.includes('병신') || m.text.includes('stupid')) hate++;
-                }
-            });
-            extraDiv.innerHTML = `
-                <div class="stats-grid" style="margin-top:1rem;">
-                    <div class="stat-card"><h4>Death threats</h4><div class="value">${death}</div></div>
-                    <div class="stat-card"><h4>Doxxing</h4><div class="value">${doxx}</div></div>
-                    <div class="stat-card"><h4>Hate speech</h4><div class="value">${hate}</div></div>
-                </div>
-                <div class="soon-card"> Geographic heatmap – coming soon</div>
-            `;
-        } else {
-            const schoolBullyingMessages = messagesData.filter(m => m.label === 'toxique' && (m.text.includes('왕따') || m.text.includes('학폭') || m.text.includes('bully')));
-            extraDiv.innerHTML = `
-                <div class="messages-panel" style="margin-top:0;">
-                    <h3>⚠️ School‑related threats</h3>
-                    ${schoolBullyingMessages.length ? schoolBullyingMessages.slice(0,5).map(m => `<div class="message-item"><div class="message-meta">${m.platform} · ${m.author}</div><div class="message-text">${m.text.substring(0,150)}</div></div>`).join('') : '<p>No bullying mentions</p>'}
-                    <button class="lang-btn" style="margin-top:1rem; background:#3B82F6; border:none; padding:8px 20px; border-radius:40px; color:#fff; cursor:pointer;" onclick="alert('${t.escalate}')">${t.escalate}</button>
-                </div>
-                <div class="soon-card">${t.schoolGuidance}</div>
-            `;
-        }
-
-        // Messages
-        const toxicMessages = messagesData.filter(m => m.label === 'toxique');
-        const messagesList = document.getElementById('messagesList');
-        if (toxicMessages.length === 0) {
-            messagesList.innerHTML = `<div class="soon-card" style="margin:0;">${t.noMessages}</div>`;
-        } else {
-            messagesList.innerHTML = toxicMessages.slice(0,15).map(msg => `
-                <div class="message-item">
-                    <div class="message-meta">
-                        <span> ${new Date(msg.timestamp).toLocaleDateString()}</span>
-                        <span>👤 ${msg.author || 'anonymous'}</span>
-                    </div>
-                    <div class="message-text">${msg.text.substring(0,200)}</div>
-                    <div><span class="toxique-badge">${msg.label}</span> (conf: ${msg.confidence})</div>
-                </div>
-            `).join('');
-        }
-    }
-
-    // ---------- MODAL ----------
-    function openArtistModal(name, group) {
-        const overlay = document.getElementById('modalOverlay');
-        const body = document.getElementById('modalBody');
-        const t = translations[currentLang];
-        const threat = computeMemberThreatLevel(name, messagesData);
-        const memberMessages = messagesData.filter(m => m.text.toLowerCase().includes(name.toLowerCase()));
-        const toxicCount = memberMessages.filter(m => m.label === 'toxique').length;
-        const totalCount = memberMessages.length;
-        const photo = getMemberPhoto(name);
-
-        body.innerHTML = `
-            <div style="text-align:center;">
-                ${photo ? `<img src="${photo}" alt="${name}" class="modal-artist-img" onerror="this.style.display='none'">` : `<div style="width:120px;height:120px;border-radius:50%;background:#1F2937;display:flex;align-items:center;justify-content:center;margin:0 auto 1rem;font-size:3rem;border:4px solid #3B82F6;"><i class="fas fa-user"></i></div>`}
-                <h2 style="font-size:2rem;">${name}</h2>
-                <p style="color:#9CA3AF;">${group}</p>
-                <div class="threat-badge ${threat.class}" style="font-size:1rem; padding:6px 18px; margin-top:0.5rem;">${threat.label}</div>
-            </div>
-            <div class="modal-stats">
-                <div class="modal-stat"><h5>${t.totalMessages}</h5><p>${totalCount}</p></div>
-                <div class="modal-stat"><h5>${t.toxicMessages}</h5><p>${toxicCount}</p></div>
-                <div class="modal-stat"><h5>${t.threats}</h5><p>${threat.value === 0 ? 'Low' : (threat.value === 1 ? 'Medium' : 'High')}</p></div>
-            </div>
-            <div style="margin-top:1rem;">
-                <h4 style="margin-bottom:0.5rem;"> ${t.recentMessages}</h4>
-                ${memberMessages.length ? memberMessages.slice(0,10).map(m => `
-                    <div class="message-item" style="padding:0.5rem 0;">
-                        <div class="message-meta">${new Date(m.timestamp).toLocaleDateString()}</div>
-                        <div class="message-text">${m.text.substring(0,150)}</div>
-                        <span class="toxique-badge" style="background:${m.label === 'toxique' ? '#EF4444' : '#10B981'};">${m.label}</span>
-                    </div>
-                `).join('') : '<p style="color:#9CA3AF;">No messages for this member.</p>'}
-            </div>
-        `;
-        overlay.classList.add('active');
-    }
-
-    document.getElementById('modalClose').addEventListener('click', () => {
-        document.getElementById('modalOverlay').classList.remove('active');
+function renderGroups(){
+  let html = '';
+  GROUPS.forEach(g=>{
+    html += `<div class="group-block">
+      <div class="group-header">
+        <div class="group-badge">${initials(g.name)}</div>
+        <span class="group-name">${g.name}</span>
+        <span class="group-count">${g.members.length} members</span>
+      </div>
+      <div class="artist-grid">`;
+    g.members.forEach(m=>{
+      const th = threatFor(m.name);
+      html += `<div class="artist-card" onclick='openDetail(${JSON.stringify(m.name)},${JSON.stringify(g.name)},${JSON.stringify(m.img)})'>
+        ${avatarHtml(m.name, m.img, 'artist-photo')}
+        <h4>${m.name}</h4>
+        <div class="artist-group">${g.name}</div>
+        <span class="threat ${th.cls}">${th.label}</span>
+      </div>`;
     });
-    document.getElementById('modalOverlay').addEventListener('click', (e) => {
-        if (e.target === e.currentTarget) document.getElementById('modalOverlay').classList.remove('active');
-    });
+    html += `</div></div>`;
+  });
+  document.getElementById('groupsContainer').innerHTML = html;
+}
 
-    // ---------- LANGUE ----------
-    function initLang() {
-        const dropdown = document.getElementById('langDropdown');
-        const btn = document.getElementById('langBtn');
-        btn.addEventListener('click', () => dropdown.classList.toggle('active'));
-        document.querySelectorAll('.lang-menu button').forEach(btn => {
-            btn.addEventListener('click', () => {
-                const lang = btn.getAttribute('data-lang');
-                currentLang = lang;
-                localStorage.setItem('lang', lang);
-                document.getElementById('currentLangLabel').innerText = lang.toUpperCase();
-                dropdown.classList.remove('active');
-                renderDashboard();
-            });
-        });
-        document.getElementById('currentLangLabel').innerText = currentLang.toUpperCase();
-        window.addEventListener('click', (e) => { if (!dropdown.contains(e.target)) dropdown.classList.remove('active'); });
-    }
+function openDetail(name, group, img){
+  const mentions = messages.filter(m=>m.label==='toxique'&&(m.text||'').toLowerCase().includes(name.toLowerCase()));
+  const th = threatFor(name);
+  document.getElementById('modalBody').innerHTML = `
+    <div class="modal-hero">
+      ${avatarHtml(name, img, 'modal-photo')}
+      <div class="modal-info">
+        <h2>${name}</h2>
+        <div class="sub">${group}</div>
+        <span class="threat ${th.cls}" style="margin-top:6px;display:inline-block">${th.label}</span>
+      </div>
+    </div>
+    <div class="stats-row" style="margin-bottom:1rem">
+      <div class="stat"><label>Mentions</label><div class="val red">${mentions.length}</div></div>
+      <div class="stat"><label>${t('rate')}</label><div class="val warn">${th.label}</div></div>
+    </div>
+    <div class="messages-wrap">
+      <div class="messages-header">${t('mentions')}</div>
+      <div>${mentions.length ? mentions.slice(0,15).map(msgRow).join('') : '<div class="empty">'+t('empty')+'</div>'}</div>
+    </div>
+  `;
+  document.getElementById('modalOverlay').classList.add('active');
+}
 
-    // ---------- ONGLETS ----------
-    function initTabs() {
-        document.querySelectorAll('.tab').forEach(tab => {
-            tab.addEventListener('click', () => {
-                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-                tab.classList.add('active');
-                currentTab = tab.getAttribute('data-tab');
-                renderDashboard();
-            });
-        });
-    }
+document.getElementById('modalClose').addEventListener('click',()=>{
+  document.getElementById('modalOverlay').classList.remove('active');
+});
+document.getElementById('modalOverlay').addEventListener('click',e=>{
+  if(e.target===e.currentTarget) document.getElementById('modalOverlay').classList.remove('active');
+});
 
-    // ---------- INIT ----------
-    initLang();
-    initTabs();
-    fetchData();
-    setInterval(fetchData, 10000);
+function msgRow(m){
+  const types = Array.isArray(m.threat_types)?m.threat_types:[];
+  const d = m.timestamp ? new Date(m.timestamp).toLocaleDateString(lang==='ko'?'ko-KR':'en',{month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'}) : '';
+  const platform = m.platform || 'web';
+  return `<div class="msg-item">
+    <div class="msg-meta">
+      <span class="platform-tag">${platform}</span>
+      <span>📅 ${d}</span>
+    </div>
+    <div class="msg-text">${(m.text||'').substring(0,200)}</div>
+    <div class="msg-badges">
+      <span class="badge badge-toxic">${m.label}</span>
+      <span class="badge badge-conf">${Math.round((m.confidence||0)*100)}%</span>
+      ${types.slice(0,2).map(tp=>`<span class="badge badge-type">${tp}</span>`).join('')}
+    </div>
+  </div>`;
+}
+
+function renderMessages(msgs){
+  const el = document.getElementById('msgsList');
+  el.innerHTML = msgs.length ? msgs.map(msgRow).join('') : `<div class="empty">${t('empty')}</div>`;
+}
+
+function renderGovt(){
+  document.getElementById('chartWrap').style.display='none';
+  document.getElementById('heatmapSlot').innerHTML = `<div class="heatmap-placeholder">${t('heatmap')}</div>`;
+  document.getElementById('groupsContainer').innerHTML = '';
+  const deaths = messages.filter(m=>m.label==='toxique'&&((m.text||'').includes('죽어')||(m.text||'').includes('죽여'))).length;
+  const doxx = messages.filter(m=>m.label==='toxique'&&(m.text||'').includes('신상')).length;
+  const hate = messages.filter(m=>m.label==='toxique'&&(m.text||'').includes('병신')).length;
+  document.getElementById('statsRow').innerHTML = `
+    <div class="stat"><label>${t('national')}</label><div class="val red">${(stats.toxic_percentage||0).toFixed(1)}%</div></div>
+    <div class="stat"><label>${t('threats')}</label><div class="val warn">${stats.toxic_count}</div></div>
+    <div class="stat"><label>${t('deaths')}</label><div class="val red">${deaths}</div></div>
+    <div class="stat"><label>${t('doxx')}</label><div class="val warn">${doxx}</div></div>
+  `;
+  renderMessages(messages.filter(m=>m.label==='toxique').slice(0,30));
+}
+
+function renderSchool(){
+  document.getElementById('chartWrap').style.display='none';
+  document.getElementById('heatmapSlot').innerHTML='';
+  document.getElementById('groupsContainer').innerHTML = '';
+  const bullying = messages.filter(m=>m.label==='toxique'&&((m.text||'').includes('왕따')||(m.text||'').includes('학폭')));
+  document.getElementById('statsRow').innerHTML = `
+    <div class="stat"><label>${t('bullyCount')}</label><div class="val warn">${bullying.length}</div></div>
+    <div class="stat"><label>${t('students')}</label><div class="val blue">5</div></div>
+  `;
+  renderMessages(bullying.slice(0,20));
+}
+
+document.getElementById('langBtn').addEventListener('click',()=>{
+  document.getElementById('langMenu').classList.toggle('open');
+});
+document.querySelectorAll('#langMenu button').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    lang = btn.dataset.lang;
+    localStorage.setItem('ktLang',lang);
+    document.getElementById('langLabel').textContent = lang.toUpperCase();
+    document.getElementById('langMenu').classList.remove('open');
+    render();
+  });
+});
+document.addEventListener('click',e=>{
+  if(!document.getElementById('langWrap').contains(e.target))
+    document.getElementById('langMenu').classList.remove('open');
+});
+document.getElementById('langLabel').textContent = lang.toUpperCase();
+
+document.querySelectorAll('.tab').forEach(el=>{
+  el.addEventListener('click',()=>{
+    document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
+    el.classList.add('active');
+    tab = el.dataset.tab;
+    render();
+  });
+});
+
+fetchData();
+setInterval(fetchData, 60000);
 </script>
 </body>
 </html>
