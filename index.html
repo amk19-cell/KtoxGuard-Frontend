@@ -9,176 +9,83 @@
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 :root{
-  --bg:#070B14;
-  --surface:#0D1320;
-  --surface2:#121A2B;
-  --border:#1C2740;
-  --blue:#3B82F6;
-  --cyan:#22D3EE;
-  --text:#F1F5F9;
-  --muted:#64748B;
-  --danger:#F43F5E;
-  --warn:#F59E0B;
-  --ok:#10B981;
+  --bg:#070B14;--surface:#0D1320;--surface2:#121A2B;--border:#1C2740;
+  --blue:#3B82F6;--cyan:#22D3EE;--text:#F1F5F9;--muted:#64748B;
+  --danger:#F43F5E;--warn:#F59E0B;--ok:#10B981;
 }
 body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;min-height:100vh;-webkit-font-smoothing:antialiased}
 ::-webkit-scrollbar{width:5px}
 ::-webkit-scrollbar-track{background:var(--surface)}
 ::-webkit-scrollbar-thumb{background:var(--blue);border-radius:10px}
 
-/* HEADER */
-.header{
-  display:flex;align-items:center;justify-content:space-between;
-  padding:0.9rem 1.5rem;background:rgba(13,19,32,0.85);
-  backdrop-filter:blur(12px);border-bottom:1px solid var(--border);
-  position:sticky;top:0;z-index:100;gap:0.75rem;flex-wrap:wrap;
-}
+.header{display:flex;align-items:center;justify-content:space-between;padding:0.9rem 1.5rem;background:rgba(13,19,32,0.85);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100;gap:0.75rem;flex-wrap:wrap}
 .header-left{display:flex;align-items:center;gap:1rem}
 .logo-kt{height:32px;object-fit:contain;display:block}
 .header-right{display:flex;align-items:center;gap:0.6rem}
-
-.sec-badge{
-  display:flex;align-items:center;gap:7px;padding:6px 14px;border-radius:30px;
-  font-size:0.72rem;font-weight:600;background:rgba(16,185,129,0.1);
-  border:1px solid rgba(16,185,129,0.25);color:var(--ok);white-space:nowrap;
-  transition:all 0.3s;
-}
+.sec-badge{display:flex;align-items:center;gap:7px;padding:6px 14px;border-radius:30px;font-size:0.72rem;font-weight:600;background:rgba(16,185,129,0.1);border:1px solid rgba(16,185,129,0.25);color:var(--ok);white-space:nowrap}
 .sec-dot{width:7px;height:7px;border-radius:50%;background:var(--ok);box-shadow:0 0 8px currentColor;animation:pulse 2s infinite}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:0.4}}
-
-.btn-creaven{
-  background:linear-gradient(135deg,var(--blue),var(--cyan));border:none;color:#06101F;
-  padding:7px 16px;border-radius:30px;font-size:0.72rem;font-weight:700;cursor:pointer;
-  white-space:nowrap;box-shadow:0 4px 14px rgba(59,130,246,0.25);
-}
-
+.btn-creaven{background:linear-gradient(135deg,var(--blue),var(--cyan));border:none;color:#06101F;padding:7px 16px;border-radius:30px;font-size:0.72rem;font-weight:700;cursor:pointer;white-space:nowrap;box-shadow:0 4px 14px rgba(59,130,246,0.25)}
 .lang-wrap{position:relative}
-.lang-btn{
-  background:var(--surface2);border:1px solid var(--border);color:var(--text);
-  padding:6px 14px;border-radius:30px;font-size:0.72rem;font-weight:500;
-  cursor:pointer;display:flex;align-items:center;gap:5px;
-}
-.lang-menu{
-  position:absolute;right:0;top:42px;background:var(--surface2);
-  border:1px solid var(--border);border-radius:14px;overflow:hidden;
-  display:none;flex-direction:column;min-width:140px;z-index:200;
-  box-shadow:0 12px 30px rgba(0,0,0,0.5);
-}
+.lang-btn{background:var(--surface2);border:1px solid var(--border);color:var(--text);padding:6px 14px;border-radius:30px;font-size:0.72rem;font-weight:500;cursor:pointer;display:flex;align-items:center;gap:5px}
+.lang-menu{position:absolute;right:0;top:42px;background:var(--surface2);border:1px solid var(--border);border-radius:14px;overflow:hidden;display:none;flex-direction:column;min-width:140px;z-index:200;box-shadow:0 12px 30px rgba(0,0,0,0.5)}
 .lang-menu.open{display:flex}
 .lang-menu button{background:none;border:none;padding:10px 16px;text-align:left;color:var(--text);cursor:pointer;font-size:0.8rem}
 .lang-menu button:hover{background:var(--border)}
-
-/* TABS */
 .tabs{display:flex;gap:4px;padding:0.9rem 1.5rem 0;border-bottom:1px solid var(--border);overflow-x:auto}
-.tab{
-  background:none;border:none;padding:9px 18px;border-radius:10px 10px 0 0;
-  font-size:0.82rem;font-weight:600;color:var(--muted);cursor:pointer;white-space:nowrap;
-  border-bottom:2px solid transparent;transition:all 0.2s;
-}
+.tab{background:none;border:none;padding:9px 18px;border-radius:10px 10px 0 0;font-size:0.82rem;font-weight:600;color:var(--muted);cursor:pointer;white-space:nowrap;border-bottom:2px solid transparent;transition:all 0.2s}
 .tab.active{color:var(--blue);border-bottom-color:var(--blue);background:rgba(59,130,246,0.07)}
-
 main{padding:1.5rem;max-width:1400px;margin:0 auto}
-
-/* STATS */
 .stats-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:0.85rem;margin-bottom:1.75rem}
-.stat{
-  background:linear-gradient(150deg,var(--surface) 0%,var(--surface2) 100%);
-  border:1px solid var(--border);border-radius:18px;padding:1.1rem 1.25rem;
-  position:relative;overflow:hidden;
-}
+.stat{background:linear-gradient(150deg,var(--surface) 0%,var(--surface2) 100%);border:1px solid var(--border);border-radius:18px;padding:1.1rem 1.25rem;position:relative;overflow:hidden}
 .stat::before{content:'';position:absolute;top:0;left:0;width:3px;height:100%;background:var(--blue);opacity:0.6}
 .stat label{font-size:0.68rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.6px;display:block;margin-bottom:5px;font-weight:600}
 .stat .val{font-size:2rem;font-weight:800;font-family:'Space Grotesk',sans-serif;line-height:1}
 .val.blue{color:var(--blue)}.val.red{color:var(--danger)}.val.warn{color:var(--warn)}.val.green{color:var(--ok)}
-
-/* CHART */
 .chart-wrap{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:1.4rem;margin-bottom:1.75rem}
 .chart-title{font-size:0.85rem;font-weight:600;margin-bottom:1rem;color:var(--muted)}
-
-/* GROUP */
 .group-block{margin-bottom:2.25rem}
 .group-header{display:flex;align-items:center;gap:0.85rem;margin-bottom:1.1rem}
-.group-badge{
-  width:42px;height:42px;border-radius:12px;background:var(--surface2);
-  border:1px solid var(--border);display:flex;align-items:center;justify-content:center;
-  font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:0.85rem;color:var(--blue);
-  flex-shrink:0;
-}
+.group-logo{width:42px;height:42px;border-radius:12px;background:#fff;padding:6px;object-fit:contain;flex-shrink:0}
 .group-name{font-size:1.15rem;font-weight:700;font-family:'Space Grotesk',sans-serif}
 .group-count{font-size:0.72rem;color:var(--muted);margin-left:auto}
-
-/* ARTIST GRID */
 .artist-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(135px,1fr));gap:0.85rem}
-.artist-card{
-  background:var(--surface);border:1px solid var(--border);border-radius:18px;
-  padding:1.1rem 0.8rem;text-align:center;cursor:pointer;transition:all 0.25s;position:relative;
-}
+.artist-card{background:var(--surface);border:1px solid var(--border);border-radius:18px;padding:1.1rem 0.8rem;text-align:center;cursor:pointer;transition:all 0.25s;position:relative}
 .artist-card:hover{border-color:var(--blue);background:var(--surface2);transform:translateY(-3px);box-shadow:0 10px 25px rgba(59,130,246,0.12)}
-.artist-photo{
-  width:74px;height:74px;border-radius:50%;object-fit:cover;object-position:top;
-  border:2px solid var(--border);margin:0 auto 0.7rem;display:block;background:var(--surface2);
-}
-.artist-photo.fallback{
-  display:flex;align-items:center;justify-content:center;
-  font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.3rem;color:var(--blue);
-  background:linear-gradient(135deg,rgba(59,130,246,0.15),rgba(34,211,238,0.1));
-}
+.artist-photo{width:74px;height:74px;border-radius:50%;object-fit:cover;object-position:top;border:2px solid var(--border);margin:0 auto 0.7rem;display:block;background:var(--surface2)}
+.artist-photo.fallback{display:flex;align-items:center;justify-content:center;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.3rem;color:var(--blue);background:linear-gradient(135deg,rgba(59,130,246,0.15),rgba(34,211,238,0.1))}
 .artist-card h4{font-size:0.84rem;font-weight:600;margin-bottom:2px}
 .artist-group{font-size:0.66rem;color:var(--muted);margin-bottom:7px}
 .threat{display:inline-block;padding:3px 11px;border-radius:20px;font-size:0.64rem;font-weight:700}
 .t-low{background:rgba(16,185,129,0.13);color:var(--ok)}
 .t-med{background:rgba(245,158,11,0.13);color:var(--warn)}
 .t-high{background:rgba(244,63,94,0.13);color:var(--danger)}
-
-/* MESSAGES */
 .messages-wrap{background:var(--surface);border:1px solid var(--border);border-radius:20px;overflow:hidden}
-.messages-header{padding:1.1rem 1.4rem;border-bottom:1px solid var(--border);font-size:0.9rem;font-weight:600;display:flex;align-items:center;gap:8px}
+.messages-header{padding:1.1rem 1.4rem;border-bottom:1px solid var(--border);font-size:0.9rem;font-weight:600}
 .msg-item{padding:1rem 1.4rem;border-bottom:1px solid var(--border)}
 .msg-item:last-child{border-bottom:none}
 .msg-meta{display:flex;gap:10px;margin-bottom:5px;flex-wrap:wrap;align-items:center}
 .msg-meta span{font-size:0.68rem;color:var(--muted);display:flex;align-items:center;gap:4px}
-.platform-tag{
-  font-size:0.65rem;font-weight:700;padding:2px 9px;border-radius:6px;
-  background:var(--surface2);color:var(--cyan);text-transform:uppercase;letter-spacing:0.3px;
-}
+.platform-tag{font-size:0.65rem;font-weight:700;padding:2px 9px;border-radius:6px;background:var(--surface2);color:var(--cyan);text-transform:uppercase;letter-spacing:0.3px}
 .msg-text{font-size:0.83rem;line-height:1.55;color:#CBD5E1}
 .msg-badges{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap}
 .badge{display:inline-block;padding:3px 10px;border-radius:20px;font-size:0.64rem;font-weight:600}
 .badge-toxic{background:rgba(244,63,94,0.13);color:var(--danger)}
 .badge-conf{background:rgba(59,130,246,0.1);color:var(--blue)}
 .badge-type{background:rgba(34,211,238,0.1);color:var(--cyan)}
-
-/* MODAL */
-.modal-overlay{
-  position:fixed;inset:0;background:rgba(5,8,15,0.88);backdrop-filter:blur(8px);
-  display:none;align-items:flex-end;justify-content:center;z-index:1000;
-}
+.modal-overlay{position:fixed;inset:0;background:rgba(5,8,15,0.88);backdrop-filter:blur(8px);display:none;align-items:flex-end;justify-content:center;z-index:1000}
 .modal-overlay.active{display:flex}
-.modal-content{
-  background:var(--surface);border-radius:28px 28px 0 0;padding:1.75rem 1.5rem 2.5rem;
-  max-width:560px;width:100%;max-height:88vh;overflow-y:auto;
-  border:1px solid var(--border);box-shadow:0 -10px 50px rgba(0,0,0,0.5);
-  animation:slideUp 0.3s ease;
-}
-@media(min-width:640px){
-  .modal-overlay{align-items:center}
-  .modal-content{border-radius:28px;max-height:80vh}
-}
+.modal-content{background:var(--surface);border-radius:28px 28px 0 0;padding:1.75rem 1.5rem 2.5rem;max-width:560px;width:100%;max-height:88vh;overflow-y:auto;border:1px solid var(--border);box-shadow:0 -10px 50px rgba(0,0,0,0.5);animation:slideUp 0.3s ease}
+@media(min-width:640px){.modal-overlay{align-items:center}.modal-content{border-radius:28px;max-height:80vh}}
 @keyframes slideUp{from{transform:translateY(40px);opacity:0}to{transform:translateY(0);opacity:1}}
-.modal-close{
-  background:var(--surface2);border:1px solid var(--border);color:var(--muted);
-  width:32px;height:32px;border-radius:50%;cursor:pointer;float:right;
-  font-size:1rem;display:flex;align-items:center;justify-content:center;
-}
+.modal-close{background:var(--surface2);border:1px solid var(--border);color:var(--muted);width:32px;height:32px;border-radius:50%;cursor:pointer;float:right;font-size:1rem;display:flex;align-items:center;justify-content:center}
 .modal-hero{display:flex;align-items:center;gap:1rem;margin-top:0.5rem;margin-bottom:1.25rem}
 .modal-photo{width:84px;height:84px;border-radius:50%;object-fit:cover;object-position:top;border:3px solid var(--blue);flex-shrink:0}
 .modal-photo.fallback{display:flex;align-items:center;justify-content:center;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.6rem;color:var(--blue);background:linear-gradient(135deg,rgba(59,130,246,0.18),rgba(34,211,238,0.12))}
 .modal-info h2{font-size:1.3rem;font-weight:700;font-family:'Space Grotesk',sans-serif}
 .modal-info .sub{font-size:0.8rem;color:var(--muted);margin-top:2px}
-
 .empty{padding:2.5rem;text-align:center;color:var(--muted);font-size:0.85rem}
 .heatmap-placeholder{background:var(--surface);border:1px dashed var(--border);border-radius:18px;padding:2.2rem;text-align:center;color:var(--muted);font-size:0.85rem;margin-bottom:1.75rem}
-
 @media(max-width:480px){
   .header{padding:0.7rem 1rem}
   main{padding:1rem}
@@ -240,51 +147,50 @@ main{padding:1.5rem;max-width:1400px;margin:0 auto}
 <script>
 const API = 'https://ktoxguard-api-production.up.railway.app';
 
-const GROUPS = [
-  {name:'BTS',members:[
-    {name:'Jimin',img:'images/artists/jimin.jpg'},
-    {name:'RM',img:'images/artists/rm.jpg'},
-    {name:'V',img:'images/artists/v.jpg'},
-    {name:'Jungkook',img:'images/artists/jungkook.jpg'},
-    {name:'Suga',img:'images/artists/suga.jpeg'},
-    {name:'Jin',img:'images/artists/jin.jpg'},
-    {name:'J-Hope',img:'images/artists/jhope.jpg'}
-  ]},
-  {name:'SEVENTEEN',members:[
-    {name:'S.Coups',img:'images/artists/scoups.jpeg'},
-    {name:'Dino',img:'images/artists/dino.jpg'},
-    {name:'Hoshi',img:'images/artists/hoshi.jpg'},
-    {name:'DK',img:'images/artists/dk.jpg'},
-    {name:'Mingyu',img:'images/artists/mingyu.jpg'},
-    {name:'Jeonghan',img:'images/artists/jeonghan.jpg'},
-    {name:'Wonwoo',img:'images/artists/wonwoo.jpg'},
-    {name:'Jun',img:'images/artists/jun.jpg'},
-    {name:'Minghao',img:'images/artists/minghao.jpg'},
-    {name:'Woozi',img:'images/artists/woozi.jpg'},
-    {name:'Vernon',img:'images/artists/vernon.jpg'},
-    {name:'Joshua',img:'images/artists/joshua.jpg'},
-    {name:'Seungkwan',img:'images/artists/seungkwan.jpg'}
-  ]},
-  {name:'TXT',members:[
-    {name:'Yeonjun',img:'images/artists/yeonjun.jpg'},
-    {name:'Soobin',img:'images/artists/soobin.jpg'},
-    {name:'Beomgyu',img:'images/artists/beomgyu.jpg'},
-    {name:'Huening Kai',img:'images/artists/kai.jpeg'},
-    {name:'Taehyun',img:'images/artists/taehyun.jpeg'}
-  ]},
-  {name:'NewJeans',members:[
-    {name:'Minji',img:'images/artists/minji.jpg'},
-    {name:'Hanni',img:'images/artists/hanni.jpg'},
-    {name:'Danielle',img:'images/artists/danielle.jpg'},
-    {name:'Haerin',img:'images/artists/haerin.jpg'},
-    {name:'Hyein',img:'images/artists/hyein.jpg'}
-  ]}
+const groups = [
+  { name: "BTS", logo: "https://logos-world.net/wp-content/uploads/2021/03/BTS-Logo.png", members: ["Jimin", "RM", "V", "Jungkook", "Suga", "Jin", "J-Hope"] },
+  { name: "BLACKPINK", logo: "https://logos-world.net/wp-content/uploads/2021/03/Blackpink-Logo.png", members: ["Jisoo", "Jennie", "Rosé", "Lisa"] },
+  { name: "IVE", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/IVE_logo.svg/512px-IVE_logo.svg.png", members: ["Yujin", "Gaeul", "Rei", "Wonyoung", "Liz", "Leeseo"] },
+  { name: "NMIXX", logo: "https://upload.wikimedia.org/wikipedia/en/thumb/7/7e/NMIXX_logo.svg/512px-NMIXX_logo.svg.png", members: ["Lily", "Haewon", "Sullyoon", "Bae", "Jiwoo", "Kyujin"] },
+  { name: "KATSEYE", logo: "https://upload.wikimedia.org/wikipedia/en/thumb/3/3f/KATSEYE_logo.svg/512px-KATSEYE_logo.svg.png", members: ["Sophia", "Lara", "Yoonchae", "Megan", "Daniela", "Manon"] }
 ];
+
+const memberPhotos = {
+  "Jimin": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTr6m_Ro1bu_wosVEh-xvObFD8Gd8s7LpyxJsYs8cazzz7CfABoOkKw7SmCqId28tJ3YdLiDwgDnuHS-LvTew8mz-PFk4Rl0x_BnAZ7woH-3g&s=10",
+  "RM": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRWB2GKjbSpKmAJdi67UWpit9S7djv3Ys0lS3n1101mY-1yJaGw0BxFmNA15KCxqIGWPMJPHeI48Q5M9ESQYyqbiEOJ0QlAhFFoNsELRCWP&s=10",
+  "V": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSPSjqzBS87ojRxVpKCK0UMwBBcxJQU-exg7nF9r74-5Q&s=10",
+  "Jungkook": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTHcFDAF1yYREbrtJ5Tp72zbb_hmCNEDzoyE-E38aYxZQ&s=10",
+  "Suga": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQCMPyS9ar3RcYSU0-UR6B0DKzjllLEvIpkSB6t6PbrRA&s=10",
+  "Jin": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTZKQDY8Xdjxto3JWewwV35xq347cSN8KQotiTMReZsug&s=10",
+  "J-Hope": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS_KdNSz6dLYjwA6P51YzSNm_WgIQSwxYwhP7aHl2BHSw&s=10",
+  "Jisoo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQJsaSgIAZAv3FCuLwbxBdxSvUyNTM0Sdlj6YFX5zXUa6PvbQ3giEID2Wr5Oz-oppgRLcEtR98c72uba_iyoXdQuNCaX_ZxKkVN-NcpVU4v&s=10",
+  "Jennie": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcScblhyPMz1wwLT-v77DOeheg_dmYBQDxzBtkrJm24jBA&s=10",
+  "Rosé": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSDUNyHoUYq7kNEEjaolzF2UHPnHvQUNS5_ma3S1KCZAA&s=10",
+  "Lisa": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRjnIO_4A-e_LDW814AkcRvjVxlJLEyatgRdcJiTkczlw&s=10",
+  "Yujin": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQSBiypKH_zJWYNTGnJv-_qWSBGa7lnFNGQeNM0j94s_GkBjHWf4TKUB2PfCJ8uKB8WAyb9BtlJVaE_HmUqxHylaXmvg_lGV5QcOe3TNObA&s=10",
+  "Gaeul": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRUpkGtXVn9xaca3ZatLi3LIEU2Q06JQ7GU9GQtPgwQ7Z9orkkmlnhWagawgwb_XGy7curScCEGa5-iNZqRutQH5ZBPcr2fetXmJOxjSjHf&s=10",
+  "Rei": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT1zAeEELxnpV-vFZjScIBcy6tS0F6YerPOoykJGH6jNPi8Cz1qOhqhkm5onwxFK4Xow_JNHokryCH3waiEEU2E-lINVarE0XMW6w07EJre&s=10",
+  "Wonyoung": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRel747R9l3wCsNmJOZJsz20PzOkAAboPSbFjh9p8qA6X5Zhl5tGNqVyDuP-PVs-mAuBHmncoGipdhf7kWKtShFfvCe2lVud6aSSWVGJ6cl&s=10",
+  "Liz": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ6yW05q1HpOBuVHuJYCcMRJQI2lZBVjkgjow3MsT2PWCbrFfsOQ6e-zea8sVWAutGDBoPJsipAntd1K6kXGwS8J3PuajcuuC-zyaXLCpLT&s=10",
+  "Leeseo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQwaXY3E98Q-tG21bex9beRCDet-NO_pp45rRPEsQXA-dG68g-erfnhqXIBW5AvmxQEajunDMzhQWSQpe2JxBaD5gQVB1qdmdiv5n9phmah9Q&s=10",
+  "Lily": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSwQe2Q0LmOdZ3bR9t04cIf69lOWN3j8D28TuvNkClNXDaIP_fN_wEPrHzmmgbW4MHZVmS7nZNFFXcrIOXM9hglQQI96onKiNZlcN_z5BHb&s=10",
+  "Haewon": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRplATYmYTYTQzrsd11-U92kYS7rMptDMmkAeOO5OWSWqwLQfrZrKfFv9zJQiPI_VTE0POIu0eftGTwqnWgorvb1eTVkHYLYVM7ZsYjT_Y6&s=10",
+  "Sullyoon": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS3_gGBVNY6a21ZoeMZ4j6KEKCoQwGgA-VFobz1ZDk-mo3uWbmRv5IeIYJ9eL2g36Y8ccQPKUmAslatCHEN-7_oh3JO8haeKFr3RE1fNYj6Xg&s=10",
+  "Bae": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRZCLoZLYdbCRR5BX6ykurK2VAqyIE-mKf57-qC4TA2V-6_Xl21hi0bW7jMg6H3cNEjHiARZbzHSKu3IVCSwU4AQInv3L3nZzO8-mtI-AbF&s=10",
+  "Jiwoo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQYPodhjCjImL4t9PY5UBI6z8mYaw5bN91jj2_Ij_a6yiv7fjqeevVwmymya5ZE-xCxedwDNBIqN5wIvHcnpdS4pjSF1HtJ1d6YLMMCj5c-4Q&s=10",
+  "Kyujin": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ8zOPrRRLbdCj1sjAWBbuFNMZzQT4Vq4DWocVM8aziFYTBvMPitwhw5-uxmfQLlJB8dvbVfjkreKA2j-f9DCjQcWpPg8gHydv4noS6jLjekQ&s=10",
+  "Sophia": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR3NktgevXUqee4p6knGkNqg63y1CwMo-Yp86WanMN1sNgVZsB6WtYgKzSWka9VSSexj7j3cJ6cK1Xkcb4YRHb-yYgLmeXWxfnj6wud-6wy&s=10",
+  "Lara": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6mnw2_J1RBtZFZX-8PftPQbNGcs4Fbb0pHnpSysLuSiiNKXtdpzwPlkJJMjOBS_zUyN50jGiFg1x7j9LAhV0DFM8r7V-PHfOZZt70riu7&s=10",
+  "Yoonchae": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQlPjjwzNqoPEEUINBNKjlGw3faW_UoQk8-cGZZZbspe6IblD_sme3Lf608r0dGUBef2TXOx6PUBXy4IUrvl4YFReVeb6LJ8oVBAmI-VxPs&s=10",
+  "Megan": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT3wpWtwvUJC9jsaoab9V6lhneDxVkvDNpJCCxkmx7JI1Ct-hfKtbShd2FYrfj0ViyJoUQ4qOGSH1p0mJo2UKutLldSL2q1SlRmBE5haVoC4A&s=10",
+  "Daniela": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQN6jMI_NIiStjhs-MUVeq8CiESUzPyVVlAYM-vN5gajKJqDFa4Y9f5Wl_6sJlrQ-lCTHQldEb27r3G31gSHvdv4asVDLnu6-NY7yHdwFf1&s=10",
+  "Manon": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4I8KlKqCPgstMn6h-7soZGq3nv0LwwHW9cxOLz0SypMp3L-v9zSS9_oZ-H-iiPovj7yOgQzt_t9KwTHWzHogguE5OLECNwr2RxxSA6kXa&s=10"
+};
 
 const T = {
   en:{secure:'Secure',moderate:'Moderate',critical:'Critical',
     total:'Total messages',toxic:'Toxic messages',alerts:'Artists under alert',rate:'Toxicity rate',
-    trend:'Toxicity trend — last detections',recents:'Recent detections',
+    trend:'Toxicity trend',recents:'Recent detections',
     calm:'Calm',vigilance:'Vigilance',crisis:'Crisis',
     mentions:'Messages mentioning this artist',empty:'No messages yet.',support:'Need support?',
     bullyCount:'Bullying indicators',students:'Students monitored',
@@ -315,9 +221,12 @@ let stats = null, messages = [], chart = null;
 function t(k){return T[lang][k]||k}
 function initials(name){return name.split(' ').map(w=>w[0]).join('').substring(0,2).toUpperCase()}
 
-function avatarHtml(name, img, size){
-  return `<img class="${size}" src="${img}" alt="${name}"
-    onerror="this.outerHTML='<div class=&quot;${size} fallback&quot;>${initials(name)}</div>'">`;
+function avatarHtml(name, size){
+  const photo = memberPhotos[name];
+  if(photo){
+    return `<img class="${size}" src="${photo}" alt="${name}" onerror="this.outerHTML='<div class=&quot;${size} fallback&quot;>${initials(name)}</div>'">`;
+  }
+  return `<div class="${size} fallback">${initials(name)}</div>`;
 }
 
 function threatFor(name){
@@ -368,7 +277,7 @@ function updateSecBadge(){
 function renderAgency(){
   document.getElementById('chartWrap').style.display='block';
   document.getElementById('heatmapSlot').innerHTML='';
-  const alertCount = GROUPS.flatMap(g=>g.members).filter(m=>threatFor(m.name).val>0).length;
+  const alertCount = groups.flatMap(g=>g.members).filter(m=>threatFor(m).val>0).length;
   document.getElementById('statsRow').innerHTML = `
     <div class="stat"><label>${t('total')}</label><div class="val blue">${stats.total_messages}</div></div>
     <div class="stat"><label>${t('toxic')}</label><div class="val red">${stats.toxic_count}</div></div>
@@ -412,19 +321,19 @@ function renderChart(){
 
 function renderGroups(){
   let html = '';
-  GROUPS.forEach(g=>{
+  groups.forEach(g=>{
     html += `<div class="group-block">
       <div class="group-header">
-        <div class="group-badge">${initials(g.name)}</div>
+        <img class="group-logo" src="${g.logo}" alt="${g.name}" onerror="this.style.display='none'">
         <span class="group-name">${g.name}</span>
         <span class="group-count">${g.members.length} members</span>
       </div>
       <div class="artist-grid">`;
     g.members.forEach(m=>{
-      const th = threatFor(m.name);
-      html += `<div class="artist-card" onclick='openDetail(${JSON.stringify(m.name)},${JSON.stringify(g.name)},${JSON.stringify(m.img)})'>
-        ${avatarHtml(m.name, m.img, 'artist-photo')}
-        <h4>${m.name}</h4>
+      const th = threatFor(m);
+      html += `<div class="artist-card" onclick='openDetail(${JSON.stringify(m)},${JSON.stringify(g.name)})'>
+        ${avatarHtml(m, 'artist-photo')}
+        <h4>${m}</h4>
         <div class="artist-group">${g.name}</div>
         <span class="threat ${th.cls}">${th.label}</span>
       </div>`;
@@ -434,12 +343,12 @@ function renderGroups(){
   document.getElementById('groupsContainer').innerHTML = html;
 }
 
-function openDetail(name, group, img){
+function openDetail(name, group){
   const mentions = messages.filter(m=>m.label==='toxique'&&(m.text||'').toLowerCase().includes(name.toLowerCase()));
   const th = threatFor(name);
   document.getElementById('modalBody').innerHTML = `
     <div class="modal-hero">
-      ${avatarHtml(name, img, 'modal-photo')}
+      ${avatarHtml(name, 'modal-photo')}
       <div class="modal-info">
         <h2>${name}</h2>
         <div class="sub">${group}</div>
@@ -494,7 +403,6 @@ function renderGovt(){
   document.getElementById('groupsContainer').innerHTML = '';
   const deaths = messages.filter(m=>m.label==='toxique'&&((m.text||'').includes('죽어')||(m.text||'').includes('죽여'))).length;
   const doxx = messages.filter(m=>m.label==='toxique'&&(m.text||'').includes('신상')).length;
-  const hate = messages.filter(m=>m.label==='toxique'&&(m.text||'').includes('병신')).length;
   document.getElementById('statsRow').innerHTML = `
     <div class="stat"><label>${t('national')}</label><div class="val red">${(stats.toxic_percentage||0).toFixed(1)}%</div></div>
     <div class="stat"><label>${t('threats')}</label><div class="val warn">${stats.toxic_count}</div></div>
